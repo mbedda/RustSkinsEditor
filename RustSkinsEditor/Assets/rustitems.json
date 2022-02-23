@@ -1,0 +1,482 @@
+[
+  {
+    "Name": "Combat Knife",
+    "Shortname": "knife.combat",
+    "Thumbnail": "https://i.imgur.com/Z1LH60g.png"
+  },
+  {
+    "Name": "Acoustic Guitar",
+    "Shortname": "fun.guitar",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/d945a172c44fdf4d0c4cd421d308e1ed.png"
+  },
+  {
+    "Name": "Armored Door",
+    "Shortname": "door.hinged.toptier",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/601639d00168157048c9438a8be7d7a4.png"
+  },
+  {
+    "Name": "Armored Double Door",
+    "Shortname": "door.double.hinged.toptier",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/af5a9d4489c41aacc730749e0b357ffa.png"
+  },
+  {
+    "Name": "Assault Rifle",
+    "Shortname": "rifle.ak",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/abcf3b856b26c6b8a7c510b0c745c182.png"
+  },
+  {
+    "Name": "Bandana Mask",
+    "Shortname": "mask.bandana",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/6731a84e10f19910c9ef61ab85ec5d66.png"
+  },
+  {
+    "Name": "Baseball Cap",
+    "Shortname": "hat.cap",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/4160c9a9264a6a61ac252df244a18d91.png"
+  },
+  {
+    "Name": "Beenie Hat",
+    "Shortname": "hat.beenie",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/fbe2d767ce6b2c0feff8add241aa19b7.png"
+  },
+  {
+    "Name": "Bolt Action Rifle",
+    "Shortname": "rifle.bolt",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/4ecdd2216ea1a9845f3a834e3e0f000e.png"
+  },
+  {
+    "Name": "Bone Club",
+    "Shortname": "bone.club",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/d310d04de12c5dc0bfb7b653610861b9.png"
+  },
+  {
+    "Name": "Bone Helmet",
+    "Shortname": "deer.skull.mask",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/fa9cca77c533e5ddca1de192b9f9f394.png"
+  },
+  {
+    "Name": "Bone Knife",
+    "Shortname": "knife.bone",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/d33cb26de1978629b7158a45d9725a31.png"
+  },
+  {
+    "Name": "Boonie Hat",
+    "Shortname": "hat.boonie",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/bb421df429fe0d249c071b60752c399b.png"
+  },
+  {
+    "Name": "Boots",
+    "Shortname": "shoes.boots",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/7830af94d60e2e5bed7e8d95299a2d44.png"
+  },
+  {
+    "Name": "Bucket Helmet",
+    "Shortname": "bucket.helmet",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/8c73981fffe422f39c432e5ae83659cc.png"
+  },
+  {
+    "Name": "Burlap Headwrap",
+    "Shortname": "burlap.headwrap",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/a251fc9f5010927744c8fb13d397afe1.png"
+  },
+  {
+    "Name": "Burlap Shirt",
+    "Shortname": "burlap.shirt",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/45c56efa9bc28c4fb24a8b9ff616859c.png"
+  },
+  {
+    "Name": "Burlap Shoes",
+    "Shortname": "burlap.shoes",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/7f75643cbd64eff06475b4285fa19641.png"
+  },
+  {
+    "Name": "Burlap Trousers",
+    "Shortname": "burlap.trousers",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/a31fd388d7c97a11a4849700efa0e1d6.png"
+  },
+  {
+    "Name": "Chair",
+    "Shortname": "chair",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/0ebd443d1582f2d34aaf250acebce206.png"
+  },
+  {
+    "Name": "Coffee Can Helmet",
+    "Shortname": "coffeecan.helmet",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/a530c861a8ca6438edd84b8717c16e0c.png"
+  },
+  {
+    "Name": "Concrete Barricade",
+    "Shortname": "barricade.concrete",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/d3637c8d26f6b2f601a35e9e71aae10d.png"
+  },
+  {
+    "Name": "Crossbow",
+    "Shortname": "crossbow",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/fa8f5c90d92f55d5922eb432e063dbf4.png"
+  },
+  {
+    "Name": "Custom SMG",
+    "Shortname": "smg.2",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/e8e8a72dda7972dc9716fdc2e56ef08f.png"
+  },
+  {
+    "Name": "Double Barrel Shotgun",
+    "Shortname": "shotgun.double",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/45bfb1c1738eeee47fab135ee76e1f59.png"
+  },
+  {
+    "Name": "Eoka Pistol",
+    "Shortname": "pistol.eoka",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/375d7f677619dde56f28b0645db8a854.png"
+  },
+  {
+    "Name": "F1 Grenade",
+    "Shortname": "grenade.f1",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/12d006d04b9f3f05331cabf0adaab268.png"
+  },
+  {
+    "Name": "Fridge",
+    "Shortname": "fridge",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/c10e96b44374c037647bb5f9067dd7de.png"
+  },
+  {
+    "Name": "Furnace",
+    "Shortname": "furnace",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/62674d764ee4a206b0368b75d34c2442.png"
+  },
+  {
+    "Name": "Garage Door",
+    "Shortname": "wall.frame.garagedoor",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/447037bd5f2f841323ec4d1d38d3b44f.png"
+  },
+  {
+    "Name": "Hammer",
+    "Shortname": "hammer",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/6b47b224b8ddb6e29f7b8363dbd06b16.png"
+  },
+  {
+    "Name": "Hatchet",
+    "Shortname": "hatchet",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/3edeeff4d5e0554d5620ee986959a9a6.png"
+  },
+  {
+    "Name": "Hazmat Suit",
+    "Shortname": "hazmatsuit",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/83eb8e5b5cf55b1bb7318904a4d1c8b1.png"
+  },
+  {
+    "Name": "Hide Boots",
+    "Shortname": "attire.hide.boots",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/241233f4337788ced39d7cad432f5d4f.png"
+  },
+  {
+    "Name": "Hide Halterneck",
+    "Shortname": "attire.hide.helterneck",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/472fb27f56137c80a86b5cc9de07d563.png"
+  },
+  {
+    "Name": "Hide Pants",
+    "Shortname": "attire.hide.pants",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/77225ae1ca99fcf9e79ab073d13a9d91.png"
+  },
+  {
+    "Name": "Hide Poncho",
+    "Shortname": "attire.hide.poncho",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/e716c2af51a6a552ac185c9bdc6ec11e.png"
+  },
+  {
+    "Name": "Hide Skirt",
+    "Shortname": "attire.hide.skirt",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/703b5e44a51b67dcda44fb61645ffd31.png"
+  },
+  {
+    "Name": "Hide Vest",
+    "Shortname": "attire.hide.vest",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/15939636cb3e2bbfc33d630b084d328f.png"
+  },
+  {
+    "Name": "Hoodie",
+    "Shortname": "hoodie",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/cbf91883b6fa7dd289713b66cb649bd6.png"
+  },
+  {
+    "Name": "Hunting Bow",
+    "Shortname": "bow.hunting",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/364ff79d278464c02cc439e753f941ad.png"
+  },
+  {
+    "Name": "Improvised Balaclava",
+    "Shortname": "mask.balaclava",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/919b18cbd64cee8b710018b141d04c6e.png"
+  },
+  {
+    "Name": "Jacket",
+    "Shortname": "jacket",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/55673aaea7c16bb10196022c7adc40a0.png"
+  },
+  {
+    "Name": "Large Wood Box",
+    "Shortname": "box.wooden.large",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/ce15e71a2b424191bb0ea3044018db4f.png"
+  },
+  {
+    "Name": "Burlap Gloves",
+    "Shortname": "burlap.gloves",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/97225a86b518fe416812d880ac790599.png"
+  },
+  {
+    "Name": "Locker",
+    "Shortname": "locker",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/d365508b8f1814f17aad3d53123d6089.png"
+  },
+  {
+    "Name": "Longsleeve T-Shirt",
+    "Shortname": "tshirt.long",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/a84a8500cc7975a1a06affeeb3c0dca3.png"
+  },
+  {
+    "Name": "Longsword",
+    "Shortname": "longsword",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/e4b9405bf8074b28932e6f29b296dfec.png"
+  },
+  {
+    "Name": "LR-300 Assault Rifle",
+    "Shortname": "rifle.lr300",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/61d72182ef15c2d3c5ec79b40b595191.png"
+  },
+  {
+    "Name": "M249",
+    "Shortname": "lmg.m249",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/fb4bac8bc370915d205586b07b933ad6.png"
+  },
+  {
+    "Name": "M39 Rifle",
+    "Shortname": "rifle.m39",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/2445fe6ffe1ec2ec937a8f064b1f0389.png"
+  },
+  {
+    "Name": "Metal Chest Plate",
+    "Shortname": "metal.plate.torso",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/4e8f9aa53798f8d0ed932f1c7d38ae2d.png"
+  },
+  {
+    "Name": "Metal Facemask",
+    "Shortname": "metal.facemask",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/8552b85b4f202ebcda078e500b40c1fa.png"
+  },
+  {
+    "Name": "Miners Hat",
+    "Shortname": "hat.miner",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/89264c9696af7a85e920488f65ddce88.png"
+  },
+  {
+    "Name": "MP5A4",
+    "Shortname": "smg.mp5",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/879f7fe04eb7e60acb55b96f4bae75dc.png"
+  },
+  {
+    "Name": "Pants",
+    "Shortname": "pants",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/ee52a04b0bed8f983db8d68d8d78e3bf.png"
+  },
+  {
+    "Name": "Pick Axe",
+    "Shortname": "pickaxe",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/13a1dcf999e5ede94b61057041c36169.png"
+  },
+  {
+    "Name": "Pump Shotgun",
+    "Shortname": "shotgun.pump",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/77dab3a101353c77d9e8fd1e9ce4101f.png"
+  },
+  {
+    "Name": "Python Revolver",
+    "Shortname": "pistol.python",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/b11266fb484127208d295ad42cdf709f.png"
+  },
+  {
+    "Name": "Reactive Target",
+    "Shortname": "target.reactive",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/f914d4f9fafe81e30c0e46110c589b4a.png"
+  },
+  {
+    "Name": "Revolver",
+    "Shortname": "pistol.revolver",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/e1c9e4799e255e33e15a010e51b86f09.png"
+  },
+  {
+    "Name": "Riot Helmet",
+    "Shortname": "riot.helmet",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/b80cec3abda72186999af8beed2ac071.png"
+  },
+  {
+    "Name": "Road Sign Jacket",
+    "Shortname": "roadsign.jacket",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/93339906d7d90d510fa591555ba74197.png"
+  },
+  {
+    "Name": "Road Sign Kilt",
+    "Shortname": "roadsign.kilt",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/c0a23c58ce8cfa449ff86f8bb51d8a87.png"
+  },
+  {
+    "Name": "Rock",
+    "Shortname": "rock",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/b9c1d4ca66796d6b89e888408625bae4.png"
+  },
+  {
+    "Name": "Rocket Launcher",
+    "Shortname": "rocket.launcher",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/f8320f0828b3b976253b8a268d39da2d.png"
+  },
+  {
+    "Name": "Rug",
+    "Shortname": "rug",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/4cf54d09fa70e50d613b1b7c8d66dea8.png"
+  },
+  {
+    "Name": "Rug Bear Skin",
+    "Shortname": "rug.bear",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/563610d7cc4da15275893c98970ba753.png"
+  },
+  {
+    "Name": "Salvaged Icepick",
+    "Shortname": "icepick.salvaged",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/41404a652b58638ba6256d7a8a0336b3.png"
+  },
+  {
+    "Name": "Salvaged Sword",
+    "Shortname": "salvaged.sword",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/c89fb613fa55575556b214cd4e2e8fac.png"
+  },
+  {
+    "Name": "Sandbag Barricade",
+    "Shortname": "barricade.sandbags",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/ec0ec62e4dd8a62fd64ebc323d3b2cd7.png"
+  },
+  {
+    "Name": "Satchel Charge",
+    "Shortname": "explosive.satchel",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/aae384e0bb8fbf1c84cd8f317b296ba3.png"
+  },
+  {
+    "Name": "Semi-Automatic Pistol",
+    "Shortname": "pistol.semiauto",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/1dc57cdb6c3162e3825f7a83d387a2cf.png"
+  },
+  {
+    "Name": "Semi-Automatic Rifle",
+    "Shortname": "rifle.semiauto",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/a9b2fdfc16af568372441b35a20c5890.png"
+  },
+  {
+    "Name": "Sheet Metal Door",
+    "Shortname": "door.hinged.metal",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/9090da7779994be2336410b50e9f4acd.png"
+  },
+  {
+    "Name": "Sheet Metal Double Door",
+    "Shortname": "door.double.hinged.metal",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/f7e6d21b2ac18220810494fa1a00824f.png"
+  },
+  {
+    "Name": "Shirt",
+    "Shortname": "shirt.collared",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/7f0d9c9e8bb5c6b9e9e5235dab459c7e.png"
+  },
+  {
+    "Name": "Shorts",
+    "Shortname": "pants.shorts",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/1270c96f801e24575a35b793d9893202.png"
+  },
+  {
+    "Name": "Sleeping Bag",
+    "Shortname": "sleepingbag",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/6ba275b3eafe8fb7f1932c05bfc8be97.png"
+  },
+  {
+    "Name": "Snow Jacket - Red",
+    "Shortname": "jacket.snow",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/524356425138f814f07d5235e41c27f8.png"
+  },
+  {
+    "Name": "Stone Hatchet",
+    "Shortname": "stonehatchet",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/ab3af57588a708d3b5facc3b801f3b88.png"
+  },
+  {
+    "Name": "Stone Pick Axe",
+    "Shortname": "stone.pickaxe",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/ecd9fcde28c313870c7d78c036788798.png"
+  },
+  {
+    "Name": "Table",
+    "Shortname": "table",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/24d9ecbf39ee040656d1b9cb8b3a855d.png"
+  },
+  {
+    "Name": "Tank Top",
+    "Shortname": "shirt.tanktop",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/887106cabae8090aa45c2c3bfc7e6e56.png"
+  },
+  {
+    "Name": "Thompson",
+    "Shortname": "smg.thompson",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/b9902424c66b969f5c34caebb0a92245.png"
+  },
+  {
+    "Name": "T-Shirt",
+    "Shortname": "tshirt",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/43671a75320bac06b76617330bdf56f6.png"
+  },
+  {
+    "Name": "Vending Machine",
+    "Shortname": "vending.machine",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/7c6659dfaf2a5c1eaa221cef24418e08.png"
+  },
+  {
+    "Name": "Water Purifier",
+    "Shortname": "water.purifier",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/36b1a26794ae6044d864ea9152c124e4.png"
+  },
+  {
+    "Name": "Waterpipe Shotgun",
+    "Shortname": "shotgun.waterpipe",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/9a27aa47e487419d5c4424503df4b12b.png"
+  },
+  {
+    "Name": "Wood Double Door",
+    "Shortname": "door.double.hinged.wood",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/0d9d10826c1216ace3d608b85a61bdbc.png"
+  },
+  {
+    "Name": "Wood Storage Box",
+    "Shortname": "box.wooden",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/edf553955ca6ff17f410b674e1862aa3.png"
+  },
+  {
+    "Name": "Wooden Door",
+    "Shortname": "door.hinged.wood",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/68bdaf364f8f26ec17e191b53cfdab17.png"
+  },
+  {
+    "Name": "L96 Rifle",
+    "Shortname": "rifle.l96",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/0c3a6326953c2fe8658f8b7c52dd3bf6.png"
+  },
+  {
+    "Name": "Roadsign Gloves",
+    "Shortname": "roadsign.gloves",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/114f99ae9d6059d6203e30fccf985d6f.png"
+  },
+  {
+    "Name": "Jackhammer",
+    "Shortname": "jackhammer",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/6b7280074f7908365955150d188ebf51.png"
+  },
+  {
+    "Name": "Spinning wheel",
+    "Shortname": "spinner.wheel",
+    "Thumbnail": "https:\/\/www.rust-items.com\/icons\/4d9a889cf22e51e9257be1aac6a7e6d3.png"
+  }
+]
