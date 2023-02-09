@@ -33,20 +33,27 @@ namespace RustSkinsEditor.UserControls
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
             e.Handled = true;
         }
 
         private void OpenLink_Click(object sender, RoutedEventArgs e)
         {
-            SkinDetails skinDetails = (SkinDetails)((MenuItem)sender).CommandParameter;
+            SteamSkinDetails skinDetails = (SteamSkinDetails)((MenuItem)sender).CommandParameter;
 
-            Process.Start(new ProcessStartInfo(skinDetails.WorkshopUrl.AbsoluteUri));
+            Process.Start(new ProcessStartInfo(skinDetails.WorkshopUrl.AbsoluteUri) { UseShellExecute = true });
+        }
+
+        private void CopyId_Click(object sender, RoutedEventArgs e)
+        {
+            SteamSkinDetails skinDetails = (SteamSkinDetails)((MenuItem)sender).CommandParameter;
+
+            Clipboard.SetText(skinDetails.Code.ToString());
         }
 
         private void OpenImage_Click(object sender, RoutedEventArgs e)
         {
-            SkinDetails skinDetails = (SkinDetails)((MenuItem)sender).CommandParameter;
+            SteamSkinDetails skinDetails = (SteamSkinDetails)((MenuItem)sender).CommandParameter;
 
             ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.SetFullscreen(skinDetails.PreviewUrl);
         }
@@ -56,10 +63,10 @@ namespace RustSkinsEditor.UserControls
             MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you would like to delete selected skin?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                SkinDetails skinDetails = (SkinDetails)((MenuItem)sender).CommandParameter;
+                SteamSkinDetails skinDetails = (SteamSkinDetails)((MenuItem)sender).CommandParameter;
 
                 ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.Delete(skinDetails.shortname, skinDetails.Code);
-                List<SkinDetails> skinDetailsList = (List<SkinDetails>)DataContext;
+                List<SteamSkinDetails> skinDetailsList = (List<SteamSkinDetails>)DataContext;
                 skinDetailsList.Remove(skinDetails);
                 DataContext = null;
                 DataContext = skinDetailsList;
@@ -75,8 +82,8 @@ namespace RustSkinsEditor.UserControls
                     MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you would like to delete selected skins?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
-                        List<SkinDetails> skinDetailsList = (List<SkinDetails>)DataContext;
-                        foreach (var item in SkinsListbox.SelectedItems.Cast<SkinDetails>())
+                        List<SteamSkinDetails> skinDetailsList = (List<SteamSkinDetails>)DataContext;
+                        foreach (var item in SkinsListbox.SelectedItems.Cast<SteamSkinDetails>())
                         {
                             ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.Delete(item.shortname, item.Code);
                             skinDetailsList.Remove(item);
@@ -93,7 +100,7 @@ namespace RustSkinsEditor.UserControls
         {
             if (e.ClickCount == 2)
             {
-                SkinDetails skinDetails = (sender as StackPanel).DataContext as SkinDetails;
+                SteamSkinDetails skinDetails = (sender as StackPanel).DataContext as SteamSkinDetails;
 
                 if (skinDetails != null)
                 {

@@ -6,37 +6,62 @@
         xmlns:local="clr-namespace:RustSkinsEditor"
         xmlns:UserControls="clr-namespace:RustSkinsEditor.UserControls" xmlns:converters="clr-namespace:RustSkinsEditor.Converters" x:Class="RustSkinsEditor.MainWindow"
         mc:Ignorable="d"
-        Title="Rust Skins Editor" Height="500" Width="840" WindowStartupLocation="CenterScreen">
+        Title="Rust Skins Editor" Height="600" Width="1100" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
-    <Grid>
+    <Grid Background="#332C39">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Background="#66000000">
             <Grid.ColumnDefinitions>
+                <!--<ColumnDefinition Width="Auto"/>-->
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="{Binding Activity}" Margin="10"></TextBlock>
-            <TextBox x:Name="FilePathTB" Visibility="Collapsed" Text="D:\Rust Server\Current\oxide\config\Skins.json" VerticalAlignment="Center" Margin="10,10,0,10"/>
+            <!--<Border HorizontalAlignment="Left" Margin="10" MouseDown="Border_MouseDown" Cursor="Hand">
+                <Border.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Set SteamAPIKey" Click="ChangeSteamAPIKey_Click"/>
+                    </ContextMenu>
+                </Border.ContextMenu>
+                <Image Source="/RustSkinsEditor;component/Assets/settings.png" Width="20" Height="20" />
+            </Border>-->
+            <TextBlock Text="{Binding Activity}" TextAlignment="Left" Margin="10" Foreground="White" VerticalAlignment="Center" Grid.Column="0"></TextBlock>
+            <TextBox x:Name="FilePathTB" Grid.Column="0" Visibility="Collapsed" Text="D:\Rust Server\Current\oxide\config\Skins.json" VerticalAlignment="Center" Margin="10,10,0,10"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1">
                 <Button x:Name="BrowseFile" Visibility="Collapsed" Content="Browse" HorizontalAlignment="Right" Margin="10,10,10,10" Padding="10,5" Click="BrowseFile_Click"/>
-                <Button x:Name="ImportFile" Grid.Column="2" Content="Import" HorizontalAlignment="Right" Margin="0,10,10,10" Padding="10,5" Click="ImportFile_Click"/>
-                <Button x:Name="ExportFile" Grid.Column="2" Content="Export" HorizontalAlignment="Right" Margin="0,10,10,10" Padding="10,5" Click="ExportFile_Click"/>
+                <Button x:Name="ImportFile" Grid.Column="2" Content="Import" HorizontalAlignment="Right" Margin="0,10,10,10" Padding="10,5" Click="ImportFile_Click">
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="SkinBox" Click="SkinBoxLoad_Click"/>
+                            <MenuItem Header="Skinner" Click="SkinnerLoad_Click"/>
+                            <MenuItem Header="Skins" Click="SkinsLoad_Click"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
+                <Button x:Name="ExportFile" Grid.Column="2" Content="Export" HorizontalAlignment="Right" Margin="0,10,10,10" Padding="10,5" Click="ExportFile_Click">
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="SkinBox" Click="SkinBoxSave_Click"/>
+                            <MenuItem Header="Skinner" Click="SkinnerSave_Click"/>
+                            <MenuItem Header="Skins" Click="SkinsSave_Click"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Item List:" Margin="10,0" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Text="Item List:" Margin="10,0" VerticalAlignment="Center" Foreground="White"></TextBlock>
 
             <Button x:Name="SelectItem" Grid.Column="1" Height="24" Visibility="Visible" Content="View All" HorizontalAlignment="Right" Margin="0" Padding="10,2" Click="SelectItem_Click"/>
             <!--<ComboBox x:Name="Cmb"
@@ -74,8 +99,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Workshop Link or Id" Margin="10,10,0,0" Foreground="#FF8D8D8D" FontStyle="Italic"></TextBlock>
-                    <!--<CheckBox x:Name="collectionCB" Grid.Column="1" Content="Is Collection" VerticalAlignment="Bottom"/>-->
+                    <TextBlock Text="Workshop Link or Id" Margin="10,10,0,0" Foreground="White" FontStyle="Italic"></TextBlock>
+                    <CheckBox x:Name="collectionCB" Grid.Column="1" Content="Is Collection" VerticalAlignment="Bottom" Foreground="White"/>
                 </Grid>
                 <TextBox x:Name="AddSkinTB" Text="" VerticalAlignment="Center" Margin="10,0,0,10"/>
             </StackPanel>
@@ -91,6 +116,68 @@
             <Viewbox Margin="50">
                 <Image Source="{Binding FullscreenImage}" Width="513" Height="513"></Image>
             </Viewbox>
+        </Grid>
+        <Grid Grid.RowSpan="10" Grid.ColumnSpan="10" Visibility="{Binding ConfigEditorOn, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.ColumnSpan="10" Background="#66000000" PreviewMouseLeftButtonUp="ConfigEditor_PreviewMouseLeftButtonUp"></Grid>
+            <Grid Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="#FF564D4D">
+                <StackPanel Margin="10">
+                    <Grid>
+                        <!--<StackPanel>
+                            <TextBlock Text="Steam Api Key" FontFamily="Lato" FontSize="14" Foreground="White" FontStyle="Italic" Margin="0,0,0,5"/>
+                            <TextBox Text="{Binding Config.SteamApiKey, UpdateSourceTrigger=PropertyChanged}" FontSize="14" FontFamily="Lato Bold" />
+                        </StackPanel>-->
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.RowSpan="10" Grid.ColumnSpan="10" Visibility="{Binding SkinnerJSONOn, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.ColumnSpan="10" Background="#66000000" PreviewMouseLeftButtonUp="SkinnerJSONOn_PreviewMouseLeftButtonUp"></Grid>
+            <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF564D4D" Margin="50">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Skinner JSON - Copy and Replace with 'Imported Skins List' in Skinner.json" FontFamily="Lato" FontSize="14" Foreground="White" FontStyle="Italic" Margin="0,0,0,5"/>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+                        <TextBox Text="{Binding SkinsFile.SkinnerJSONString}" IsReadOnly="True" AcceptsReturn="True" AcceptsTab="True" HorizontalAlignment="Stretch" FontSize="14" FontFamily="Lato Bold" TextWrapping="Wrap" />
+                        <!--<TextBlock Text="{Binding SkinsFile.SkinnerJSONString}" HorizontalAlignment="Stretch" FontSize="14" Foreground="White" FontFamily="Lato Bold" TextWrapping="Wrap" />-->
+                    </ScrollViewer>
+                    <Button Grid.Row="2" Content="Copy to Clipboard" HorizontalAlignment="Right" Margin="10,10,0,0" Padding="10,5" Click="CopySkinnerJSONText_Click"/>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.RowSpan="10" Grid.ColumnSpan="10" Visibility="{Binding SkinBoxJSONOn, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.ColumnSpan="10" Background="#66000000" PreviewMouseLeftButtonUp="SkinBoxJSONOn_PreviewMouseLeftButtonUp"></Grid>
+            <Grid Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#FF564D4D" Margin="50">
+                <Grid Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="SkinBox JSON - Copy and Replace with 'Imported Workshop Skins' in SkinBox.json" FontFamily="Lato" FontSize="14" Foreground="White" FontStyle="Italic" Margin="0,0,0,5"/>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled">
+                        <TextBox Text="{Binding SkinsFile.SkinBoxJSONString}" IsReadOnly="True" AcceptsReturn="True" AcceptsTab="True" HorizontalAlignment="Stretch" FontSize="14" FontFamily="Lato Bold" TextWrapping="Wrap" />
+                        <!--<TextBlock Text="{Binding SkinsFile.SkinBoxJSONString}" HorizontalAlignment="Stretch" FontSize="14" Foreground="White" FontFamily="Lato Bold" TextWrapping="Wrap" />-->
+                    </ScrollViewer>
+                    <Button Grid.Row="2" Content="Copy to Clipboard" HorizontalAlignment="Right" Margin="10,10,0,0" Padding="10,5" Click="CopySkinBoxJSONText_Click"/>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

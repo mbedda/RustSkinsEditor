@@ -13,5 +13,9 @@ namespace RustSkinsEditor
     /// </summary>
     public partial class App : Application
     {
+        public MainWindow GetMainWindow()
+        {
+            return ((MainWindow)System.Windows.Application.Current.MainWindow);
+        }
     }
 }

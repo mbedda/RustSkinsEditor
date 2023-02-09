@@ -2,12 +2,14 @@
 using Prism.Mvvm;
 using RustSkinsEditor.Helpers;
 using RustSkinsEditor.Models;
+using RustSkinsEditor.Models.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using IOPath = System.IO.Path;
 
 namespace RustSkinsEditor.ViewModels
 {
@@ -48,6 +50,27 @@ namespace RustSkinsEditor.ViewModels
             set { SetProperty(ref fullscreen, value); }
         }
 
+        private bool _ConfigEditorOn;
+        public bool ConfigEditorOn
+        {
+            get { return _ConfigEditorOn; }
+            set { SetProperty(ref _ConfigEditorOn, value); }
+        }
+
+        private bool _SkinnerJSONOn;
+        public bool SkinnerJSONOn
+        {
+            get { return _SkinnerJSONOn; }
+            set { SetProperty(ref _SkinnerJSONOn, value); }
+        }
+
+        private bool _SkinBoxJSONOn;
+        public bool SkinBoxJSONOn
+        {
+            get { return _SkinBoxJSONOn; }
+            set { SetProperty(ref _SkinBoxJSONOn, value); }
+        }
+
         private Uri fullscreenImage;
         public Uri FullscreenImage
         {
@@ -55,15 +78,23 @@ namespace RustSkinsEditor.ViewModels
             set { SetProperty(ref fullscreenImage, value); }
         }
 
-        public DelegateCommand<string> LoadFileCommand { get; set; }
         public DelegateCommand UpdateCommand { get; set; }
         public DelegateCommand ExitFullscreenCommand { get; set; }
 
         public RustItems RustItems { get; set; }
 
+        private Config _config;
+        public Config Config
+        {
+            get { return _config; }
+            set { SetProperty(ref _config, value); }
+        }
+
+        string DataPath = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "RustSkinsEditor", "config.json");
+
         public MainViewModel()
         {
-            LoadFileCommand = new DelegateCommand<string>(LoadFile);
+            LoadConfig();
             UpdateCommand = new DelegateCommand(Update);
             ExitFullscreenCommand = new DelegateCommand(ExitFullscreen);
 
@@ -72,6 +103,18 @@ namespace RustSkinsEditor.ViewModels
             Fullscreen = false;
 
             Activity = "No file loaded...";
+        }
+
+        public void LoadConfig()
+        {
+            //Config = Common.LoadJson<Config>(DataPath);
+
+            //if(Config == null) Config = new Config();
+        }
+
+        public void SaveConfig()
+        {
+            //Common.SaveJson(Config, DataPath);
         }
 
         public async Task InitAsync()
@@ -90,6 +133,34 @@ namespace RustSkinsEditor.ViewModels
             ItemsModal = false;
         }
 
+        public void ShowConfigEditor()
+        {
+            ConfigEditorOn = true;
+        }
+        public void HideConfigEditor()
+        {
+            SaveConfig();
+            ConfigEditorOn = false;
+        }
+
+        public void ShowSkinnerJSON()
+        {
+            SkinnerJSONOn = true;
+        }
+        public void HideSkinnerJSON()
+        {
+            SkinnerJSONOn = false;
+        }
+
+        public void ShowSkinBoxJSON()
+        {
+            SkinBoxJSONOn = true;
+        }
+        public void HideSkinBoxJSON()
+        {
+            SkinBoxJSONOn = false;
+        }
+
         public void SetFullscreen(Uri image)
         {
             FullscreenImage = image;
@@ -101,10 +172,10 @@ namespace RustSkinsEditor.ViewModels
             Fullscreen = false;
         }
 
-        public void LoadFile(string filepath)
+        public void LoadFile(string filepath, SkinFileSource skinFileSource)
         {
             SkinsFile = new SkinsFile();
-            SkinsFile.SkinsRoot = Common.LoadJson<SkinsRoot>(filepath);
+            SkinsFile.LoadFile(filepath, skinFileSource);
 
             if (SkinsFile.SkinsRoot != null && SkinsFile.SkinsRoot.Skins != null)
             {
@@ -147,12 +218,25 @@ namespace RustSkinsEditor.ViewModels
         {
         }
 
-        public void Save(string filepath)
+        public async void Save(string filepath, SkinFileSource skinFileSource)
         {
-            //if (DataChanged)
-            //{
-            Common.SaveJson(SkinsFile.SkinsRoot, filepath);
-            //}
+            if (SkinsFile != null)
+            {
+                switch (skinFileSource)
+                {
+                    case SkinFileSource.Skins:
+                        SkinsFile.SaveFile(filepath, Config, skinFileSource);
+                        break;
+                    case SkinFileSource.Skinner:
+                        await SkinsFile.GetSkinnerJSONString();
+                        ShowSkinnerJSON();
+                        break;
+                    case SkinFileSource.SkinBox:
+                        await SkinsFile.GetSkinBoxJSONString();
+                        ShowSkinBoxJSON();
+                        break;
+                }
+            }
         }
 
         public bool Add(Skin skinitem, ulong skincode)
@@ -169,11 +253,37 @@ namespace RustSkinsEditor.ViewModels
             }
         }
 
+        public bool Add(string shortname, ulong skincode)
+        {
+            if(SkinsFile != null && SkinsFile.SkinsRoot != null && SkinsFile.SkinsRoot.Skins!=null)
+            {
+                var skinitem = SkinsFile.SkinsRoot.Skins.FirstOrDefault(s => s.ItemShortname == shortname);
+
+                if (skinitem == null)
+                {
+                    SkinsFile.SkinsRoot.Skins.Add(new Skin() { ItemShortname = shortname });
+                    skinitem = SkinsFile.SkinsRoot.Skins.FirstOrDefault(s => s.ItemShortname == shortname);
+                }
+
+                if (!skinitem.Skins.Contains(skincode))
+                {
+                    skinitem.Skins.Add(skincode);
+                    UpdateActivity();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
         public bool AddItem(string Shortname)
         {
             if (SkinsFile != null && SkinsFile.SkinsRoot != null && SkinsFile.SkinsRoot.Skins != null)
             {
-                var skinitem = SkinsFile.SkinsRoot.Skins.Find(x => x.ItemShortname == Shortname);
+                var skinitem = SkinsFile.SkinsRoot.Skins.Where(x => x.ItemShortname == Shortname).FirstOrDefault();
                 if (skinitem == null)
                 {
                     SkinsFile.SkinsRoot.Skins.Add(new Skin() { Name = Shortname, ItemShortname = Shortname, ImagePath = new Uri("https://i.imgur.com/nY1CFCC.png") });

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -9,6 +10,34 @@ namespace RustSkinsEditor.Helpers
 {
     public class Common
     {
+        public static string FormatJSON(string json)
+        {
+            dynamic parsedJson = JsonConvert.DeserializeObject(json);
+            return JsonConvert.SerializeObject(parsedJson, Formatting.Indented);
+        }
+
+        public static string GetJsonString<T>(T theobject)
+        {
+            string json = "";
+            try
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    DataContractJsonSerializer serializer = new DataContractJsonSerializer
+                    (typeof(T), new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = true });
+                    serializer.WriteObject(ms, theobject);
+                    Encoding enc = Encoding.UTF8;
+                    json = enc.GetString(ms.ToArray());
+                }
+
+                return json;
+            }
+            catch (Exception e)
+            {
+                return json;
+            }
+        }
+
         public static bool SaveJson<T>(T theobject, string filePath)
         {
             try
@@ -24,7 +53,7 @@ namespace RustSkinsEditor.Helpers
                         using (MemoryStream ms = new MemoryStream())
                         {
                             DataContractJsonSerializer serializer = new DataContractJsonSerializer
-                            (typeof(T));
+                            (typeof(T), new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = true});
                             serializer.WriteObject(ms, theobject);
                             Encoding enc = Encoding.UTF8;
                             sw.Write(enc.GetString(ms.ToArray()));
@@ -51,27 +80,35 @@ namespace RustSkinsEditor.Helpers
                 return default(T);
             }
 
-            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
+            try
             {
-                using (StreamReader sr = new StreamReader(fs))
+                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
                 {
-                    string filetext = sr.ReadToEnd();
-
-                    if (filetext.StartsWith("#"))
+                    using (StreamReader sr = new StreamReader(fs))
                     {
-                        int firstlineindex = filetext.IndexOf(System.Environment.NewLine);
-                        filetext = filetext.Substring(firstlineindex + System.Environment.NewLine.Length);
+                        string filetext = sr.ReadToEnd();
+
+                        if (filetext.StartsWith("#"))
+                        {
+                            int firstlineindex = filetext.IndexOf(System.Environment.NewLine);
+                            filetext = filetext.Substring(firstlineindex + System.Environment.NewLine.Length);
+                        }
+
+                        using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(filetext)))
+                        {
+                            DataContractJsonSerializerSettings settings = new DataContractJsonSerializerSettings();
+                            settings.UseSimpleDictionaryFormat = true;
+                            var deserializer = new DataContractJsonSerializer(typeof(T), settings);
+                            result = (T)deserializer.ReadObject(ms);
+                        }
                     }
 
-                    using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(filetext)))
-                    {
-                        DataContractJsonSerializerSettings settings = new DataContractJsonSerializerSettings();
-                        var deserializer = new DataContractJsonSerializer(typeof(T), settings);
-                        result = (T)deserializer.ReadObject(ms);
-                    }
+                    fs.Close();
                 }
-
-                fs.Close();
+            }
+            catch 
+            {
+                result = default(T);
             }
 
             return result;
@@ -105,6 +142,16 @@ namespace RustSkinsEditor.Helpers
             }
 
             return result;
+        }
+
+        public static T DeserializeJSONString<T>(string json)
+        {
+            var instance = Activator.CreateInstance<T>();
+            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(json)))
+            {
+                var serializer = new DataContractJsonSerializer(instance.GetType());
+                return (T)serializer.ReadObject(ms);
+            }
         }
     }
 }

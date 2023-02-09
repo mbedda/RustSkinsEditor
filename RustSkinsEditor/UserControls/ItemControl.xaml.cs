@@ -1,4 +1,5 @@
 ﻿using RustSkinsEditor.Models;
+using RustSkinsEditor.Models.Plugins;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
