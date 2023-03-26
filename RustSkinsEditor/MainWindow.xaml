@@ -85,7 +85,7 @@
             </ComboBox>
         </Grid>
         <Grid Grid.Row="2" Margin="10">
-            <UserControls:ItemSkinsControl x:Name="itemSkinsControl" />
+            <UserControls:ItemSkinsControl x:Name="itemSkinsControl" DataContext="{Binding SelectedItemSkins}" />
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -178,6 +178,11 @@
                     <Button Grid.Row="2" Content="Copy to Clipboard" HorizontalAlignment="Right" Margin="10,10,0,0" Padding="10,5" Click="CopySkinBoxJSONText_Click"/>
                 </Grid>
             </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.RowSpan="10" Grid.ColumnSpan="10" Visibility="{Binding PartialLoadingScreen, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#7F332C39">
+        </Grid>
+        <Grid Grid.RowSpan="10" Grid.ColumnSpan="10" Visibility="{Binding FullLoadingScreen, Converter={StaticResource BooleanToVisibilityConverter}}" Background="#7F332C39">
+            <TextBlock Text="Loading..." FontFamily="Lato" FontSize="14" Foreground="White" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
     </Grid>
 </Window>

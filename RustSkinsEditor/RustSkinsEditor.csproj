@@ -6,8 +6,28 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>hazmat_xQg_icon.ico</ApplicationIcon>
-    <FileVersion>1.6.0.0</FileVersion>
-    <AssemblyVersion>1.6.0.0</AssemblyVersion>
+    <FileVersion>1.6.4.0</FileVersion>
+    <AssemblyVersion>1.6.4.0</AssemblyVersion>
+    <SignAssembly>False</SignAssembly>
+    <Version>$(VersionPrefix)1.6.4.0</Version>
+    <AssemblyOriginatorKeyFile>C:\Users\mbedd\source\repos\RustSkinsEditor\RustSkinsEditor.snk</AssemblyOriginatorKeyFile>
+    <Company>$(Authors)</Company>
+    <DebugType>none</DebugType>
+    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
+    <ErrorReport>prompt</ErrorReport>
+    <Copyright>Copyright © beee 2023</Copyright>
+    <Authors>beee</Authors>
+    <PackageProjectUrl>https://github.com/mbedda/RustSkinsEditor</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mbedda/RustSkinsEditor.git</RepositoryUrl>
+    <PackageLicenseFile>C:\Users\mbedd\source\repos\RustSkinsEditor\RustSkinsEditor\MIT-License.txt</PackageLicenseFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +58,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
+    <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     <PackageReference Include="SteamWebAPI2" Version="4.3.2" />
@@ -54,6 +74,21 @@
     <Resource Include="Assets\settings.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

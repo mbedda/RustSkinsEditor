@@ -1,4 +1,5 @@
 ﻿using RustSkinsEditor.Models;
+using RustSkinsEditor.ViewModels;
 using SteamWebAPI2.Interfaces;
 using SteamWebAPI2.Utilities;
 using System;
@@ -25,10 +26,17 @@ namespace RustSkinsEditor.UserControls
     /// </summary>
     public partial class ItemSkinsControl : UserControl
     {
+        MainViewModel mainViewModel;
         public ItemSkinsControl()
         {
             InitializeComponent();
 
+        }
+
+        private void SkinsListbox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (((MainWindow)System.Windows.Application.Current.MainWindow) != null)
+                mainViewModel = ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel;
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -65,11 +73,11 @@ namespace RustSkinsEditor.UserControls
             {
                 SteamSkinDetails skinDetails = (SteamSkinDetails)((MenuItem)sender).CommandParameter;
 
-                ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.Delete(skinDetails.shortname, skinDetails.Code);
-                List<SteamSkinDetails> skinDetailsList = (List<SteamSkinDetails>)DataContext;
-                skinDetailsList.Remove(skinDetails);
-                DataContext = null;
-                DataContext = skinDetailsList;
+                //mainViewModel.Delete(skinDetails.shortname, skinDetails.Code);
+                //List<SteamSkinDetails> skinDetailsList = (List<SteamSkinDetails>)DataContext;
+                mainViewModel.SelectedItemSkins.Remove(skinDetails);
+                //DataContext = null;
+                //DataContext = skinDetailsList;
             }
         }
 
@@ -82,15 +90,16 @@ namespace RustSkinsEditor.UserControls
                     MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you would like to delete selected skins?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
-                        List<SteamSkinDetails> skinDetailsList = (List<SteamSkinDetails>)DataContext;
-                        foreach (var item in SkinsListbox.SelectedItems.Cast<SteamSkinDetails>())
+                        for (int i = SkinsListbox.SelectedItems.Count-1; i >= 0; i--)
                         {
-                            ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.Delete(item.shortname, item.Code);
-                            skinDetailsList.Remove(item);
+                            SteamSkinDetails skinDetails = (SteamSkinDetails)SkinsListbox.SelectedItems[i];
+
+                            //mainViewModel.Delete(skinDetails.shortname, skinDetails.Code);
+                            mainViewModel.SelectedItemSkins.Remove(skinDetails);
                         }
 
-                        DataContext = null;
-                        DataContext = skinDetailsList;
+                        //DataContext = null;
+                        //DataContext = skinDetailsList;
                     }
                 }
             }
@@ -104,9 +113,14 @@ namespace RustSkinsEditor.UserControls
 
                 if (skinDetails != null)
                 {
-                    ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.SetFullscreen(skinDetails.PreviewUrl);
+                    mainViewModel.SetFullscreen(skinDetails.PreviewUrl);
                 }
             }
+        }
+
+        private void SkinsListbox_Drop(object sender, DragEventArgs e)
+        {
+            //((MainWindow)System.Windows.Application.Current.MainWindow).UpdateItemSkinsControlIfComboSelected();
         }
     }
 }

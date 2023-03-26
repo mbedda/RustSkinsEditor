@@ -167,19 +167,28 @@ namespace RustSkinsEditor.Models
 
             List<ulong> skinlist = SkinnerRoot.Skins.Select(s => s.Key).ToList();
 
+
             if (skinlist.Count > 0)
             {
-                var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync("whatever", skinlist);
+                int skip = 0;
+                int take = 3000;
 
-                List<SteamSkinDetails> skinsDetails = new List<SteamSkinDetails>();
-
-                foreach (var fileDetails in fileDataDetails)
+                while(skip < skinlist.Count)
                 {
-                    if (fileDetails.Title == null || fileDetails.Title == "")
-                        fileDetails.Title = fileDetails.PublishedFileId + "";
+                    List<ulong> maxedList = skinlist.Skip(skip).Take(take).ToList();
+                    skip += maxedList.Count;
 
-                    SkinnerRoot.Skins[fileDetails.PublishedFileId].itemDisplayname = fileDetails.Title;
+                    var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync("whatever", maxedList);
+
+                    foreach (var fileDetails in fileDataDetails)
+                    {
+                        if (fileDetails.Title == null || fileDetails.Title == "")
+                            fileDetails.Title = fileDetails.PublishedFileId + "";
+
+                        SkinnerRoot.Skins[fileDetails.PublishedFileId].itemDisplayname = fileDetails.Title;
+                    }
                 }
+                
 
                 string skinnerJSON = Common.GetJsonString<SkinnerRoot>(SkinnerRoot);
 

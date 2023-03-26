@@ -21,6 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RustSkinsEditor.Models.Plugins;
+using System.Collections.ObjectModel;
 
 namespace RustSkinsEditor
 {
@@ -52,6 +53,8 @@ namespace RustSkinsEditor
         public async void FetchSteamSkins(Skin item)
         {
             List<ulong> skinlist = new List<ulong>();
+
+            viewModel.SelectedItem = item;
 
             foreach (var skin in item.Skins)
             {
@@ -85,7 +88,8 @@ namespace RustSkinsEditor
                     skinsDetails.Add(skinDetails);
                 }
 
-                itemSkinsControl.DataContext = skinsDetails;
+                viewModel.ResetSkinsCollection(skinsDetails);
+                //itemSkinsControl.DataContext = skinsDetails;
             }
         }
 
@@ -93,7 +97,7 @@ namespace RustSkinsEditor
         {
             if (comboboxItems.SelectedIndex > -1)
             {
-                itemSkinsControl.DataContext = null;
+                //itemSkinsControl.DataContext = null;
                 FetchSteamSkins((Skin)(comboboxItems.SelectedItem));
                 AddSkinTB.Text = "";
             }
@@ -104,6 +108,7 @@ namespace RustSkinsEditor
         {
             if (((ComboBox)sender).SelectedIndex > -1)
             {
+                viewModel.SelectedItemSkins = null;
                 FetchSteamSkins((Skin)((ComboBox)sender).SelectedItem);
             }
         }
@@ -153,13 +158,15 @@ namespace RustSkinsEditor
 
             ulong skincode = 0;
 
-            if (AddSkinTB.Text.Contains("steamcommunity.com"))
+            if (AddSkinTB.Text.Contains("steamcommunity.com") && AddSkinTB.Text.Split('?').Count()>1)
             {
                 Dictionary<String, String> params1 = new Dictionary<string, string>();
                 string[] queryParams = AddSkinTB.Text.Split('?')[1].Split('&');
                 foreach (string s in queryParams)
                 {
                     string[] queryParameter = s.Split('=');
+                    if(queryParameter.Length < 2)
+                        continue;
                     params1.Add(queryParameter[0], queryParameter[1]);
                 }
 
@@ -205,6 +212,10 @@ namespace RustSkinsEditor
 
                     MessageBox.Show("Skin already exists!");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid url or skin id.");
             }
         }
 
@@ -386,7 +397,7 @@ namespace RustSkinsEditor
             if (result == true)
             {
                 FilePathTB.Text = openFileDlg.FileName;
-                itemSkinsControl.DataContext = null;
+                //itemSkinsControl.DataContext = null;
                 viewModel.LoadFile(FilePathTB.Text, SkinFileSource.Skins);
             }
         }
@@ -399,7 +410,7 @@ namespace RustSkinsEditor
             if (result == true)
             {
                 FilePathTB.Text = openFileDlg.FileName;
-                itemSkinsControl.DataContext = null;
+                //itemSkinsControl.DataContext = null;
                 viewModel.LoadFile(FilePathTB.Text, SkinFileSource.Skinner);
             }
         }
@@ -412,7 +423,7 @@ namespace RustSkinsEditor
             if (result == true)
             {
                 FilePathTB.Text = openFileDlg.FileName;
-                itemSkinsControl.DataContext = null;
+                //itemSkinsControl.DataContext = null;
                 viewModel.LoadFile(FilePathTB.Text, SkinFileSource.SkinBox);
             }
         }

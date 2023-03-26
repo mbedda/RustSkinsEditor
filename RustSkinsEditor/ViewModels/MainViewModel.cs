@@ -5,7 +5,9 @@ using RustSkinsEditor.Models;
 using RustSkinsEditor.Models.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -57,6 +59,20 @@ namespace RustSkinsEditor.ViewModels
             set { SetProperty(ref _ConfigEditorOn, value); }
         }
 
+        private bool partialLoadingScreen;
+        public bool PartialLoadingScreen
+        {
+            get { return partialLoadingScreen; }
+            set { SetProperty(ref partialLoadingScreen, value); }
+        }
+
+        private bool fullLoadingScreen;
+        public bool FullLoadingScreen
+        {
+            get { return fullLoadingScreen; }
+            set { SetProperty(ref fullLoadingScreen, value); }
+        }
+
         private bool _SkinnerJSONOn;
         public bool SkinnerJSONOn
         {
@@ -76,6 +92,13 @@ namespace RustSkinsEditor.ViewModels
         {
             get { return fullscreenImage; }
             set { SetProperty(ref fullscreenImage, value); }
+        }
+
+        private ObservableCollection<SteamSkinDetails> _SelectedItemSkins;
+        public ObservableCollection<SteamSkinDetails> SelectedItemSkins
+        {
+            get { return _SelectedItemSkins; }
+            set { SetProperty(ref _SelectedItemSkins, value); }
         }
 
         public DelegateCommand UpdateCommand { get; set; }
@@ -101,8 +124,24 @@ namespace RustSkinsEditor.ViewModels
             RustItems = new RustItems();
 
             Fullscreen = false;
+            PartialLoadingScreen = true;
+            FullLoadingScreen = false;
 
             Activity = "No file loaded...";
+        }
+
+        private void SelectedItemSkins_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var skin = SkinsFile.SkinsRoot.Skins.FirstOrDefault(s => s.ItemShortname == SelectedItem.ItemShortname);
+            skin.Skins.Clear();
+            skin.Skins.AddRange(SelectedItemSkins.Select(s => s.Code).ToList());
+            UpdateActivity();
+        }
+
+        public void ResetSkinsCollection(IEnumerable<SteamSkinDetails> skinlist)
+        {
+            SelectedItemSkins = new ObservableCollection<SteamSkinDetails>(skinlist);
+            SelectedItemSkins.CollectionChanged += SelectedItemSkins_CollectionChanged;
         }
 
         public void LoadConfig()
@@ -174,6 +213,7 @@ namespace RustSkinsEditor.ViewModels
 
         public void LoadFile(string filepath, SkinFileSource skinFileSource)
         {
+            SelectedItemSkins = null;
             SkinsFile = new SkinsFile();
             SkinsFile.LoadFile(filepath, skinFileSource);
 
@@ -211,6 +251,7 @@ namespace RustSkinsEditor.ViewModels
             else
             {
                 Activity = "Skins file imported.. " + SkinsFile.SkinsRoot.Skins.Count() + " items, " + SkinsFile.SkinsRoot.Skins.SelectMany(x => x.Skins).Count() + " skins";
+                PartialLoadingScreen = false;
             }
         }
 
@@ -225,15 +266,21 @@ namespace RustSkinsEditor.ViewModels
                 switch (skinFileSource)
                 {
                     case SkinFileSource.Skins:
+                        FullLoadingScreen = true;
                         SkinsFile.SaveFile(filepath, Config, skinFileSource);
+                        FullLoadingScreen = false;
                         break;
                     case SkinFileSource.Skinner:
+                        FullLoadingScreen = true;
                         await SkinsFile.GetSkinnerJSONString();
                         ShowSkinnerJSON();
+                        FullLoadingScreen = false;
                         break;
                     case SkinFileSource.SkinBox:
+                        FullLoadingScreen = true;
                         await SkinsFile.GetSkinBoxJSONString();
                         ShowSkinBoxJSON();
+                        FullLoadingScreen = false;
                         break;
                 }
             }
