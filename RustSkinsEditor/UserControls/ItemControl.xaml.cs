@@ -2,6 +2,7 @@
 using RustSkinsEditor.Models.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -36,11 +37,9 @@ namespace RustSkinsEditor.UserControls
                     MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you would like to delete selected item with all it's skins?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
-                        List<Skin> skinItemList = (List<Skin>)DataContext;
-                        foreach (var item in ItemListbox.SelectedItems.Cast<Skin>())
-                        {
-                            skinItemList.Remove(item);
-                        }
+                        ObservableCollection<Skin> skinItemList = (ObservableCollection<Skin>)DataContext;
+
+                        skinItemList.Remove(ItemListbox.SelectedItem as Skin);
 
                         ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.UpdateActivity();
 
@@ -104,7 +103,7 @@ namespace RustSkinsEditor.UserControls
                 Skin skinItem = (Skin)((MenuItem)sender).CommandParameter;
 
                 //((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.Delete(skinItem);
-                List<Skin> skinItems = (List<Skin>)DataContext;
+                ObservableCollection<Skin> skinItems = (ObservableCollection<Skin>)DataContext;
                 skinItems.Remove(skinItem);
                 ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.UpdateActivity();
                 DataContext = null;
@@ -127,7 +126,7 @@ namespace RustSkinsEditor.UserControls
 
             NewItemNameTB.Text = "";
             NewItemShortnameTB.Text = "";
-            List<Skin> skinItems = (List<Skin>)DataContext;
+            ObservableCollection<Skin> skinItems = (ObservableCollection<Skin>)DataContext;
             DataContext = null;
             DataContext = skinItems;
         }

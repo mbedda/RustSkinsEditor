@@ -18,6 +18,8 @@ namespace RustSkinsEditor.Helpers
             var webInterfaceFactory = new SteamWebInterfaceFactory(steamApiKey);
             var steamInterface = webInterfaceFactory.CreateSteamWebInterface<SteamRemoteStorage>(new HttpClient());
 
+            skinList.Remove(0);
+
             var publishedFileDataResponse = await steamInterface.GetPublishedFileDetailsAsync((uint)skinList.Count(), skinList);
             return publishedFileDataResponse.Data;
         }

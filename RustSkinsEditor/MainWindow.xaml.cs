@@ -185,20 +185,23 @@ namespace RustSkinsEditor
 
             if (skincode != 0)
             {
-                string shortname = await GetSkinShortnameFromSteamApi(skincode);
+                string shortname = "";
 
-                if (string.IsNullOrEmpty(shortname))
+                if (comboboxItems.SelectedIndex != -1)
                 {
-                    if (comboboxItems.SelectedIndex == -1)
+                    shortname = (comboboxItems.SelectedItem as Skin).ItemShortname;
+                }
+                else
+                {
+                    shortname = await GetSkinShortnameFromSteamApi(skincode);
+
+                    if (string.IsNullOrEmpty(shortname))
                     {
                         MessageBox.Show("Could not retrieve skin shortname.");
                         return;
                     }
-                    else
-                    {
-                        shortname = (comboboxItems.SelectedItem as Skin).ItemShortname;
-                    }
                 }
+                
 
                 if (viewModel.Add(shortname, skincode))
                 {
