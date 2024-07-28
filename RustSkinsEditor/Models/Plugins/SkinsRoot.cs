@@ -17,17 +17,17 @@ namespace RustSkinsEditor.Models.Plugins
         }
 
         [DataMember]
-        public List<string> Commands { get; set; }
+        public List<string> Commands { get; set; } = new List<string>() { "skin", "skins" };
         [DataMember]
         public ObservableCollection<Skin> Skins { get; set; }
 
         [DataMember(Name = "Container Panel Name")]
-        public string ContainerPanelName { get; set; }
+        public string ContainerPanelName { get; set; } = "generic";
 
         [DataMember(Name = "Container Capacity")]
-        public int ContainerCapacity { get; set; }
+        public int ContainerCapacity { get; set; } = 36;
         [DataMember(Name = "UI")]
-        public UI Ui { get; set; }
+        public UI Ui { get; set; } = new UI();
 
 
 
@@ -115,40 +115,40 @@ namespace RustSkinsEditor.Models.Plugins
         public class UI
         {
             [DataMember(Name = "Background Color")]
-            public string BackgroundColor { get; set; }
+            public string BackgroundColor { get; set; } = "0.18 0.28 0.36";
 
             [DataMember(Name = "Background Anchors")]
-            public BackgroundAnchors BackgroundAnchors { get; set; }
+            public BackgroundAnchors BackgroundAnchors { get; set; } = new BackgroundAnchors() { AnchorMinX = "1.0", AnchorMinY = "1.0", AnchorMaxX = "1.0", AnchorMaxY = "1.0" };
 
             [DataMember(Name = "Background Offsets")]
-            public BackgroundOffsets BackgroundOffsets { get; set; }
+            public BackgroundOffsets BackgroundOffsets { get; set; } = new BackgroundOffsets() { OffsetMinX = "-300", OffsetMinY = "-100", OffsetMaxX = "0", OffsetMaxY = "0" };
 
             [DataMember(Name = "Left Button Text")]
-            public string LeftButtonText { get; set; }
+            public string LeftButtonText { get; set; } = "<size=36><</size>";
 
             [DataMember(Name = "Left Button Color")]
-            public string LeftButtonColor { get; set; }
+            public string LeftButtonColor { get; set; } = "0.11 0.51 0.83";
 
             [DataMember(Name = "Left Button Anchors")]
-            public LeftButtonAnchors LeftButtonAnchors { get; set; }
+            public LeftButtonAnchors LeftButtonAnchors { get; set; } = new LeftButtonAnchors() { AnchorMinX = "0.025", AnchorMinY = "0.05", AnchorMaxX = "0.325", AnchorMaxY = "0.95" };
 
             [DataMember(Name = "Center Button Text")]
-            public string CenterButtonText { get; set; }
+            public string CenterButtonText { get; set; } = "<size=36>Page: {page}</size>";
 
             [DataMember(Name = "Center Button Color")]
-            public string CenterButtonColor { get; set; }
+            public string CenterButtonColor { get; set; } = "0.11 0.51 0.83";
 
             [DataMember(Name = "Center Button Anchors")]
-            public CenterButtonAnchors CenterButtonAnchors { get; set; }
+            public CenterButtonAnchors CenterButtonAnchors { get; set; } = new CenterButtonAnchors() { AnchorMinX = "0.350", AnchorMinY = "0.05", AnchorMaxX = "0.650", AnchorMaxY = "0.95" };
 
             [DataMember(Name = "Right Button Text")]
-            public string RightButtonText { get; set; }
+            public string RightButtonText { get; set; } = "<size=36>></size>";
 
             [DataMember(Name = "Right Button Color")]
-            public string RightButtonColor { get; set; }
+            public string RightButtonColor { get; set; } = "0.11 0.51 0.83";
 
             [DataMember(Name = "Right Button Anchors")]
-            public RightButtonAnchors RightButtonAnchors { get; set; }
+            public RightButtonAnchors RightButtonAnchors { get; set; } = new RightButtonAnchors() { AnchorMinX = "0.675", AnchorMinY = "0.05", AnchorMaxX = "0.975", AnchorMaxY = "0.95" };
         }
     }
 

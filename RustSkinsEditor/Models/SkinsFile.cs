@@ -66,7 +66,7 @@ namespace RustSkinsEditor.Models
             switch (skinFileSource)
             {
                 case SkinFileSource.Skins:
-                    Common.SaveJson<SkinsRoot>(SkinsRoot, filepath);
+                    Common.SaveJsonNewton<SkinsRoot>(SkinsRoot, filepath);
                     break;
                     //case SkinFileSource.Skinner:
                     //    ConvertSkinsToSkinner();
@@ -247,7 +247,7 @@ namespace RustSkinsEditor.Models
                     SkinnerRoot.Skins[fileDetails.PublishedFileId].itemDisplayname = fileDetails.Title;
                 }
 
-                Common.SaveJson<SkinnerRoot>(SkinnerRoot, filepath);
+                Common.SaveJsonNewton<SkinnerRoot>(SkinnerRoot, filepath);
             }
         }
     }

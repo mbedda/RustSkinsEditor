@@ -5,6 +5,8 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace RustSkinsEditor.Helpers
 {
@@ -57,6 +59,43 @@ namespace RustSkinsEditor.Helpers
                             serializer.WriteObject(ms, theobject);
                             Encoding enc = Encoding.UTF8;
                             sw.Write(enc.GetString(ms.ToArray()));
+                        }
+                    }
+
+                    fs.Flush();
+                    fs.Close();
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        private static readonly JsonSerializerOptions _options =
+        new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+
+        public static bool SaveJsonNewton<T>(T theobject, string filePath)
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
+                {
+                    using (StreamWriter sw = new StreamWriter(fs))
+                    {
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            var options = new JsonSerializerOptions(_options)
+                            {
+                                WriteIndented = true
+                            };
+                            var jsonString = JsonConvert.SerializeObject(theobject, Formatting.Indented);
+
+                            sw.Write(jsonString);
                         }
                     }
 

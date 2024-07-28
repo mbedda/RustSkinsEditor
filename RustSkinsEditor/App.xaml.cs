@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace RustSkinsEditor
 {
@@ -16,6 +17,11 @@ namespace RustSkinsEditor
         public MainWindow GetMainWindow()
         {
             return ((MainWindow)System.Windows.Application.Current.MainWindow);
+        }
+
+        void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show("An error has occurred.. please send below details to dev in a support ticket to resolve:\n\n" + e.Exception.ToString(), "Exception");
         }
     }
 }
