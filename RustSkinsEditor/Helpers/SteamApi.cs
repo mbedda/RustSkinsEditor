@@ -2,11 +2,9 @@
 using Steam.Models;
 using SteamWebAPI2.Interfaces;
 using SteamWebAPI2.Utilities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RustSkinsEditor.Helpers
@@ -47,6 +45,24 @@ namespace RustSkinsEditor.Helpers
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 SteamCollectionWebResponse result = Common.DeserializeJSONString<SteamCollectionWebResponse>(responseString);
+
+                return result;
+            }
+            catch (HttpRequestException)
+            {
+                return null;
+            }
+        }
+
+        public static async Task<RustDLCResponse> GetDLCs()
+        {
+            try
+            {
+                var response = await client.GetAsync("https://api.rusthelp.com/v1/facepunch/skins");
+
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                RustDLCResponse result = Common.DeserializeJSONString<RustDLCResponse>(responseString);
 
                 return result;
             }

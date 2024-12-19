@@ -2,26 +2,15 @@
 using RustSkinsEditor.Helpers;
 using RustSkinsEditor.Models;
 using RustSkinsEditor.ViewModels;
-using SteamWebAPI2.Interfaces;
-using SteamWebAPI2.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using RustSkinsEditor.Models.Plugins;
-using System.Collections.ObjectModel;
 
 namespace RustSkinsEditor
 {
@@ -468,6 +457,33 @@ namespace RustSkinsEditor
         private void CopySkinBoxJSONText_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(viewModel.SkinsFile.SkinBoxJSONString);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            viewModel.LoadGameItems();
+        }
+
+
+        private void DeleteMarketSkins_Click(object sender, RoutedEventArgs e)
+        {
+            int count = 0;
+            foreach (var skinCat in viewModel.SkinsFile.SkinsRoot.Skins)
+            {
+                for (int i = skinCat.Skins.Count - 1; i >= 0; i--)
+                {
+                    if (viewModel.RustItems.DLCsData.ProhibitedSkins.Contains(skinCat.Skins[i]))
+                    {
+                        skinCat.Skins.RemoveAt(i);
+                        count++;
+                    }
+                }
+            }
+            viewModel.UpdateActivity();
+            viewModel.SelectedItemSkins = null;
+            FetchSteamSkins((Skin)(comboboxItems.SelectedItem));
+
+            MessageBox.Show($"Deleted {count} market skins");
         }
     }
 }

@@ -6,10 +6,10 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>hazmat_xQg_icon.ico</ApplicationIcon>
-    <FileVersion>1.6.7.0</FileVersion>
-    <AssemblyVersion>1.6.7.0</AssemblyVersion>
+    <FileVersion>1.7.0.0</FileVersion>
+    <AssemblyVersion>1.7.0.0</AssemblyVersion>
     <SignAssembly>False</SignAssembly>
-    <Version>$(VersionPrefix)1.6.7.0</Version>
+    <Version>$(VersionPrefix)1.7.0.0</Version>
     <AssemblyOriginatorKeyFile>C:\Users\mbedd\source\repos\RustSkinsEditor\RustSkinsEditor.snk</AssemblyOriginatorKeyFile>
     <Company>$(Authors)</Company>
     <DebugType>none</DebugType>
@@ -31,13 +31,453 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\dlcs.json" />
     <None Remove="Assets\items.json" />
     <None Remove="Assets\placeholder.png" />
     <None Remove="Assets\rustitems.json" />
+    <None Remove="Assets\RustItems\attire.hide.boots.png" />
+    <None Remove="Assets\RustItems\attire.hide.helterneck.png" />
+    <None Remove="Assets\RustItems\attire.hide.pants.png" />
+    <None Remove="Assets\RustItems\attire.hide.poncho.png" />
+    <None Remove="Assets\RustItems\attire.hide.skirt.png" />
+    <None Remove="Assets\RustItems\attire.hide.vest.png" />
+    <None Remove="Assets\RustItems\barricade.concrete.png" />
+    <None Remove="Assets\RustItems\barricade.sandbags.png" />
+    <None Remove="Assets\RustItems\beachchair.png" />
+    <None Remove="Assets\RustItems\beachparasol.png" />
+    <None Remove="Assets\RustItems\beachtowel.png" />
+    <None Remove="Assets\RustItems\bone.club.png" />
+    <None Remove="Assets\RustItems\boogieboard.png" />
+    <None Remove="Assets\RustItems\bow.hunting.png" />
+    <None Remove="Assets\RustItems\box.wooden.large.png" />
+    <None Remove="Assets\RustItems\box.wooden.png" />
+    <None Remove="Assets\RustItems\bucket.helmet.png" />
+    <None Remove="Assets\RustItems\burlap.gloves.png" />
+    <None Remove="Assets\RustItems\burlap.headwrap.png" />
+    <None Remove="Assets\RustItems\burlap.shirt.png" />
+    <None Remove="Assets\RustItems\burlap.shoes.png" />
+    <None Remove="Assets\RustItems\burlap.trousers.png" />
+    <None Remove="Assets\RustItems\chair.png" />
+    <None Remove="Assets\RustItems\coffeecan.helmet.png" />
+    <None Remove="Assets\RustItems\crossbow.png" />
+    <None Remove="Assets\RustItems\deer.skull.mask.png" />
+    <None Remove="Assets\RustItems\door.double.hinged.metal.png" />
+    <None Remove="Assets\RustItems\door.double.hinged.toptier.png" />
+    <None Remove="Assets\RustItems\door.double.hinged.wood.png" />
+    <None Remove="Assets\RustItems\door.hinged.metal.png" />
+    <None Remove="Assets\RustItems\door.hinged.toptier.png" />
+    <None Remove="Assets\RustItems\door.hinged.wood.png" />
+    <None Remove="Assets\RustItems\explosive.satchel.png" />
+    <None Remove="Assets\RustItems\fridge.png" />
+    <None Remove="Assets\RustItems\fun.guitar.png" />
+    <None Remove="Assets\RustItems\furnace.png" />
+    <None Remove="Assets\RustItems\grenade.f1.png" />
+    <None Remove="Assets\RustItems\gun.water.png" />
+    <None Remove="Assets\RustItems\hammer.png" />
+    <None Remove="Assets\RustItems\hat.beenie.png" />
+    <None Remove="Assets\RustItems\hat.boonie.png" />
+    <None Remove="Assets\RustItems\hat.cap.png" />
+    <None Remove="Assets\RustItems\hat.miner.png" />
+    <None Remove="Assets\RustItems\hatchet.png" />
+    <None Remove="Assets\RustItems\hazmatsuit.png" />
+    <None Remove="Assets\RustItems\hoodie.png" />
+    <None Remove="Assets\RustItems\icepick.salvaged.png" />
+    <None Remove="Assets\RustItems\innertube.png" />
+    <None Remove="Assets\RustItems\jacket.png" />
+    <None Remove="Assets\RustItems\jacket.snow.png" />
+    <None Remove="Assets\RustItems\jackhammer.png" />
+    <None Remove="Assets\RustItems\knife.bone.png" />
+    <None Remove="Assets\RustItems\knife.combat.png" />
+    <None Remove="Assets\RustItems\largebackpack.png" />
+    <None Remove="Assets\RustItems\lmg.m249.png" />
+    <None Remove="Assets\RustItems\locker.png" />
+    <None Remove="Assets\RustItems\longsword.png" />
+    <None Remove="Assets\RustItems\mask.balaclava.png" />
+    <None Remove="Assets\RustItems\mask.bandana.png" />
+    <None Remove="Assets\RustItems\metal.facemask.png" />
+    <None Remove="Assets\RustItems\metal.plate.torso.png" />
+    <None Remove="Assets\RustItems\paddlingpool.png" />
+    <None Remove="Assets\RustItems\pants.png" />
+    <None Remove="Assets\RustItems\pants.shorts.png" />
+    <None Remove="Assets\RustItems\pickaxe.png" />
+    <None Remove="Assets\RustItems\pistol.eoka.png" />
+    <None Remove="Assets\RustItems\pistol.python.png" />
+    <None Remove="Assets\RustItems\pistol.revolver.png" />
+    <None Remove="Assets\RustItems\pistol.semiauto.png" />
+    <None Remove="Assets\RustItems\rifle.ak.png" />
+    <None Remove="Assets\RustItems\rifle.bolt.png" />
+    <None Remove="Assets\RustItems\rifle.l96.png" />
+    <None Remove="Assets\RustItems\rifle.m39.png" />
+    <None Remove="Assets\RustItems\rifle.semiauto.png" />
+    <None Remove="Assets\RustItems\riot.helmet.png" />
+    <None Remove="Assets\RustItems\roadsign.gloves.png" />
+    <None Remove="Assets\RustItems\roadsign.jacket.png" />
+    <None Remove="Assets\RustItems\roadsign.kilt.png" />
+    <None Remove="Assets\RustItems\rock.png" />
+    <None Remove="Assets\RustItems\rocket.launcher.png" />
+    <None Remove="Assets\RustItems\rug.bear.png" />
+    <None Remove="Assets\RustItems\rug.png" />
+    <None Remove="Assets\RustItems\salvaged.sword.png" />
+    <None Remove="Assets\RustItems\shirt.collared.png" />
+    <None Remove="Assets\RustItems\shirt.tanktop.png" />
+    <None Remove="Assets\RustItems\shoes.boots.png" />
+    <None Remove="Assets\RustItems\shotgun.double.png" />
+    <None Remove="Assets\RustItems\shotgun.pump.png" />
+    <None Remove="Assets\RustItems\shotgun.waterpipe.png" />
+    <None Remove="Assets\RustItems\skull.trophy.png" />
+    <None Remove="Assets\RustItems\skullspikes.png" />
+    <None Remove="Assets\RustItems\sled.png" />
+    <None Remove="Assets\RustItems\sleepingbag.png" />
+    <None Remove="Assets\RustItems\smg.2.png" />
+    <None Remove="Assets\RustItems\smg.mp5.png" />
+    <None Remove="Assets\RustItems\smg.thompson.png" />
+    <None Remove="Assets\RustItems\spear.wooden.png" />
+    <None Remove="Assets\RustItems\spinner.wheel.png" />
+    <None Remove="Assets\RustItems\stone.pickaxe.png" />
+    <None Remove="Assets\RustItems\stonehatchet.png" />
+    <None Remove="Assets\RustItems\sunglasses.png" />
+    <None Remove="Assets\RustItems\table.png" />
+    <None Remove="Assets\RustItems\target.reactive.png" />
+    <None Remove="Assets\RustItems\tshirt.long.png" />
+    <None Remove="Assets\RustItems\tshirt.png" />
+    <None Remove="Assets\RustItems\twitch.headset.png" />
+    <None Remove="Assets\RustItems\vending.machine.png" />
+    <None Remove="Assets\RustItems\wall.frame.garagedoor.png" />
+    <None Remove="Assets\RustItems\water.purifier.png" />
     <None Remove="Assets\settings.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\dlcs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\attire.hide.boots.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\attire.hide.helterneck.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\attire.hide.pants.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\attire.hide.poncho.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\attire.hide.skirt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\attire.hide.vest.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\barricade.concrete.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\barricade.sandbags.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\beachchair.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\beachparasol.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\beachtowel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\bone.club.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\boogieboard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\bow.hunting.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\box.wooden.large.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\box.wooden.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\bucket.helmet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\burlap.gloves.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\burlap.headwrap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\burlap.shirt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\burlap.shoes.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\burlap.trousers.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\chair.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\coffeecan.helmet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\crossbow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\deer.skull.mask.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\door.double.hinged.metal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\door.double.hinged.toptier.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\door.double.hinged.wood.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\door.hinged.metal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\door.hinged.toptier.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\door.hinged.wood.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\explosive.satchel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\fridge.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\fun.guitar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\furnace.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\grenade.f1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\gun.water.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hammer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hat.beenie.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hat.boonie.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hat.cap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hat.miner.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hatchet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hazmatsuit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hoodie.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\icepick.salvaged.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\innertube.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\jacket.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\jacket.snow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\jackhammer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\knife.bone.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\knife.combat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\largebackpack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\lmg.m249.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\locker.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\longsword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\mask.balaclava.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\mask.bandana.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\metal.facemask.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\metal.plate.torso.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\paddlingpool.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\pants.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\pants.shorts.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\pickaxe.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\pistol.eoka.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\pistol.python.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\pistol.revolver.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\pistol.semiauto.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rifle.ak.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rifle.bolt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rifle.l96.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rifle.m39.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rifle.semiauto.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\riot.helmet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\roadsign.gloves.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\roadsign.jacket.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\roadsign.kilt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rock.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rocket.launcher.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rug.bear.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rug.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\salvaged.sword.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\shirt.collared.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\shirt.tanktop.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\shoes.boots.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\shotgun.double.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\shotgun.pump.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\shotgun.waterpipe.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\skull.trophy.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\skullspikes.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\sled.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\sleepingbag.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\smg.2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\smg.mp5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\smg.thompson.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\spear.wooden.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\spinner.wheel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\stone.pickaxe.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\stonehatchet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\sunglasses.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\table.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\target.reactive.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\tshirt.long.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\tshirt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\twitch.headset.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\vending.machine.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\wall.frame.garagedoor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\water.purifier.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="hazmat_xQg_icon.ico" />
   </ItemGroup>
 
@@ -48,9 +488,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Assets\items.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <Content Include="Assets\items.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -62,6 +502,7 @@
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     <PackageReference Include="SteamWebAPI2" Version="4.3.2" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,14 +1,14 @@
-﻿using Prism.Commands;
+﻿using Microsoft.Win32;
+using Prism.Commands;
 using Prism.Mvvm;
-using RustSkinsEditor.Helpers;
 using RustSkinsEditor.Models;
 using RustSkinsEditor.Models.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using IOPath = System.IO.Path;
@@ -115,6 +115,8 @@ namespace RustSkinsEditor.ViewModels
 
         string DataPath = IOPath.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "RustSkinsEditor", "config.json");
 
+        public string SteamPath { get; set; }
+
         public MainViewModel()
         {
             LoadConfig();
@@ -123,11 +125,74 @@ namespace RustSkinsEditor.ViewModels
 
             RustItems = new RustItems();
 
+            GetSteamPath();
+
             Fullscreen = false;
             PartialLoadingScreen = true;
             FullLoadingScreen = false;
 
             Activity = "No file loaded...";
+        }
+
+        public async Task LoadGameItems()
+        {
+            FullLoadingScreen = true;
+            await RustItems.Load(SteamPath);
+            FullLoadingScreen = false;
+        }
+
+        public void GetSteamPath()
+        {
+            SteamPath = "";
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Valve\Steam");
+
+            if (key != null)
+            {
+                SteamPath = key.GetValue("InstallPath")?.ToString();
+                key.Close();
+            }
+            else
+            {
+                key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Valve\Steam");
+
+                if (key != null)
+                {
+                    SteamPath = key.GetValue("InstallPath")?.ToString();
+                    key.Close();
+                }
+            }
+            if (string.IsNullOrEmpty(SteamPath))
+            {
+                SteamPath = "";
+                return;
+            }
+
+            string libfoldersPath = Path.Combine(SteamPath, "steamapps", "libraryfolders.vdf");
+            string driveRegex = @"[A-Z]:\\";
+
+            if (File.Exists(libfoldersPath))
+            {
+                string[] configLines = File.ReadAllLines(libfoldersPath);
+                foreach (var item in configLines)
+                {
+                    Match match = Regex.Match(item, driveRegex);
+                    if (item != string.Empty && match.Success)
+                    {
+                        string matched = match.ToString();
+                        string item2 = item.Substring(item.IndexOf(matched));
+                        item2 = item2.Replace("\\\\", "\\");
+                        item2 = item2.Replace("\"", "");
+
+                        string pat = Path.Combine(item2, "steamapps", "common", "Rust", "Rust.exe");
+
+                        if (File.Exists(pat))
+                        {
+                            SteamPath = item2;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private void SelectedItemSkins_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

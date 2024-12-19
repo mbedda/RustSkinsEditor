@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RustSkinsEditor.Models
 {
@@ -28,12 +25,13 @@ namespace RustSkinsEditor.Models
             return shortname;
         }
 
-        private static Dictionary<string, string> _workshopNameToShortname = new Dictionary<string, string>
+        public static Dictionary<string, string> _workshopNameToShortname = new Dictionary<string, string>
         {
             {"Acoustic Guitar","fun.guitar"},
             {"AK47","rifle.ak"},
             {"Armored Double Door", "door.double.hinged.toptier"},
             {"Armored Door","door.hinged.toptier"},
+            {"Large Backpack","largebackpack"},
             {"Balaclava","mask.balaclava"},
             {"Bandana","mask.bandana"},
             {"Bearskin Rug", "rug.bear"},
@@ -167,6 +165,45 @@ namespace RustSkinsEditor.Models
             [DataMember(Name = "filetype")]
             public int FileType { get; set; }
         }
+    }
+
+    [DataContract]
+    public class RustDLCMeta
+    {
+        [DataMember(Name = "status")]
+        public string status { get; set; }
+
+        [DataMember(Name = "statusCode")]
+        public int statusCode { get; set; }
+
+    }
+
+    [DataContract]
+    public class RustDLCData
+    {
+        [DataMember(Name = "name")]
+        public string name { get; set; }
+
+        [DataMember(Name = "workshopId")]
+        public ulong? workshopId { get; set; }
+
+        [DataMember(Name = "itemDefinitionId")]
+        public string? itemDefinitionId { get; set; }
+
+        [DataMember(Name = "itemShortName")]
+        public string itemShortName { get; set; }
+
+    }
+
+    [DataContract]
+    public class RustDLCResponse
+    {
+        [DataMember(Name = "meta")]
+        public RustDLCMeta meta { get; set; }
+
+        [DataMember(Name = "data")]
+        public IList<RustDLCData> data { get; set; }
+
     }
 
     public class SteamSkinDetails

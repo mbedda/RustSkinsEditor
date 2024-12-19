@@ -1,13 +1,8 @@
-﻿using Newtonsoft.Json;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 using RustSkinsEditor.Helpers;
 using RustSkinsEditor.Models.Plugins;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RustSkinsEditor.Models

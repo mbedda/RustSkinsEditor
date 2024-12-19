@@ -7,6 +7,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace RustSkinsEditor.Helpers
 {
@@ -77,7 +78,7 @@ namespace RustSkinsEditor.Helpers
         private static readonly JsonSerializerOptions _options =
         new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
 
-        public static bool SaveJsonNewton<T>(T theobject, string filePath)
+        public static bool SaveJsonNewton<T>(T theobject, string filePath, Dictionary<string, string> langReplace = null, bool WriteIndented = true)
         {
             try
             {
@@ -91,9 +92,15 @@ namespace RustSkinsEditor.Helpers
                         {
                             var options = new JsonSerializerOptions(_options)
                             {
-                                WriteIndented = true
+                                WriteIndented = WriteIndented
                             };
-                            var jsonString = JsonConvert.SerializeObject(theobject, Formatting.Indented);
+                            var jsonString = JsonConvert.SerializeObject(theobject, WriteIndented ? Formatting.Indented : Formatting.None);
+
+                            if (langReplace != null)
+                            {
+                                foreach (var replace in langReplace)
+                                    jsonString = jsonString.Replace((string)replace.Key, (string)replace.Value);
+                            }
 
                             sw.Write(jsonString);
                         }
@@ -178,6 +185,47 @@ namespace RustSkinsEditor.Helpers
                 }
 
                 stream.Close();
+            }
+
+            return result;
+        }
+
+        public static async Task<T> LoadJsonAsync<T>(string filePath, Dictionary<string, string> langReplace = null)
+        {
+            T result;
+            if (!System.IO.File.Exists(filePath))
+            {
+                return default(T);
+            }
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
+            {
+                using (StreamReader sr = new StreamReader(fs))
+                {
+                    string filetext = await sr.ReadToEndAsync();
+
+                    if (filetext.StartsWith("#"))
+                    {
+                        int firstlineindex = filetext.IndexOf(System.Environment.NewLine);
+                        filetext = filetext.Substring(firstlineindex + System.Environment.NewLine.Length);
+                    }
+
+                    if (langReplace != null)
+                    {
+                        foreach (var replace in langReplace)
+                            filetext = filetext.Replace((string)replace.Key, (string)replace.Value);
+                    }
+
+                    using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(filetext)))
+                    {
+                        DataContractJsonSerializerSettings settings = new DataContractJsonSerializerSettings();
+                        settings.UseSimpleDictionaryFormat = true;
+                        var deserializer = new DataContractJsonSerializer(typeof(T), settings);
+                        result = (T)deserializer.ReadObject(ms);
+                    }
+                }
+
+                fs.Close();
             }
 
             return result;

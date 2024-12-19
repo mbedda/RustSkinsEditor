@@ -26,7 +26,12 @@
                             <MenuItem Header="Delete" Click="Delete_Click" CommandParameter="{Binding}"/>
                         </ContextMenu>
                     </StackPanel.ContextMenu>
-                    <Image Source="{Binding PreviewUrl}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="120"></Image>
+                    <Grid>
+                        <Image Source="{Binding PreviewUrl}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="120"></Image>
+                        <Grid Margin="2" Background="#B2C11E1E" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding Code, Converter={StaticResource IsMarketSkinConverter}}">
+                            <TextBlock Margin="3,3" Text="MARKET SKIN" Foreground="White" FontWeight="Bold" FontSize="14" TextWrapping="Wrap"></TextBlock>
+                        </Grid>
+                    </Grid>
                     <TextBlock HorizontalAlignment="Center" Foreground="White" Margin="0,0,0,5" Text="{Binding Path=Title}" ToolTip="{Binding Path=Title}" Width="120" TextWrapping="Wrap" Height="30" TextAlignment="Center"></TextBlock>
                 </StackPanel>
             </DataTemplate>
