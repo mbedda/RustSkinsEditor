@@ -1,11 +1,8 @@
-﻿using Prism.Mvvm;
-using RustSkinsEditor.Helpers;
+﻿using RustSkinsEditor.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RustSkinsEditor.Models
 {
