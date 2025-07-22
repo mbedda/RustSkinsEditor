@@ -41,6 +41,8 @@ namespace RustSkinsEditor
 
         public async void FetchSteamSkins(Skin item)
         {
+            if(item == null || item.Skins == null) return;
+
             List<ulong> skinlist = new List<ulong>();
 
             viewModel.SelectedItem = item;
@@ -480,8 +482,12 @@ namespace RustSkinsEditor
                 }
             }
             viewModel.UpdateActivity();
-            viewModel.SelectedItemSkins = null;
-            FetchSteamSkins((Skin)(comboboxItems.SelectedItem));
+
+            if(viewModel.SelectedItemSkins != null)
+            {
+                viewModel.SelectedItemSkins = null;
+                FetchSteamSkins((Skin)(comboboxItems.SelectedItem));
+            }
 
             MessageBox.Show($"Deleted {count} market skins");
         }
