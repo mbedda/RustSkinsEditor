@@ -20,7 +20,8 @@ namespace RustSkinsEditor.Converters
             {
 				MainViewModel vm = ((MainWindow)Application.Current.MainWindow).viewModel;
 
-                return vm.RustItems.DLCsData.ProhibitedSkins.Contains((ulong)value) ? Visibility.Visible : Visibility.Collapsed;
+                return vm.RustItems.DLCsData.ProhibitedSkins.Contains((ulong)value) 
+                    || vm.RustItems.DLCsData.ProhibitedSkinsItemIds.Contains(value.ToString()) ? Visibility.Visible : Visibility.Collapsed;
             }
             else
             {

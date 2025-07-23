@@ -41,6 +41,7 @@
                             <MenuItem Header="SkinBox" Click="SkinBoxLoad_Click"/>
                             <MenuItem Header="Skinner" Click="SkinnerLoad_Click"/>
                             <MenuItem Header="Skins" Click="SkinsLoad_Click"/>
+                            <MenuItem Header="LSkins" Click="LSkinsLoad_Click"/>
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
@@ -50,6 +51,7 @@
                             <MenuItem Header="SkinBox" Click="SkinBoxSave_Click"/>
                             <MenuItem Header="Skinner" Click="SkinnerSave_Click"/>
                             <MenuItem Header="Skins" Click="SkinsSave_Click"/>
+                            <MenuItem Header="LSkins" Click="LSkinsSave_Click"/>
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>

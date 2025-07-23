@@ -79,9 +79,10 @@ namespace RustSkinsEditor.Models
                 foreach (var dlc in DLCsData.Data)
                 {
                     if (dlc.workshopId.HasValue && dlc.workshopId != 0 && !DLCsData.ProhibitedSkins.Contains(dlc.workshopId.Value))
-                    {
                         DLCsData.ProhibitedSkins.Add(dlc.workshopId.Value);
-                    }
+
+                    if (!string.IsNullOrEmpty(dlc.itemDefinitionId) && !DLCsData.ProhibitedSkinsItemIds.Contains(dlc.itemDefinitionId))
+                        DLCsData.ProhibitedSkinsItemIds.Add(dlc.itemDefinitionId);
                 }
             }
 
@@ -184,7 +185,7 @@ namespace RustSkinsEditor.Models
             destination.Save(itempath, ImageFormat.Png);
         }
 
-        List<string> skinnableItems = new() {
+        public static List<string> skinnableItems = new() {
             "attire.hide.boots", "attire.hide.helterneck", "attire.hide.pants", "attire.hide.poncho", "attire.hide.skirt", "attire.hide.vest", "barricade.concrete", "barricade.sandbags", "bone.club",
             "bow.hunting", "box.wooden", "box.wooden.large", "bucket.helmet", "burlap.gloves", "burlap.headwrap", "burlap.shirt", "burlap.shoes", "burlap.trousers",
             "chair", "coffeecan.helmet", "crossbow", "deer.skull.mask", "door.double.hinged.metal", "door.double.hinged.toptier", "door.double.hinged.wood", "door.hinged.metal", "door.hinged.toptier",
@@ -200,6 +201,7 @@ namespace RustSkinsEditor.Models
     {
         public List<RustDLCData> Data { get; set; }
         public List<ulong> ProhibitedSkins { get; set; } = new List<ulong>();
+        public List<string> ProhibitedSkinsItemIds { get; set; } = new List<string>();
     }
 
     public class RustItem : BindableBase

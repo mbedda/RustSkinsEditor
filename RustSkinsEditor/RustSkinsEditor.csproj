@@ -20,6 +20,7 @@
     <PackageProjectUrl>https://github.com/mbedda/RustSkinsEditor</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mbedda/RustSkinsEditor.git</RepositoryUrl>
     <PackageLicenseFile>C:\Users\mbedd\source\repos\RustSkinsEditor\RustSkinsEditor\MIT-License.txt</PackageLicenseFile>
+    <UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -499,6 +500,7 @@
 
   <ItemGroup>
     <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
+    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
     <PackageReference Include="SteamWebAPI2" Version="4.3.2" />

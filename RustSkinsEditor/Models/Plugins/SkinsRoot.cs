@@ -159,8 +159,6 @@ namespace RustSkinsEditor.Models.Plugins
 
         [IgnoreDataMember]
         public string Name { get; set; }
-        [IgnoreDataMember]
-        public Uri ImagePath { get; set; }
         [DataMember(Name = "Item Shortname")]
         public string ItemShortname { get; set; }
         [DataMember(Name = "Permission")]

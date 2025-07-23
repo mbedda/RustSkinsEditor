@@ -105,6 +105,7 @@ namespace RustSkinsEditor.ViewModels
         public DelegateCommand ExitFullscreenCommand { get; set; }
 
         public RustItems RustItems { get; set; }
+        public List<string> RustItemsList { get; set; }
 
         private Config _config;
         public Config Config
@@ -138,6 +139,8 @@ namespace RustSkinsEditor.ViewModels
         {
             FullLoadingScreen = true;
             await RustItems.Load(SteamPath);
+            RustItemsList = RustItems.Items.Select(x => x.shortName).ToList();
+
             FullLoadingScreen = false;
         }
 
@@ -291,15 +294,31 @@ namespace RustSkinsEditor.ViewModels
                     RustItem rustItem = RustItems.GetRustItem(skinitem.ItemShortname);
 
                     if (rustItem != null)
-                    {
                         skinitem.Name = rustItem.displayName;
-                        skinitem.ImagePath = new Uri("https://rustlabs.com/img/items180/" + rustItem.shortName + ".png");
-                    }
                     else
-                    {
                         skinitem.Name = skinitem.ItemShortname;
-                        skinitem.ImagePath = new Uri("https://i.imgur.com/nY1CFCC.png");
-                    }
+                }
+            }
+
+            UpdateActivity();
+        }
+
+        public void LoadFolder(string folderpath, SkinFileSource skinFileSource)
+        {
+            SelectedItemSkins = null;
+            SkinsFile = new SkinsFile();
+            SkinsFile.LoadFiles(folderpath, skinFileSource);
+
+            if (SkinsFile.SkinsRoot != null && SkinsFile.SkinsRoot.Skins != null)
+            {
+                foreach (var skinitem in SkinsFile.SkinsRoot.Skins)
+                {
+                    RustItem rustItem = RustItems.GetRustItem(skinitem.ItemShortname);
+
+                    if (rustItem != null)
+                        skinitem.Name = rustItem.displayName;
+                    else
+                        skinitem.Name = skinitem.ItemShortname;
                 }
             }
 
@@ -345,6 +364,11 @@ namespace RustSkinsEditor.ViewModels
                         FullLoadingScreen = true;
                         await SkinsFile.GetSkinBoxJSONString();
                         ShowSkinBoxJSON();
+                        FullLoadingScreen = false;
+                        break;
+                    case SkinFileSource.LSkins:
+                        FullLoadingScreen = true;
+                        SkinsFile.SaveFiles(filepath, Config, skinFileSource);
                         FullLoadingScreen = false;
                         break;
                 }
@@ -398,7 +422,7 @@ namespace RustSkinsEditor.ViewModels
                 var skinitem = SkinsFile.SkinsRoot.Skins.Where(x => x.ItemShortname == Shortname).FirstOrDefault();
                 if (skinitem == null)
                 {
-                    SkinsFile.SkinsRoot.Skins.Add(new Skin() { Name = Shortname, ItemShortname = Shortname, ImagePath = new Uri("https://i.imgur.com/nY1CFCC.png") });
+                    SkinsFile.SkinsRoot.Skins.Add(new Skin() { Name = Shortname, ItemShortname = Shortname });
                     UpdateActivity();
                     return true;
                 }

@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using RustSkinsEditor.Models.Plugins;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace RustSkinsEditor
 {
@@ -422,6 +423,17 @@ namespace RustSkinsEditor
             }
         }
 
+        private void LSkinsLoad_Click(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                FilePathTB.Text = dialog.FileName;
+                viewModel.LoadFolder(FilePathTB.Text, SkinFileSource.LSkins);
+            }
+        }
+
         private void SkinsSave_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -444,6 +456,16 @@ namespace RustSkinsEditor
         private void SkinnerJSONOn_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             viewModel.HideSkinnerJSON();
+        }
+
+        private void LSkinsSave_Click(object sender, RoutedEventArgs e)
+        {
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                viewModel.Save(dialog.FileName, SkinFileSource.LSkins);
+            }
         }
 
         private void CopySkinnerJSONText_Click(object sender, RoutedEventArgs e)
@@ -474,7 +496,8 @@ namespace RustSkinsEditor
             {
                 for (int i = skinCat.Skins.Count - 1; i >= 0; i--)
                 {
-                    if (viewModel.RustItems.DLCsData.ProhibitedSkins.Contains(skinCat.Skins[i]))
+                    if (viewModel.RustItems.DLCsData.ProhibitedSkins.Contains(skinCat.Skins[i]) 
+                        || viewModel.RustItems.DLCsData.ProhibitedSkinsItemIds.Contains(skinCat.Skins[i].ToString()))
                     {
                         skinCat.Skins.RemoveAt(i);
                         count++;
