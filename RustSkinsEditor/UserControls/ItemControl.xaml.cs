@@ -1,4 +1,5 @@
-﻿using RustSkinsEditor.Models.Plugins;
+﻿using RustSkinsEditor.Models;
+using RustSkinsEditor.Models.Plugins;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -27,14 +28,7 @@ namespace RustSkinsEditor.UserControls
                     MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you would like to delete selected item with all it's skins?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
-                        ObservableCollection<Skin> skinItemList = (ObservableCollection<Skin>)DataContext;
-
-                        skinItemList.Remove(ItemListbox.SelectedItem as Skin);
-
-                        ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.UpdateActivity();
-
-                        DataContext = null;
-                        DataContext = skinItemList;
+                        ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.DeleteItem(ItemListbox.SelectedItem as BaseItem);
                     }
                 }
             }
@@ -44,11 +38,11 @@ namespace RustSkinsEditor.UserControls
         {
             if (e.ClickCount == 2)
             {
-                Skin skinitem = (sender as StackPanel).DataContext as Skin;
+                BaseItem baseItem = (sender as StackPanel).DataContext as BaseItem;
 
-                if (skinitem != null)
+                if (baseItem != null)
                 {
-                    ((MainWindow)System.Windows.Application.Current.MainWindow).comboboxItems.SelectedItem = skinitem;
+                    ((MainWindow)System.Windows.Application.Current.MainWindow).comboboxItems.SelectedItem = baseItem;
                     filtertxt.Text = "";
                     ICollectionView itemsViewOriginal = (CollectionView)CollectionViewSource.GetDefaultView(ItemListbox.ItemsSource);
 
@@ -69,7 +63,7 @@ namespace RustSkinsEditor.UserControls
                 if (String.IsNullOrEmpty(filtertxt.Text)) return true;
                 else
                 {
-                    if (((Skin)o).Name.ToLower().Contains(filtertxt.Text.Trim().ToLower())) return true;
+                    if (((BaseItem)o).Name.ToLower().Contains(filtertxt.Text.Trim().ToLower())) return true;
                     else return false;
                 }
             });
@@ -90,14 +84,9 @@ namespace RustSkinsEditor.UserControls
             MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you would like to delete selected item with all it's skins?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                Skin skinItem = (Skin)((MenuItem)sender).CommandParameter;
+                BaseItem baseItem = (BaseItem)((MenuItem)sender).CommandParameter;
 
-                //((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.Delete(skinItem);
-                ObservableCollection<Skin> skinItems = (ObservableCollection<Skin>)DataContext;
-                skinItems.Remove(skinItem);
-                ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.UpdateActivity();
-                DataContext = null;
-                DataContext = skinItems;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).viewModel.DeleteItem(baseItem);
             }
         }
 
@@ -116,18 +105,15 @@ namespace RustSkinsEditor.UserControls
 
             NewItemNameTB.Text = "";
             NewItemShortnameTB.Text = "";
-            ObservableCollection<Skin> skinItems = (ObservableCollection<Skin>)DataContext;
-            DataContext = null;
-            DataContext = skinItems;
         }
 
         private void SelectItem_Click(object sender, RoutedEventArgs e)
         {
-            Skin skinitem = ItemListbox.SelectedItem as Skin;
+            BaseItem baseItem = ItemListbox.SelectedItem as BaseItem;
 
-            if (skinitem != null)
+            if (baseItem != null)
             {
-                ((MainWindow)System.Windows.Application.Current.MainWindow).comboboxItems.SelectedItem = skinitem;
+                ((MainWindow)System.Windows.Application.Current.MainWindow).comboboxItems.SelectedItem = baseItem;
                 filtertxt.Text = "";
                 ICollectionView itemsViewOriginal = (CollectionView)CollectionViewSource.GetDefaultView(ItemListbox.ItemsSource);
 

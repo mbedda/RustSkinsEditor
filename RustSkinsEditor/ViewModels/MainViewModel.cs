@@ -366,35 +366,30 @@ namespace RustSkinsEditor.ViewModels
             }
         }
 
-        public bool Add(Skin skinitem, ulong skincode)
+        public bool AddSkin(string shortname, ulong skincode)
         {
-            if (!skinitem.Skins.Contains(skincode))
+            if(SkinsFile != null && SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
             {
-                skinitem.Skins.Add(skincode);
-                UpdateActivity();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+                var baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => s.Shortname == shortname);
 
-        public bool Add(string shortname, ulong skincode)
-        {
-            if(SkinsFile != null && SkinsFile.SkinsRoot != null && SkinsFile.SkinsRoot.Skins!=null)
-            {
-                var skinitem = SkinsFile.SkinsRoot.Skins.FirstOrDefault(s => s.ItemShortname == shortname);
-
-                if (skinitem == null)
+                if (baseItem == null)
                 {
-                    SkinsFile.SkinsRoot.Skins.Add(new Skin() { ItemShortname = shortname });
-                    skinitem = SkinsFile.SkinsRoot.Skins.FirstOrDefault(s => s.ItemShortname == shortname);
+                    baseItem = new BaseItem() { Shortname = shortname };
+
+                    var rustItem = RustItems.GetRustItem(shortname);
+                    if (rustItem != null)
+                        baseItem.Name = rustItem.displayName;
+
+                    SkinsFile.BaseModel.Items.Add(baseItem);
                 }
 
-                if (!skinitem.Skins.Contains(skincode))
+                if (baseItem.Skins.Where(s=>s.WorkshopId == skincode).Count() == 0)
                 {
-                    skinitem.Skins.Add(skincode);
+                    baseItem.Skins.Add(new BaseSkin()
+                    {
+                        WorkshopId = skincode,
+                        Name = skincode.ToString()
+                    });
                     UpdateActivity();
                     return true;
                 }
@@ -408,12 +403,19 @@ namespace RustSkinsEditor.ViewModels
 
         public bool AddItem(string Shortname)
         {
-            if (SkinsFile != null && SkinsFile.SkinsRoot != null && SkinsFile.SkinsRoot.Skins != null)
+            if (SkinsFile != null && SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
             {
-                var skinitem = SkinsFile.SkinsRoot.Skins.Where(x => x.ItemShortname == Shortname).FirstOrDefault();
-                if (skinitem == null)
+                var baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => s.Shortname == Shortname);
+                if (baseItem == null)
                 {
-                    SkinsFile.SkinsRoot.Skins.Add(new Skin() { Name = Shortname, ItemShortname = Shortname });
+                    baseItem = new BaseItem() { Shortname = Shortname };
+
+                    var rustItem = RustItems.GetRustItem(Shortname);
+                    if (rustItem != null)
+                        baseItem.Name = rustItem.displayName;
+
+                    SkinsFile.BaseModel.Items.Add(baseItem);
+
                     UpdateActivity();
                     return true;
                 }
@@ -426,11 +428,40 @@ namespace RustSkinsEditor.ViewModels
             return false;
         }
 
-        public void Delete(string shortname, ulong skincode)
+        public void DeleteSkin(string shortname, ulong skincode)
         {
-            var skin = SkinsFile.SkinsRoot.Skins.FirstOrDefault(s => s.ItemShortname == shortname);
-            skin.Skins.Remove(skincode);
-            UpdateActivity();
+            var baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => s.Shortname == shortname);
+
+            if(baseItem != null)
+            {
+                var baseSkin = baseItem.Skins.FirstOrDefault(s => s.WorkshopId == skincode);
+
+                if (baseItem != null)
+                {
+                    baseItem.Skins.Remove(baseSkin);
+                    UpdateActivity();
+                }
+            }
+        }
+
+        public void DeleteItem(string shortname)
+        {
+            var baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => s.Shortname == shortname);
+
+            if (baseItem != null)
+            {
+                SkinsFile.BaseModel.Items.Remove(baseItem);
+                UpdateActivity();
+            }
+        }
+
+        public void DeleteItem(BaseItem baseItem)
+        {
+            if (baseItem != null)
+            {
+                SkinsFile.BaseModel.Items.Remove(baseItem);
+                UpdateActivity();
+            }
         }
     }
 }

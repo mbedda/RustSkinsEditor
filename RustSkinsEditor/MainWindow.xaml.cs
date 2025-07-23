@@ -135,7 +135,7 @@ namespace RustSkinsEditor
 
         private async void AddWorkshopSkinAsync()
         {
-            if (viewModel.SkinsFile == null || viewModel.SkinsFile.SkinsRoot == null)
+            if (viewModel.SkinsFile == null || viewModel.SkinsFile.BaseModel == null)
             {
                 MessageBox.Show("No skins file loaded.");
                 return;
@@ -179,7 +179,7 @@ namespace RustSkinsEditor
 
                 if (comboboxItems.SelectedIndex != -1)
                 {
-                    shortname = (comboboxItems.SelectedItem as Skin).ItemShortname;
+                    shortname = (comboboxItems.SelectedItem as BaseItem).Shortname;
                 }
                 else
                 {
@@ -193,7 +193,7 @@ namespace RustSkinsEditor
                 }
                 
 
-                if (viewModel.Add(shortname, skincode))
+                if (viewModel.AddSkin(shortname, skincode))
                 {
                     UpdateItemSkinsControlIfComboSelected();
 
@@ -237,7 +237,7 @@ namespace RustSkinsEditor
 
         private void AddWorkshopSkinCollection()
         {
-            if (viewModel.SkinsFile == null || viewModel.SkinsFile.SkinsRoot == null)
+            if (viewModel.SkinsFile == null || viewModel.SkinsFile.BaseModel == null)
             {
                 MessageBox.Show("No skins file loaded.");
                 return;
@@ -319,7 +319,7 @@ namespace RustSkinsEditor
                         continue;
                     }
 
-                    if (viewModel.Add(shortname, fileDetails.PublishedFileId))
+                    if (viewModel.AddSkin(shortname, fileDetails.PublishedFileId))
                     {
                         partialsuccess = true;
                     }
@@ -490,14 +490,14 @@ namespace RustSkinsEditor
         private void DeleteMarketSkins_Click(object sender, RoutedEventArgs e)
         {
             int count = 0;
-            foreach (var skinCat in viewModel.SkinsFile.SkinsRoot.Skins)
+            foreach (var baseItem in viewModel.SkinsFile.BaseModel.Items)
             {
-                for (int i = skinCat.Skins.Count - 1; i >= 0; i--)
+                for (int i = baseItem.Skins.Count - 1; i >= 0; i--)
                 {
-                    if (viewModel.RustItems.DLCsData.ProhibitedSkins.Contains(skinCat.Skins[i]) 
-                        || viewModel.RustItems.DLCsData.ProhibitedSkinsItemIds.Contains(skinCat.Skins[i].ToString()))
+                    if (viewModel.RustItems.DLCsData.ProhibitedSkins.Contains(baseItem.Skins[i].WorkshopId) 
+                        || viewModel.RustItems.DLCsData.ProhibitedSkinsItemIds.Contains(baseItem.Skins[i].WorkshopId.ToString()))
                     {
-                        skinCat.Skins.RemoveAt(i);
+                        baseItem.Skins.RemoveAt(i);
                         count++;
                     }
                 }

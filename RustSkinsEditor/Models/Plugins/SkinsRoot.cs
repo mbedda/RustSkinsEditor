@@ -162,7 +162,7 @@ namespace RustSkinsEditor.Models.Plugins
         [DataMember(Name = "Item Shortname")]
         public string ItemShortname { get; set; }
         [DataMember(Name = "Permission")]
-        public string Permission { get; set; }
+        public string Permission { get; set; } = "";
         [DataMember(Name = "Skins")]
         public List<ulong> Skins { get; set; }
     }

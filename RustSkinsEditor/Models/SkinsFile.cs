@@ -68,11 +68,11 @@ namespace RustSkinsEditor.Models
                     break;
                 case SkinFileSource.Skinner:
                     SkinnerRoot = Common.LoadJson<SkinnerRoot>(filepath);
-                    ConvertSkinnerToSkins();
+                    ConvertSkinnerToBaseModel();
                     break;
                 case SkinFileSource.SkinBox:
                     SkinBoxRoot = Common.LoadJson<SkinBoxRoot>(filepath);
-                    ConvertSkinBoxToSkins();
+                    ConvertSkinBoxToBaseModel();
                     break;
             }
         }
@@ -100,7 +100,7 @@ namespace RustSkinsEditor.Models
                             }
                         }
                     }
-                    ConvertLSkinsToSkins();
+                    ConvertLSkinsToBaseModel();
                     break;
             }
         }
@@ -116,12 +116,17 @@ namespace RustSkinsEditor.Models
             }
         }
 
-        public void SaveFiles(string folderpath, Config config, SkinFileSource skinFileSource = SkinFileSource.LSkins)
+        public async Task  SaveFiles(string folderpath, Config config, SkinFileSource skinFileSource = SkinFileSource.LSkins)
         {
             switch (skinFileSource)
             {
                 case SkinFileSource.LSkins:
-                    ConvertSkinsToLSkins();
+                    try
+                    {
+                        await FetchMissingSkinNames();
+                    }
+                    catch { }
+                    ConvertBaseModelToLSkins();
                     //FetchSteamSkinsNamesLSkins();
                     foreach (var item in LSkinsRoot.Items)
                     {
@@ -166,7 +171,7 @@ namespace RustSkinsEditor.Models
         {
             if (BaseModel != null && BaseModel.Items != null)
             {
-                SkinsRoot SkinsRootTmp = new SkinsRoot();
+                SkinsRoot = new SkinsRoot();
 
                 foreach (var item in BaseModel.Items)
                 {
@@ -179,123 +184,146 @@ namespace RustSkinsEditor.Models
                         skin.Skins.Add(baseItem.WorkshopId);
                     }
 
-                    SkinsRootTmp.Skins.Add(skin);
+                    SkinsRoot.Skins.Add(skin);
                 }
-
-                SkinsRoot = SkinsRootTmp;
             }
         }
 
-        public void ConvertSkinnerToSkins()
+        public void ConvertSkinnerToBaseModel()
         {
-            if (SkinnerRoot != null && skinnerRoot.Skins != null)
+            if (SkinnerRoot != null && SkinnerRoot.Skins != null)
             {
                 var results = SkinnerRoot.Skins.GroupBy(p => p.Value.itemShortname,
-                    p => p.Key, (key, g) => new { Shortname = key, Keys = g.ToList() });
+                    p => p, (key, g) => new { Shortname = key, Keys = g.ToList() });
 
-                SkinsRoot SkinsRootTmp = new SkinsRoot();
+                BaseModel = new BaseModel();
+                BaseModel.Items = new();
 
                 foreach (var item in results)
                 {
-                    Skin skin = new Skin();
-                    skin.ItemShortname = item.Shortname;
-                    skin.Skins = item.Keys.ToList();
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.Shortname = item.Shortname;
+                    baseItem.Skins = new();
 
-                    SkinsRootTmp.Skins.Add(skin);
+                    foreach (var skin in item.Keys)
+                    {
+                        if (skin.Key == 0) continue; // Skip skins with WorkshopId 0
+                        baseItem.Skins.Add(
+                            new()
+                            {
+                                WorkshopId = skin.Key,
+                                Name = skin.Value.itemDisplayname
+                            });
+                    }
+
+                    BaseModel.Items.Add(baseItem);
                 }
-
-                SkinsRoot = SkinsRootTmp;
-                //SkinsRoot.Skins.Add
             }
         }
 
-        public void ConvertSkinsToSkinner()
+        public void ConvertBaseModelToSkinner()
         {
-            if (SkinsRoot != null)
+            if (BaseModel != null && BaseModel.Items != null)
             {
                 SkinnerRoot = new SkinnerRoot();
-                skinnerRoot.Skins = new Dictionary<ulong, SkinnerRoot.SkinnerSkin>();
+                SkinnerRoot.Skins = new Dictionary<ulong, SkinnerRoot.SkinnerSkin>();
 
-                foreach (var item in SkinsRoot.Skins)
+                foreach (var item in BaseModel.Items)
                 {
-                    foreach (var skinid in item.Skins)
+                    foreach (var baseSkin in item.Skins)
                     {
-                        if (!skinnerRoot.Skins.ContainsKey(skinid))
+                        if (baseSkin.WorkshopId == 0) continue;
+
+                        if (!SkinnerRoot.Skins.ContainsKey(baseSkin.WorkshopId))
                         {
-                            skinnerRoot.Skins.Add(skinid,
-                                new SkinnerRoot.SkinnerSkin() { itemDisplayname = item.Name, itemShortname = item.ItemShortname });
+                            SkinnerRoot.Skins.Add(baseSkin.WorkshopId,
+                                new SkinnerRoot.SkinnerSkin() { itemDisplayname = baseSkin.Name, itemShortname = item.Shortname });
                         }
                     }
                 }
             }
         }
 
-        public void ConvertSkinBoxToSkins()
+        public void ConvertSkinBoxToBaseModel()
         {
             if (SkinBoxRoot != null && SkinBoxRoot.Skins != null)
             {
-                SkinsRoot SkinsRootTmp = new SkinsRoot();
+                BaseModel = new BaseModel();
+                BaseModel.Items = new();
 
                 foreach (var item in SkinBoxRoot.Skins)
                 {
-                    Skin skin = new Skin();
-                    skin.ItemShortname = item.Key;
-                    skin.Skins = item.Value.ToList();
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.Shortname = item.Key;
+                    baseItem.Skins = new();
 
-                    SkinsRootTmp.Skins.Add(skin);
+                    foreach (var skin in item.Value)
+                    {
+                        if (skin == 0) continue; // Skip skins with WorkshopId 0
+                        baseItem.Skins.Add(
+                            new()
+                            {
+                                WorkshopId = skin,
+                                Name = skin.ToString()
+                            });
+                    }
+
+                    BaseModel.Items.Add(baseItem);
                 }
-
-                SkinsRoot = SkinsRootTmp;
             }
         }
 
-        public void ConvertSkinsToSkinBox()
+        public void ConvertBaseModelToSkinBox()
         {
-            if (SkinsRoot != null)
+            if (BaseModel != null && BaseModel.Items != null)
             {
-                SkinBoxRoot = new SkinBoxRoot();
-                SkinBoxRoot.Skins = new Dictionary<string, List<ulong>>();
+                SkinBoxRoot = new();
+                SkinBoxRoot.Skins = new();
 
-                foreach (var item in SkinsRoot.Skins)
+                foreach (var item in BaseModel.Items)
                 {
-                    SkinBoxRoot.Skins.Add(item.ItemShortname, item.Skins);
+                    SkinBoxRoot.Skins.Add(item.Shortname, item.Skins.Select(s => s.WorkshopId).ToList());
                 }
             }
         }
 
-        public void ConvertLSkinsToSkins()
+        public void ConvertLSkinsToBaseModel()
         {
             if (LSkinsRoot != null && LSkinsRoot.Items != null)
             {
-                SkinsRoot SkinsRootTmp = new SkinsRoot();
+                BaseModel = new BaseModel();
+                BaseModel.Items = new();
 
                 foreach (var item in LSkinsRoot.Items)
                 {
-                    Skin skin = new Skin();
-                    skin.ItemShortname = item.Key;
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.Shortname = item.Key;
+                    baseItem.Skins = new();
+
                     foreach (var lskin in item.Value.Skins)
                     {
-                        if (lskin.Key == "0") continue;
-
-                        if(UInt64.TryParse(lskin.Key, out ulong skinId))
-                            skin.Skins.Add(skinId);
+                        if (lskin.Key == "0" || !UInt64.TryParse(lskin.Key, out ulong skinId)) continue; // Skip skins with WorkshopId 0
+                        baseItem.Skins.Add(
+                            new()
+                            {
+                                WorkshopId = skinId,
+                                Name = lskin.Value.Name
+                            });
                     }
 
-                    SkinsRootTmp.Skins.Add(skin);
+                    BaseModel.Items.Add(baseItem);
                 }
-
-                SkinsRoot = SkinsRootTmp;
             }
         }
 
-        public void ConvertSkinsToLSkins()
+        public void ConvertBaseModelToLSkins()
         {
-            if (SkinsRoot != null)
+            if (BaseModel != null && BaseModel.Items != null)
             {
-                LSkinsRoot = new LSkinsRoot();
+                LSkinsRoot = new();
                 LSkinsRoot.Items = new();
 
-                foreach (var item in SkinsRoot.Skins)
+                foreach (var item in BaseModel.Items)
                 {
                     LSkinsRoot.LSkinItem lSkinItem = new LSkinsRoot.LSkinItem();
                     lSkinItem.Skins = new();
@@ -305,16 +333,16 @@ namespace RustSkinsEditor.Models
                         Name = item.Name
                     });
 
-                    foreach (var skin in item.Skins)
+                    foreach (var baseSkin in item.Skins)
                     {
-                        lSkinItem.Skins.Add(skin.ToString(),
+                        lSkinItem.Skins.Add(baseSkin.WorkshopId.ToString(),
                             new()
                             {
-                                Name = item.Name
+                                Name = baseSkin.Name
                             });
                     }
 
-                    LSkinsRoot.Items.Add(item.ItemShortname, lSkinItem);
+                    LSkinsRoot.Items.Add(item.Shortname, lSkinItem);
                 }
             }
         }
@@ -328,77 +356,38 @@ namespace RustSkinsEditor.Models
 
         public async Task GetSkinnerJSONString()
         {
-            ConvertSkinsToSkinner();
+            try
+            {
+                await FetchMissingSkinNames();
+            }
+            catch { }
+            
+            ConvertBaseModelToSkinner();
 
             if (SkinnerRoot == null) return;
 
-            List<ulong> skinlist = SkinnerRoot.Skins.Select(s => s.Key).ToList();
+            string skinnerJSON = Common.GetJsonString<SkinnerRoot>(SkinnerRoot);
 
-
-            if (skinlist.Count > 0)
+            if (skinnerJSON != null && skinnerJSON.StartsWith('{') && skinnerJSON.EndsWith('}'))
             {
-                int skip = 0;
-                int take = 3000;
+                skinnerJSON = Common.FormatJSON(skinnerJSON);
+                skinnerJSON = skinnerJSON.Substring(1, skinnerJSON.Length - 2).Trim();
 
-                while(skip < skinlist.Count)
-                {
-                    List<ulong> maxedList = skinlist.Skip(skip).Take(take).ToList();
-                    skip += maxedList.Count;
-
-                    var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync("whatever", maxedList);
-
-                    foreach (var fileDetails in fileDataDetails)
-                    {
-                        if (fileDetails.Title == null || fileDetails.Title == "")
-                            fileDetails.Title = fileDetails.PublishedFileId + "";
-
-                        SkinnerRoot.Skins[fileDetails.PublishedFileId].itemDisplayname = fileDetails.Title;
-                    }
-                }
-                
-
-                string skinnerJSON = Common.GetJsonString<SkinnerRoot>(SkinnerRoot);
-
-                if (skinnerJSON != null && skinnerJSON.StartsWith('{') && skinnerJSON.EndsWith('}'))
-                {
-                    skinnerJSON = Common.FormatJSON(skinnerJSON);
-                    skinnerJSON = skinnerJSON.Substring(1, skinnerJSON.Length - 2).Trim();
-
-                    SkinnerJSONString = skinnerJSON;
-                }
+                SkinnerJSONString = skinnerJSON;
             }
         }
 
-        private string _SkinBoxJSONString;
-        public string SkinBoxJSONString
+        public async Task FetchMissingSkinNames()
         {
-            get { return _SkinBoxJSONString; }
-            set { SetProperty(ref _SkinBoxJSONString, value); }
-        }
+            if (BaseModel == null) return;
 
-        public async Task GetSkinBoxJSONString()
-        {
-            ConvertSkinsToSkinBox();
+            List<ulong> skinlist = new();
 
-            if (SkinBoxRoot == null) return;
-
-
-            string skinBoxJSON = Common.GetJsonString<SkinBoxRoot>(SkinBoxRoot);
-
-            if (skinBoxJSON != null && skinBoxJSON.StartsWith('{') && skinBoxJSON.EndsWith('}'))
+            foreach (var baseItem in BaseModel.Items)
             {
-                skinBoxJSON = Common.FormatJSON(skinBoxJSON);
-                skinBoxJSON = skinBoxJSON.Substring(1, skinBoxJSON.Length - 2).Trim();
-
-                SkinBoxJSONString = skinBoxJSON;
+                skinlist.AddRange(baseItem.Skins.Where(s => string.IsNullOrEmpty(s.Name) 
+                    || s.Name == s.WorkshopId.ToString()).Select(s => s.WorkshopId));
             }
-        }
-
-        public async void FetchSteamSkinsNamesSkinnerAndSave(string filepath, Config config)
-        {
-            if (SkinnerRoot == null) return;
-
-            List<ulong> skinlist = SkinnerRoot.Skins.Select(s => s.Key).ToList();
 
             if (skinlist.Count > 0)
             {
@@ -417,11 +406,48 @@ namespace RustSkinsEditor.Models
                         if (fileDetails.Title == null || fileDetails.Title == "")
                             fileDetails.Title = fileDetails.PublishedFileId + "";
 
-                        SkinnerRoot.Skins[fileDetails.PublishedFileId].itemDisplayname = fileDetails.Title;
+                        bool found = false;
+                        foreach (var baseItem in BaseModel.Items)
+                        {
+                            foreach (var baseSkin in baseItem.Skins)
+                            {
+                                if(baseSkin.WorkshopId == fileDetails.PublishedFileId)
+                                {
+                                    found = true;
+                                    baseSkin.Name = fileDetails.Title;
+                                    break;
+                                }
+                            }
+
+                            if(found) break;
+                        }
                     }
                 }
+            }
+        }
 
-                Common.SaveJson<SkinnerRoot>(SkinnerRoot, filepath);
+        private string _SkinBoxJSONString;
+        public string SkinBoxJSONString
+        {
+            get { return _SkinBoxJSONString; }
+            set { SetProperty(ref _SkinBoxJSONString, value); }
+        }
+
+        public async Task GetSkinBoxJSONString()
+        {
+            ConvertBaseModelToSkinBox();
+
+            if (SkinBoxRoot == null) return;
+
+
+            string skinBoxJSON = Common.GetJsonString<SkinBoxRoot>(SkinBoxRoot);
+
+            if (skinBoxJSON != null && skinBoxJSON.StartsWith('{') && skinBoxJSON.EndsWith('}'))
+            {
+                skinBoxJSON = Common.FormatJSON(skinBoxJSON);
+                skinBoxJSON = skinBoxJSON.Substring(1, skinBoxJSON.Length - 2).Trim();
+
+                SkinBoxJSONString = skinBoxJSON;
             }
         }
     }
