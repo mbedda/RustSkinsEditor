@@ -40,7 +40,7 @@ namespace RustSkinsEditor
 
         }
 
-        public async void FetchSteamSkins(Skin item)
+        public async void FetchSteamSkins(BaseItem item)
         {
             if(item == null || item.Skins == null) return;
 
@@ -48,12 +48,13 @@ namespace RustSkinsEditor
 
             viewModel.SelectedItem = item;
 
-            foreach (var skin in item.Skins)
+            foreach (var baseSkin in item.Skins)
             {
-                ulong skincode = Convert.ToUInt64(skin);
-                if (skincode != 0)
+                if (baseSkin.PreviewUrl != null) continue;
+
+                if (baseSkin.WorkshopId != 0)
                 {
-                    skinlist.Add(skincode);
+                    skinlist.Add(baseSkin.WorkshopId);
                 }
             }
 
@@ -61,26 +62,23 @@ namespace RustSkinsEditor
             {
                 var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync("whatever", skinlist);
 
-                List<SteamSkinDetails> skinsDetails = new List<SteamSkinDetails>();
-
                 foreach (var fileDetails in fileDataDetails)
                 {
                     if (fileDetails.Title == null || fileDetails.Title == "")
                         fileDetails.Title = fileDetails.PublishedFileId + "";
 
-                    SteamSkinDetails skinDetails = new SteamSkinDetails();
-
-                    skinDetails.shortname = ((Skin)comboboxItems.SelectedItem).ItemShortname;
-                    skinDetails.Title = fileDetails.Title;
-                    skinDetails.Description = fileDetails.Description;
-                    skinDetails.Code = fileDetails.PublishedFileId;
-                    skinDetails.PreviewUrl = fileDetails.PreviewUrl;
-                    skinDetails.WorkshopUrl = new Uri("https://steamcommunity.com/sharedfiles/filedetails/?id=" + skinDetails.Code);
-                    skinDetails.Tags = fileDetails.Tags.ToList();
-                    skinsDetails.Add(skinDetails);
+                    foreach (var baseSkin in viewModel.SelectedItem.Skins)
+                    {
+                        if(baseSkin.WorkshopId == fileDetails.PublishedFileId)
+                        {
+                            baseSkin.Name = fileDetails.Title;
+                            baseSkin.PreviewUrl = fileDetails.PreviewUrl;
+                            baseSkin.WorkshopUrl = new Uri("https://steamcommunity.com/sharedfiles/filedetails/?id=" + baseSkin.WorkshopId);
+                        }
+                    }
                 }
 
-                viewModel.ResetSkinsCollection(skinsDetails);
+                //viewModel.ResetSkinsCollection(skinsDetails);
                 //itemSkinsControl.DataContext = skinsDetails;
             }
         }
@@ -90,7 +88,7 @@ namespace RustSkinsEditor
             if (comboboxItems.SelectedIndex > -1)
             {
                 //itemSkinsControl.DataContext = null;
-                FetchSteamSkins((Skin)(comboboxItems.SelectedItem));
+                FetchSteamSkins((BaseItem)(comboboxItems.SelectedItem));
                 AddSkinTB.Text = "";
             }
             AddSkinTB.Text = "";
@@ -100,8 +98,8 @@ namespace RustSkinsEditor
         {
             if (((ComboBox)sender).SelectedIndex > -1)
             {
-                viewModel.SelectedItemSkins = null;
-                FetchSteamSkins((Skin)((ComboBox)sender).SelectedItem);
+                viewModel.SelectedItem = null;
+                FetchSteamSkins((BaseItem)((ComboBox)sender).SelectedItem);
             }
         }
 
@@ -506,10 +504,10 @@ namespace RustSkinsEditor
             }
             viewModel.UpdateActivity();
 
-            if(viewModel.SelectedItemSkins != null)
+            if(viewModel.SelectedItem != null)
             {
-                viewModel.SelectedItemSkins = null;
-                FetchSteamSkins((Skin)(comboboxItems.SelectedItem));
+                viewModel.SelectedItem = null;
+                FetchSteamSkins((BaseItem)(comboboxItems.SelectedItem));
             }
 
             MessageBox.Show($"Deleted {count} market skins");

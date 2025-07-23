@@ -37,8 +37,8 @@
                                     <MenuItem Header="Delete" Click="Delete_Click" CommandParameter="{Binding}"/>
                                 </ContextMenu>
                             </StackPanel.ContextMenu>
-                            <Image Source="{Binding ItemShortname, Converter={StaticResource UriFromShortnameConverter}, ConverterParameter='Assets\\RustItems'}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80"></Image>
-                            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5" Text="{Binding Path=Name}" ToolTip="{Binding Path=ItemShortname}" Width="120" TextWrapping="Wrap" Height="30" TextAlignment="Center"></TextBlock>
+                            <Image Source="{Binding Shortname, Converter={StaticResource UriFromShortnameConverter}, ConverterParameter='Assets\\RustItems'}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80"></Image>
+                            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5" Text="{Binding Path=Name}" ToolTip="{Binding Path=Shortname}" Width="120" TextWrapping="Wrap" Height="30" TextAlignment="Center"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

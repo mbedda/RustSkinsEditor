@@ -24,8 +24,8 @@ namespace RustSkinsEditor.ViewModels
             set { SetProperty(ref skinsFile, value); }
         }
 
-        private Skin selectedItem;
-        public Skin SelectedItem
+        private BaseItem selectedItem;
+        public BaseItem SelectedItem
         {
             get { return selectedItem; }
             set { SetProperty(ref selectedItem, value); }
@@ -92,13 +92,6 @@ namespace RustSkinsEditor.ViewModels
         {
             get { return fullscreenImage; }
             set { SetProperty(ref fullscreenImage, value); }
-        }
-
-        private ObservableCollection<SteamSkinDetails> _SelectedItemSkins;
-        public ObservableCollection<SteamSkinDetails> SelectedItemSkins
-        {
-            get { return _SelectedItemSkins; }
-            set { SetProperty(ref _SelectedItemSkins, value); }
         }
 
         public DelegateCommand UpdateCommand { get; set; }
@@ -198,19 +191,19 @@ namespace RustSkinsEditor.ViewModels
             }
         }
 
-        private void SelectedItemSkins_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            var skin = SkinsFile.SkinsRoot.Skins.FirstOrDefault(s => s.ItemShortname == SelectedItem.ItemShortname);
-            skin.Skins.Clear();
-            skin.Skins.AddRange(SelectedItemSkins.Select(s => s.Code).ToList());
-            UpdateActivity();
-        }
+        //private void SelectedItemSkins_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        //{
+        //    var skin = SkinsFile.SkinsRoot.Skins.FirstOrDefault(s => s.ItemShortname == SelectedItem.ItemShortname);
+        //    skin.Skins.Clear();
+        //    skin.Skins.AddRange(SelectedItemSkins.Select(s => s.Code).ToList());
+        //    UpdateActivity();
+        //}
 
-        public void ResetSkinsCollection(IEnumerable<SteamSkinDetails> skinlist)
-        {
-            SelectedItemSkins = new ObservableCollection<SteamSkinDetails>(skinlist);
-            SelectedItemSkins.CollectionChanged += SelectedItemSkins_CollectionChanged;
-        }
+        //public void ResetSkinsCollection(IEnumerable<SteamSkinDetails> skinlist)
+        //{
+        //    SelectedItemSkins = new ObservableCollection<SteamSkinDetails>(skinlist);
+        //    SelectedItemSkins.CollectionChanged += SelectedItemSkins_CollectionChanged;
+        //}
 
         public void LoadConfig()
         {
@@ -281,22 +274,20 @@ namespace RustSkinsEditor.ViewModels
 
         public void LoadFile(string filepath, SkinFileSource skinFileSource)
         {
-            SelectedItemSkins = null;
+            SelectedItem = null;
             SkinsFile = new SkinsFile();
             SkinsFile.LoadFile(filepath, skinFileSource);
 
-            if (SkinsFile.SkinsRoot != null && SkinsFile.SkinsRoot.Skins != null)
+            if (SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
             {
-                //RustItems.ParseData(SkinsFile.SkinsRoot.Skins.Select(s => s.ItemShortname).ToList());
-
-                foreach (var skinitem in SkinsFile.SkinsRoot.Skins)
+                foreach (var baseItem in SkinsFile.BaseModel.Items)
                 {
-                    RustItem rustItem = RustItems.GetRustItem(skinitem.ItemShortname);
+                    RustItem rustItem = RustItems.GetRustItem(baseItem.Shortname);
 
                     if (rustItem != null)
-                        skinitem.Name = rustItem.displayName;
+                        baseItem.Name = rustItem.displayName;
                     else
-                        skinitem.Name = skinitem.ItemShortname;
+                        baseItem.Name = baseItem.Shortname;
                 }
             }
 
@@ -305,20 +296,20 @@ namespace RustSkinsEditor.ViewModels
 
         public void LoadFolder(string folderpath, SkinFileSource skinFileSource)
         {
-            SelectedItemSkins = null;
+            SelectedItem = null;
             SkinsFile = new SkinsFile();
             SkinsFile.LoadFiles(folderpath, skinFileSource);
 
-            if (SkinsFile.SkinsRoot != null && SkinsFile.SkinsRoot.Skins != null)
+            if (SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
             {
-                foreach (var skinitem in SkinsFile.SkinsRoot.Skins)
+                foreach (var baseItem in SkinsFile.BaseModel.Items)
                 {
-                    RustItem rustItem = RustItems.GetRustItem(skinitem.ItemShortname);
+                    RustItem rustItem = RustItems.GetRustItem(baseItem.Shortname);
 
                     if (rustItem != null)
-                        skinitem.Name = rustItem.displayName;
+                        baseItem.Name = rustItem.displayName;
                     else
-                        skinitem.Name = skinitem.ItemShortname;
+                        baseItem.Name = baseItem.Shortname;
                 }
             }
 
@@ -327,14 +318,14 @@ namespace RustSkinsEditor.ViewModels
 
         public void UpdateActivity()
         {
-            if (SkinsFile.SkinsRoot == null || SkinsFile.SkinsRoot.Skins == null)
+            if (SkinsFile.BaseModel == null || SkinsFile.BaseModel.Items == null)
             {
-                SkinsFile.SkinsRoot = new SkinsRoot();
+                SkinsFile.BaseModel = new BaseModel();
                 Activity = "No file loaded...";
             }
             else
             {
-                Activity = "Skins file imported.. " + SkinsFile.SkinsRoot.Skins.Count() + " items, " + SkinsFile.SkinsRoot.Skins.SelectMany(x => x.Skins).Count() + " skins";
+                Activity = "Skins file imported.. " + SkinsFile.BaseModel.Items.Count() + " items, " + SkinsFile.BaseModel.Items.SelectMany(x => x.Skins).Count() + " skins";
                 PartialLoadingScreen = false;
             }
         }

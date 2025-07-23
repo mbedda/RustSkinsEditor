@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RustSkinsEditor.UserControls"
              xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
              mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
-    <ListBox x:Name="SkinsListbox" Background="#66000000" ItemsSource="{Binding}" Loaded="SkinsListbox_Loaded"
+    <ListBox x:Name="SkinsListbox" Background="#66000000" ItemsSource="{Binding Skins}" Loaded="SkinsListbox_Loaded"
              SelectionMode="Extended" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
              Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" PreviewKeyDown="ListBox_PreviewKeyDown" Drop="SkinsListbox_Drop"
              BorderThickness="3" BorderBrush="#33000000" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True">
@@ -28,11 +28,11 @@
                     </StackPanel.ContextMenu>
                     <Grid>
                         <Image Source="{Binding PreviewUrl}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="120"></Image>
-                        <Grid Margin="2" Background="#B2C11E1E" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding Code, Converter={StaticResource IsMarketSkinConverter}}">
+                        <Grid Margin="2" Background="#B2C11E1E" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding WorkshopId, Converter={StaticResource IsMarketSkinConverter}}">
                             <TextBlock Margin="3,3" Text="MARKET SKIN" Foreground="White" FontWeight="Bold" FontSize="14" TextWrapping="Wrap"></TextBlock>
                         </Grid>
                     </Grid>
-                    <TextBlock HorizontalAlignment="Center" Foreground="White" Margin="0,0,0,5" Text="{Binding Path=Title}" ToolTip="{Binding Path=Title}" Width="120" TextWrapping="Wrap" Height="30" TextAlignment="Center"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" Foreground="White" Margin="0,0,0,5" Text="{Binding Path=Name}" ToolTip="{Binding Path=Name}" Width="120" TextWrapping="Wrap" Height="30" TextAlignment="Center"></TextBlock>
                 </StackPanel>
             </DataTemplate>
         </ListBox.ItemTemplate>

@@ -22,6 +22,14 @@ namespace RustSkinsEditor.Models
 
     public class SkinsFile : BindableBase
     {
+        private BaseModel _baseModel;
+        public BaseModel BaseModel
+        {
+            get { return _baseModel; }
+            set { SetProperty(ref _baseModel, value); }
+        }
+
+
         private SkinsRoot skinsRoot;
         public SkinsRoot SkinsRoot
         {
@@ -56,6 +64,7 @@ namespace RustSkinsEditor.Models
             {
                 case SkinFileSource.Skins:
                     SkinsRoot = Common.LoadJson<SkinsRoot>(filepath);
+                    ConverSkinsToBaseModel();
                     break;
                 case SkinFileSource.Skinner:
                     SkinnerRoot = Common.LoadJson<SkinnerRoot>(filepath);
@@ -101,12 +110,9 @@ namespace RustSkinsEditor.Models
             switch (skinFileSource)
             {
                 case SkinFileSource.Skins:
+                    ConvertBaseModelToSkins();
                     Common.SaveJsonNewton<SkinsRoot>(SkinsRoot, filepath);
                     break;
-                    //case SkinFileSource.Skinner:
-                    //    ConvertSkinsToSkinner();
-                    //    FetchSteamSkinsNamesSkinnerAndSave(filepath, config);
-                    //    break;
             }
         }
 
@@ -123,6 +129,60 @@ namespace RustSkinsEditor.Models
                     }
                     //Common.SaveJsonNewton<SkinsRoot>(SkinsRoot, filepath);
                     break;
+            }
+        }
+
+        public void ConverSkinsToBaseModel()
+        {
+            if (SkinsRoot != null)
+            {
+                BaseModel = new BaseModel();
+                BaseModel.Items = new();
+
+                foreach (var item in SkinsRoot.Skins)
+                {
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.Name = item.Name;
+                    baseItem.Shortname = item.ItemShortname;
+                    baseItem.Skins = new();
+
+                    foreach (var skin in item.Skins)
+                    {
+                        if (skin == 0) continue; // Skip skins with WorkshopId 0
+                        baseItem.Skins.Add(
+                            new()
+                            {
+                                WorkshopId = skin,
+                                Name = skin.ToString()
+                            });
+                    }
+
+                    BaseModel.Items.Add(baseItem);
+                }
+            }
+        }
+
+        public void ConvertBaseModelToSkins()
+        {
+            if (BaseModel != null && BaseModel.Items != null)
+            {
+                SkinsRoot SkinsRootTmp = new SkinsRoot();
+
+                foreach (var item in BaseModel.Items)
+                {
+                    Skin skin = new Skin();
+                    skin.ItemShortname = item.Shortname;
+                    foreach (var baseItem in item.Skins)
+                    {
+                        if (baseItem.WorkshopId == 0) continue;
+
+                        skin.Skins.Add(baseItem.WorkshopId);
+                    }
+
+                    SkinsRootTmp.Skins.Add(skin);
+                }
+
+                SkinsRoot = SkinsRootTmp;
             }
         }
 

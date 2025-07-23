@@ -75,11 +75,11 @@
                       SelectedValuePath="ItemShortname"
                       DisplayMemberPath="ItemShortname"
           KeyUp="Cmb_KeyUp" />-->
-            <ComboBox x:Name="comboboxItems" Grid.Column="2" IsTextSearchEnabled="True" Margin="10,0" ItemsSource="{Binding SkinsFile.SkinsRoot.Skins}" SelectedValuePath="ItemShortname" SelectionChanged="comboboxItems_SelectionChanged" Height="24">
+            <ComboBox x:Name="comboboxItems" Grid.Column="2" IsTextSearchEnabled="True" Margin="10,0" ItemsSource="{Binding SkinsFile.BaseModel.Items}" SelectedValuePath="Shortname" SelectionChanged="comboboxItems_SelectionChanged" Height="24">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding ItemShortname, Converter={StaticResource UriFromShortnameConverter}, ConverterParameter='Assets\\RustItems'}" Width="20" Height="20" Margin="0,0,5,0" />
+                            <Image Source="{Binding Shortname, Converter={StaticResource UriFromShortnameConverter}, ConverterParameter='Assets\\RustItems'}" Width="20" Height="20" Margin="0,0,5,0" />
                             <TextBlock Text="{Binding Name}" />
                         </StackPanel>
                     </DataTemplate>
@@ -87,7 +87,7 @@
             </ComboBox>
         </Grid>
         <Grid Grid.Row="2" Margin="10">
-            <UserControls:ItemSkinsControl x:Name="itemSkinsControl" DataContext="{Binding SelectedItemSkins}" />
+            <UserControls:ItemSkinsControl x:Name="itemSkinsControl" DataContext="{Binding SelectedItem}" />
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -113,7 +113,7 @@
         </Grid>
         <Grid Grid.RowSpan="7" Visibility="{Binding ItemsModal, Converter={StaticResource BooleanToVisibilityConverter}}">
             <Grid Background="#B2000000" PreviewMouseLeftButtonUp="ItemList_PreviewMouseLeftButtonUp"></Grid>
-            <UserControls:ItemControl DataContext="{Binding SkinsFile.SkinsRoot.Skins}"/>
+            <UserControls:ItemControl DataContext="{Binding SkinsFile.BaseModel.Items}"/>
         </Grid>
         <Grid Grid.RowSpan="7" Background="#66000000" Visibility="{Binding Fullscreen, Converter={StaticResource BooleanToVisibilityConverter}}" PreviewMouseLeftButtonUp="Fullscreen_PreviewMouseLeftButtonUp">
             <Viewbox Margin="50">

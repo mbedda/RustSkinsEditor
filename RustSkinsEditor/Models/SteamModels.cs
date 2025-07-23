@@ -206,14 +206,14 @@ namespace RustSkinsEditor.Models
 
     }
 
-    public class SteamSkinDetails
-    {
-        public string shortname { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public ulong Code { get; set; }
-        public Uri PreviewUrl { get; set; }
-        public Uri WorkshopUrl { get; set; }
-        public List<string> Tags { get; set; }
-    }
+    //public class SteamSkinDetails
+    //{
+    //    public string shortname { get; set; }
+    //    public string Title { get; set; }
+    //    public string Description { get; set; }
+    //    public ulong Code { get; set; }
+    //    public Uri PreviewUrl { get; set; }
+    //    public Uri WorkshopUrl { get; set; }
+    //    public List<string> Tags { get; set; }
+    //}
 }
