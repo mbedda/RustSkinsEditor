@@ -122,7 +122,8 @@ namespace RustSkinsEditor.Models
             {"Waterpipe Shotgun","shotgun.waterpipe"},
             {"Wood Storage Box","box.wooden"},
             {"Wooden Door","door.hinged.wood"},
-            {"Work Boots","shoes.boots"}
+            {"Work Boots","shoes.boots"},
+            {"Spinning Wheel", "spinner.wheel"}
         };
     }
 

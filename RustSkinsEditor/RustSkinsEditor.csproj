@@ -108,6 +108,7 @@
     <None Remove="Assets\RustItems\rifle.ak.png" />
     <None Remove="Assets\RustItems\rifle.bolt.png" />
     <None Remove="Assets\RustItems\rifle.l96.png" />
+    <None Remove="Assets\RustItems\rifle.lr300.png" />
     <None Remove="Assets\RustItems\rifle.m39.png" />
     <None Remove="Assets\RustItems\rifle.semiauto.png" />
     <None Remove="Assets\RustItems\riot.helmet.png" />
@@ -366,6 +367,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\rifle.l96.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rifle.lr300.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\rifle.m39.png">

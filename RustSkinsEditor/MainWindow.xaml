@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RustSkinsEditor"
         xmlns:UserControls="clr-namespace:RustSkinsEditor.UserControls" xmlns:converters="clr-namespace:RustSkinsEditor.Converters" x:Class="RustSkinsEditor.MainWindow"
         mc:Ignorable="d" Loaded="Window_Loaded"
-        Title="Rust Skins Editor" Height="600" Width="1100" WindowStartupLocation="CenterScreen">
+        Title="Rust Skins Editor" Height="600" Width="1110" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
