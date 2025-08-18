@@ -367,6 +367,11 @@ namespace RustSkinsEditor.ViewModels
                         SkinsFile.SaveFiles(filepath, Config, skinFileSource);
                         FullLoadingScreen = false;
                         break;
+                    case SkinFileSource.SkinController:
+                        FullLoadingScreen = true;
+                        SkinsFile.SaveFile(filepath, Config, skinFileSource);
+                        FullLoadingScreen = false;
+                        break;
                 }
             }
         }

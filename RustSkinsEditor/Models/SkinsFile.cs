@@ -18,7 +18,8 @@ namespace RustSkinsEditor.Models
         Skinner,
         SkinnerBeta,
         SkinBox,
-        LSkins
+        LSkins,
+        SkinController
     }
 
     public class SkinsFile : BindableBase
@@ -59,6 +60,13 @@ namespace RustSkinsEditor.Models
             set { SetProperty(ref lSkinsRoot, value); }
         }
 
+        private SkinControllerRoot skinControllerRoot;
+        public SkinControllerRoot SkinControllerRoot
+        {
+            get { return skinControllerRoot; }
+            set { SetProperty(ref skinControllerRoot, value); }
+        }
+
         public void LoadFile(string filepath, SkinFileSource skinFileSource = SkinFileSource.Skins)
         {
             switch (skinFileSource)
@@ -79,6 +87,12 @@ namespace RustSkinsEditor.Models
                 case SkinFileSource.SkinBox:
                     SkinBoxRoot = Common.LoadJson<SkinBoxRoot>(filepath);
                     ConvertSkinBoxToBaseModel();
+                    break;
+                case SkinFileSource.SkinController:
+                    SkinControllerRoot = new SkinControllerRoot();
+                    SkinControllerRoot.Items = Common.LoadJson<Dictionary<int, List<SkinControllerRoot.SkinControllerSkin>>>(filepath);
+                    
+                    ConvertSkinControllerToBaseModel();
                     break;
             }
         }
@@ -111,7 +125,7 @@ namespace RustSkinsEditor.Models
             }
         }
 
-        public void SaveFile(string filepath, Config config, SkinFileSource skinFileSource = SkinFileSource.Skins)
+        public async Task SaveFile(string filepath, Config config, SkinFileSource skinFileSource = SkinFileSource.Skins)
         {
             switch (skinFileSource)
             {
@@ -122,16 +136,26 @@ namespace RustSkinsEditor.Models
                 case SkinFileSource.SkinnerBeta:
                     try
                     {
-                        FetchMissingSkinNames();
+                        await FetchMissingSkinNames();
                     }
                     catch { }
                     ConvertBaseModelToSkinner();
                     Common.SaveJsonNewton<Dictionary<ulong, SkinnerRoot.SkinnerSkin>>(SkinnerRoot.Skins, filepath);
                     break;
+                case SkinFileSource.SkinController:
+                    try
+                    {
+                        await FetchMissingSkinNames();
+                    }
+                    catch { }
+                    
+                    ConvertBaseModelToSkinController();
+                    Common.SaveJsonNewton<Dictionary<int, List<SkinControllerRoot.SkinControllerSkin>>>(SkinControllerRoot.Items, filepath);
+                    break;
             }
         }
 
-        public async Task  SaveFiles(string folderpath, Config config, SkinFileSource skinFileSource = SkinFileSource.LSkins)
+        public async Task SaveFiles(string folderpath, Config config, SkinFileSource skinFileSource = SkinFileSource.LSkins)
         {
             switch (skinFileSource)
             {
@@ -362,6 +386,106 @@ namespace RustSkinsEditor.Models
             }
         }
 
+        public void ConvertSkinControllerToBaseModel()
+        {
+            if (SkinControllerRoot != null && SkinControllerRoot.Items != null)
+            {
+                MainViewModel vm = ((MainWindow)Application.Current.MainWindow).viewModel;
+
+                BaseModel = new BaseModel();
+                BaseModel.Items = new();
+
+                foreach (var item in SkinControllerRoot.Items)
+                {
+                    RustItem rustItem = GetRustItem(item.Key, vm);
+                    if (rustItem == null) continue;
+
+                    BaseItem baseItem = new BaseItem();
+                    baseItem.Shortname = rustItem.shortName;
+                    baseItem.Skins = new();
+
+                    foreach (var skin in item.Value)
+                    {
+                        if (skin.SkinID == 0) continue; // Skip skins with WorkshopId 0
+                        baseItem.Skins.Add(
+                            new()
+                            {
+                                WorkshopId = skin.SkinID,
+                                Name = skin.SkinName
+                            });
+                    }
+
+                    BaseModel.Items.Add(baseItem);
+                }
+            }
+        }
+
+        public void ConvertBaseModelToSkinController()
+        {
+            if (BaseModel != null && BaseModel.Items != null)
+            {
+                MainViewModel vm = ((MainWindow)Application.Current.MainWindow).viewModel;
+
+                SkinControllerRoot = new();
+                SkinControllerRoot.Items = new();
+
+                foreach (var item in BaseModel.Items)
+                {
+                    RustItem rustItem = GetRustItem(item.Shortname, vm);
+                    if (rustItem == null) continue;
+
+                    List<SkinControllerRoot.SkinControllerSkin> skinContSkins = new ();
+
+                    foreach (var baseSkin in item.Skins)
+                    {
+                        skinContSkins.Add(
+                            new()
+                            {
+                                Category = rustItem.category,
+                                ItemID = rustItem.itemID,
+                                ItemShortname = item.Shortname,
+                                SkinID = baseSkin.WorkshopId,
+                                SkinName = baseSkin.Name
+                            });
+                    }
+
+                    SkinControllerRoot.Items.Add(rustItem.itemID, skinContSkins);
+                }
+            }
+        }
+
+        public RustItem GetRustItem(int itemID, MainViewModel vm)
+        {
+            RustItem result = null;
+
+            foreach (var item in vm.RustItems.Items)
+            {
+                if(item.itemID == itemID)
+                {
+                    result = item;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        public RustItem GetRustItem(string shortname, MainViewModel vm)
+        {
+            RustItem result = null;
+
+            foreach (var item in vm.RustItems.Items)
+            {
+                if (item.shortName == shortname)
+                {
+                    result = item;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
         private string _SkinnerJSONString;
         public string SkinnerJSONString
         {
@@ -407,7 +531,7 @@ namespace RustSkinsEditor.Models
             if (skinlist.Count > 0)
             {
                 int skip = 0;
-                int take = 3000;
+                int take = 1500;
 
                 while (skip < skinlist.Count)
                 {

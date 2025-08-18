@@ -445,6 +445,19 @@ namespace RustSkinsEditor
             }
         }
 
+        private void SkinControllerLoad_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDlg = new Microsoft.Win32.OpenFileDialog();
+
+            Nullable<bool> result = openFileDlg.ShowDialog();
+            if (result == true)
+            {
+                FilePathTB.Text = openFileDlg.FileName;
+                //itemSkinsControl.DataContext = null;
+                viewModel.LoadFile(FilePathTB.Text, SkinFileSource.SkinController);
+            }
+        }
+
         private void SkinsSave_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -486,6 +499,15 @@ namespace RustSkinsEditor
             {
                 viewModel.Save(dialog.FileName, SkinFileSource.LSkins);
             }
+        }
+
+        private void SkinControllerSave_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON file (*.json)|*.json";
+
+            if (saveFileDialog.ShowDialog() == true)
+                viewModel.Save(saveFileDialog.FileName, SkinFileSource.SkinController);
         }
 
         private void CopySkinnerJSONText_Click(object sender, RoutedEventArgs e)
