@@ -55,16 +55,15 @@ namespace RustSkinsEditor.UserControls
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you would like to delete selected skin?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you would like to delete selected skins?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                BaseSkin baseSkin = (BaseSkin)((MenuItem)sender).CommandParameter;
+                for (int i = SkinsListbox.SelectedItems.Count - 1; i >= 0; i--)
+                {
+                    BaseSkin baseSkin = (BaseSkin)SkinsListbox.SelectedItems[i];
 
-                //mainViewModel.Delete(skinDetails.shortname, skinDetails.Code);
-                //List<SteamSkinDetails> skinDetailsList = (List<SteamSkinDetails>)DataContext;
-                mainViewModel.SelectedItem.Skins.Remove(baseSkin);
-                //DataContext = null;
-                //DataContext = skinDetailsList;
+                    mainViewModel.SelectedItem.Skins.Remove(baseSkin);
+                }
             }
         }
 
@@ -81,12 +80,8 @@ namespace RustSkinsEditor.UserControls
                         {
                             BaseSkin baseSkin = (BaseSkin)SkinsListbox.SelectedItems[i];
 
-                            //mainViewModel.Delete(skinDetails.shortname, skinDetails.Code);
                             mainViewModel.SelectedItem.Skins.Remove(baseSkin);
                         }
-
-                        //DataContext = null;
-                        //DataContext = skinDetailsList;
                     }
                 }
             }
