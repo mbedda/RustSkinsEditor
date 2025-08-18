@@ -16,6 +16,8 @@ namespace RustSkinsEditor.Models.Plugins
             public string itemShortname { get; set; }
             [DataMember(Name = "itemDisplayname", Order = 1)]
             public string itemDisplayname { get; set; }
+            [DataMember(Name = "permission", Order = 2)]
+            public string permission { get; set; } = "skinner.default";
         }
     }
 }

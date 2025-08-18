@@ -16,6 +16,7 @@ namespace RustSkinsEditor.Models
     {
         Skins,
         Skinner,
+        SkinnerBeta,
         SkinBox,
         LSkins
     }
@@ -70,6 +71,11 @@ namespace RustSkinsEditor.Models
                     SkinnerRoot = Common.LoadJson<SkinnerRoot>(filepath);
                     ConvertSkinnerToBaseModel();
                     break;
+                case SkinFileSource.SkinnerBeta:
+                    SkinnerRoot = new SkinnerRoot();
+                    SkinnerRoot.Skins = Common.LoadJson<Dictionary<ulong, SkinnerRoot.SkinnerSkin>>(filepath);
+                    ConvertSkinnerToBaseModel();
+                    break;
                 case SkinFileSource.SkinBox:
                     SkinBoxRoot = Common.LoadJson<SkinBoxRoot>(filepath);
                     ConvertSkinBoxToBaseModel();
@@ -112,6 +118,15 @@ namespace RustSkinsEditor.Models
                 case SkinFileSource.Skins:
                     ConvertBaseModelToSkins();
                     Common.SaveJsonNewton<SkinsRoot>(SkinsRoot, filepath);
+                    break;
+                case SkinFileSource.SkinnerBeta:
+                    try
+                    {
+                        FetchMissingSkinNames();
+                    }
+                    catch { }
+                    ConvertBaseModelToSkinner();
+                    Common.SaveJsonNewton<Dictionary<ulong, SkinnerRoot.SkinnerSkin>>(SkinnerRoot.Skins, filepath);
                     break;
             }
         }

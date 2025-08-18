@@ -351,6 +351,11 @@ namespace RustSkinsEditor.ViewModels
                         ShowSkinnerJSON();
                         FullLoadingScreen = false;
                         break;
+                    case SkinFileSource.SkinnerBeta:
+                        FullLoadingScreen = true;
+                        SkinsFile.SaveFile(filepath, Config, skinFileSource);
+                        FullLoadingScreen = false;
+                        break;
                     case SkinFileSource.SkinBox:
                         FullLoadingScreen = true;
                         await SkinsFile.GetSkinBoxJSONString();
