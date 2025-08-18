@@ -120,18 +120,19 @@ namespace RustSkinsEditor.Models
 
             var itemFiles = Directory.EnumerateFiles(itemsDirectory, "*.png");
 
-            //List<string> skinnableItems = new List<string>();
+            List<string> skinnableItems1 = new List<string>();
 
-            //foreach (var dlc in DLCsData.Data)
-            //{
-            //    if (dlc.workshopId.HasValue && dlc.workshopId != 0 && !DLCsData.ProhibitedSkins.Contains(dlc.workshopId.Value))
-            //    {
-            //        DLCsData.ProhibitedSkins.Add(dlc.workshopId.Value);
+            foreach (var dlc in DLCsData.Data)
+            {
+                if (dlc.workshopId.HasValue && dlc.workshopId != 0)
+                {
+                    if(!DLCsData.ProhibitedSkins.Contains(dlc.workshopId.Value))
+                        DLCsData.ProhibitedSkins.Add(dlc.workshopId.Value);
 
-            //        if (!string.IsNullOrEmpty(dlc.itemShortName) && !skinnableItems.Contains(dlc.itemShortName))
-            //            skinnableItems.Add(dlc.itemShortName);
-            //    }
-            //}
+                    if (!string.IsNullOrEmpty(dlc.itemShortName) && !skinnableItems1.Contains(dlc.itemShortName.Replace("lr300.item", "rifle.lr300")))
+                        skinnableItems1.Add(dlc.itemShortName.Replace("lr300.item", "rifle.lr300"));
+                }
+            }
 
             bool newItemsFound = false;
 
@@ -143,7 +144,7 @@ namespace RustSkinsEditor.Models
                 {
                     BundleItem bundleItem = await Common.LoadJsonAsync<BundleItem>(item.Replace(".png", ".json"));
 
-                    if (string.IsNullOrEmpty(bundleItem.Name) || !skinnableItems.Contains(bundleItem.shortname)) continue;
+                    if (string.IsNullOrEmpty(bundleItem.Name) || !skinnableItems1.Contains(bundleItem.shortname)) continue;
 
                     await ResizeAndSaveImageFromSteam(appPath, shortname, steamPath);
 
@@ -151,7 +152,8 @@ namespace RustSkinsEditor.Models
                     {
                         shortName = bundleItem.shortname,
                         category = bundleItem.Category,
-                        displayName = bundleItem.Name
+                        displayName = bundleItem.Name,
+                        itemID = bundleItem.itemid
                     });
 
                     newItemsFound = true;
@@ -184,17 +186,6 @@ namespace RustSkinsEditor.Models
             }
             destination.Save(itempath, ImageFormat.Png);
         }
-
-        public static List<string> skinnableItems = new() {
-            "attire.hide.boots", "attire.hide.helterneck", "attire.hide.pants", "attire.hide.poncho", "attire.hide.skirt", "attire.hide.vest", "barricade.concrete", "barricade.sandbags", "bone.club",
-            "bow.hunting", "box.wooden", "box.wooden.large", "bucket.helmet", "burlap.gloves", "burlap.headwrap", "burlap.shirt", "burlap.shoes", "burlap.trousers",
-            "chair", "coffeecan.helmet", "crossbow", "deer.skull.mask", "door.double.hinged.metal", "door.double.hinged.toptier", "door.double.hinged.wood", "door.hinged.metal", "door.hinged.toptier",
-            "door.hinged.wood", "explosive.satchel", "fridge", "fun.guitar", "furnace", "grenade.f1", "hammer", "hat.beenie", "hat.boonie",
-            "hat.cap", "hat.miner", "hoodie", "jacket", "knife.bone", "largebackpack", "longsleeve.tshirt", "mask.bandana", "metal.facemask",
-            "metal.plate.torso", "pants", "rifle.ak", "rifle.bolt", "roadsign.gloves", "roadsign.jacket", "roadsign.kilt", "shirt.collared", "shirt.tanktop",
-            "shoes.boots", "shorts", "spear.wooden", "sunglasses", "tshirt", "spinner.wheel", "beachchair", "beachparasol", "beachtowel", "boogieboard", "hazmatsuit",
-            "twitch.headset", "innertube", "paddlingpool", "skullspikes", "skull.trophy", "sled", "gun.water"
-        };
     }
 
     public class DLCsData
@@ -211,6 +202,13 @@ namespace RustSkinsEditor.Models
         {
             get { return _displayName; }
             set { SetProperty(ref _displayName, value); }
+        }
+
+        private int _itemID;
+        public int itemID
+        {
+            get { return _itemID; }
+            set { SetProperty(ref _itemID, value); }
         }
 
         private string _shortName;

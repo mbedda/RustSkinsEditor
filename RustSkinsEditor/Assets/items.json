@@ -1,556 +1,577 @@
 [
   {
     "displayName": "Hide Boots",
+    "itemID": 794356786,
     "shortName": "attire.hide.boots",
     "category": "Attire"
   },
   {
     "displayName": "Hide Halterneck",
+    "itemID": 3222790,
     "shortName": "attire.hide.helterneck",
     "category": "Attire"
   },
   {
     "displayName": "Hide Pants",
+    "itemID": 1722154847,
     "shortName": "attire.hide.pants",
     "category": "Attire"
   },
   {
     "displayName": "Hide Poncho",
+    "itemID": 980333378,
     "shortName": "attire.hide.poncho",
     "category": "Attire"
   },
   {
     "displayName": "Hide Skirt",
+    "itemID": -1773144852,
     "shortName": "attire.hide.skirt",
     "category": "Attire"
   },
   {
     "displayName": "Hide Vest",
+    "itemID": 196700171,
     "shortName": "attire.hide.vest",
     "category": "Attire"
   },
   {
     "displayName": "Concrete Barricade",
+    "itemID": -1950721390,
     "shortName": "barricade.concrete",
     "category": "Construction"
   },
   {
     "displayName": "Sandbag Barricade",
+    "itemID": -559599960,
     "shortName": "barricade.sandbags",
     "category": "Construction"
   },
   {
-    "displayName": "Beach Chair",
-    "shortName": "beachchair",
-    "category": "Fun"
-  },
-  {
-    "displayName": "Beach Parasol",
-    "shortName": "beachparasol",
-    "category": "Fun"
-  },
-  {
-    "displayName": "Beach Towel",
-    "shortName": "beachtowel",
-    "category": "Fun"
-  },
-  {
     "displayName": "Bone Club",
+    "itemID": 1711033574,
     "shortName": "bone.club",
     "category": "Weapon"
   },
   {
-    "displayName": "Boogie Board",
-    "shortName": "boogieboard",
-    "category": "Fun"
-  },
-  {
     "displayName": "Hunting Bow",
+    "itemID": 1443579727,
     "shortName": "bow.hunting",
     "category": "Weapon"
   },
   {
     "displayName": "Large Wood Box",
+    "itemID": 833533164,
     "shortName": "box.wooden.large",
     "category": "Items"
   },
   {
     "displayName": "Wood Storage Box",
+    "itemID": -180129657,
     "shortName": "box.wooden",
     "category": "Items"
   },
   {
     "displayName": "Bucket Helmet",
+    "itemID": 850280505,
     "shortName": "bucket.helmet",
     "category": "Attire"
   },
   {
     "displayName": "Leather Gloves",
+    "itemID": 1366282552,
     "shortName": "burlap.gloves",
     "category": "Attire"
   },
   {
     "displayName": "Burlap Headwrap",
+    "itemID": 1877339384,
     "shortName": "burlap.headwrap",
     "category": "Attire"
   },
   {
     "displayName": "Burlap Shirt",
+    "itemID": 602741290,
     "shortName": "burlap.shirt",
     "category": "Attire"
   },
   {
     "displayName": "Burlap Shoes",
+    "itemID": -761829530,
     "shortName": "burlap.shoes",
     "category": "Attire"
   },
   {
     "displayName": "Burlap Trousers",
+    "itemID": 1992974553,
     "shortName": "burlap.trousers",
     "category": "Attire"
   },
   {
     "displayName": "Chair",
+    "itemID": 1534542921,
     "shortName": "chair",
     "category": "Items"
   },
   {
     "displayName": "Coffee Can Helmet",
+    "itemID": -803263829,
     "shortName": "coffeecan.helmet",
     "category": "Attire"
   },
   {
     "displayName": "Crossbow",
+    "itemID": 1965232394,
     "shortName": "crossbow",
     "category": "Weapon"
   },
   {
     "displayName": "Bone Helmet",
+    "itemID": -1903165497,
     "shortName": "deer.skull.mask",
     "category": "Attire"
   },
   {
     "displayName": "Sheet Metal Double Door",
+    "itemID": 1390353317,
     "shortName": "door.double.hinged.metal",
     "category": "Construction"
   },
   {
     "displayName": "Armored Double Door",
+    "itemID": 1221063409,
     "shortName": "door.double.hinged.toptier",
     "category": "Construction"
   },
   {
     "displayName": "Wood Double Door",
+    "itemID": -1336109173,
     "shortName": "door.double.hinged.wood",
     "category": "Construction"
   },
   {
     "displayName": "Sheet Metal Door",
+    "itemID": -2067472972,
     "shortName": "door.hinged.metal",
     "category": "Construction"
   },
   {
     "displayName": "Armored Door",
+    "itemID": 1353298668,
     "shortName": "door.hinged.toptier",
     "category": "Construction"
   },
   {
     "displayName": "Wooden Door",
+    "itemID": 1729120840,
     "shortName": "door.hinged.wood",
     "category": "Construction"
   },
   {
     "displayName": "Satchel Charge",
+    "itemID": -1878475007,
     "shortName": "explosive.satchel",
     "category": "Tool"
   },
   {
     "displayName": "Fridge",
+    "itemID": 1413014235,
     "shortName": "fridge",
     "category": "Electrical"
   },
   {
     "displayName": "Acoustic Guitar",
+    "itemID": -2124352573,
     "shortName": "fun.guitar",
     "category": "Fun"
   },
   {
     "displayName": "Furnace",
+    "itemID": -1999722522,
     "shortName": "furnace",
     "category": "Items"
   },
   {
     "displayName": "F1 Grenade",
+    "itemID": 143803535,
     "shortName": "grenade.f1",
     "category": "Weapon"
   },
   {
-    "displayName": "Water Gun",
-    "shortName": "gun.water",
-    "category": "Weapon"
-  },
-  {
     "displayName": "Hammer",
+    "itemID": 200773292,
     "shortName": "hammer",
     "category": "Tool"
   },
   {
-    "displayName": "Salvaged Hammer",
-    "shortName": "hammer.salvaged",
-    "category": "Tool"
-  },
-  {
     "displayName": "Beenie Hat",
+    "itemID": 1675639563,
     "shortName": "hat.beenie",
     "category": "Attire"
   },
   {
     "displayName": "Boonie Hat",
+    "itemID": -23994173,
     "shortName": "hat.boonie",
     "category": "Attire"
   },
   {
     "displayName": "Baseball Cap",
+    "itemID": -1022661119,
     "shortName": "hat.cap",
     "category": "Attire"
   },
   {
     "displayName": "Miners Hat",
+    "itemID": -1539025626,
     "shortName": "hat.miner",
     "category": "Attire"
   },
   {
     "displayName": "Hatchet",
+    "itemID": -1252059217,
     "shortName": "hatchet",
     "category": "Tool"
   },
   {
-    "displayName": "Hazmat Suit",
-    "shortName": "hazmatsuit",
-    "category": "Attire"
-  },
-  {
     "displayName": "Hoodie",
+    "itemID": 1751045826,
     "shortName": "hoodie",
     "category": "Attire"
   },
   {
     "displayName": "Salvaged Icepick",
+    "itemID": -1780802565,
     "shortName": "icepick.salvaged",
     "category": "Tool"
   },
   {
-    "displayName": "Inner Tube",
-    "shortName": "innertube",
-    "category": "Fun"
-  },
-  {
     "displayName": "Jacket",
+    "itemID": -1163532624,
     "shortName": "jacket",
     "category": "Attire"
   },
   {
     "displayName": "Snow Jacket",
+    "itemID": -48090175,
     "shortName": "jacket.snow",
     "category": "Attire"
   },
   {
     "displayName": "Jackhammer",
+    "itemID": 1488979457,
     "shortName": "jackhammer",
     "category": "Tool"
   },
   {
     "displayName": "Bone Knife",
+    "itemID": 1814288539,
     "shortName": "knife.bone",
     "category": "Weapon"
   },
   {
     "displayName": "Combat Knife",
+    "itemID": 2040726127,
     "shortName": "knife.combat",
     "category": "Weapon"
   },
   {
     "displayName": "Large Backpack",
+    "itemID": -907422733,
     "shortName": "largebackpack",
     "category": "Attire"
   },
   {
     "displayName": "M249",
+    "itemID": -2069578888,
     "shortName": "lmg.m249",
     "category": "Weapon"
   },
   {
     "displayName": "Locker",
+    "itemID": -110921842,
     "shortName": "locker",
     "category": "Items"
   },
   {
     "displayName": "Longsword",
+    "itemID": -1469578201,
     "shortName": "longsword",
     "category": "Weapon"
   },
   {
     "displayName": "Improvised Balaclava",
+    "itemID": -2012470695,
     "shortName": "mask.balaclava",
     "category": "Attire"
   },
   {
     "displayName": "Bandana Mask",
+    "itemID": -702051347,
     "shortName": "mask.bandana",
     "category": "Attire"
   },
   {
     "displayName": "Metal Facemask",
+    "itemID": -194953424,
     "shortName": "metal.facemask",
     "category": "Attire"
   },
   {
     "displayName": "Metal Chest Plate",
+    "itemID": 1110385766,
     "shortName": "metal.plate.torso",
     "category": "Attire"
   },
   {
-    "displayName": "Paddling Pool",
-    "shortName": "paddlingpool",
-    "category": "Fun"
-  },
-  {
     "displayName": "Pants",
+    "itemID": 237239288,
     "shortName": "pants",
     "category": "Attire"
   },
   {
     "displayName": "Shorts",
+    "itemID": -1695367501,
     "shortName": "pants.shorts",
     "category": "Attire"
   },
   {
     "displayName": "Pickaxe",
+    "itemID": -1302129395,
     "shortName": "pickaxe",
     "category": "Tool"
   },
   {
     "displayName": "Eoka Pistol",
+    "itemID": -75944661,
     "shortName": "pistol.eoka",
     "category": "Weapon"
   },
   {
     "displayName": "Python Revolver",
+    "itemID": 1373971859,
     "shortName": "pistol.python",
     "category": "Weapon"
   },
   {
     "displayName": "Revolver",
+    "itemID": 649912614,
     "shortName": "pistol.revolver",
     "category": "Weapon"
   },
   {
     "displayName": "Semi-Automatic Pistol",
+    "itemID": 818877484,
     "shortName": "pistol.semiauto",
     "category": "Weapon"
   },
   {
     "displayName": "Assault Rifle",
+    "itemID": 1545779598,
     "shortName": "rifle.ak",
     "category": "Weapon"
   },
   {
     "displayName": "Bolt Action Rifle",
+    "itemID": 1588298435,
     "shortName": "rifle.bolt",
     "category": "Weapon"
   },
   {
     "displayName": "L96 Rifle",
+    "itemID": -778367295,
     "shortName": "rifle.l96",
     "category": "Weapon"
   },
   {
     "displayName": "LR-300 Assault Rifle",
+    "itemID": -1812555177,
     "shortName": "rifle.lr300",
     "category": "Weapon"
   },
   {
     "displayName": "M39 Rifle",
+    "itemID": 28201841,
     "shortName": "rifle.m39",
     "category": "Weapon"
   },
   {
     "displayName": "Semi-Automatic Rifle",
+    "itemID": -904863145,
     "shortName": "rifle.semiauto",
     "category": "Weapon"
   },
   {
     "displayName": "Riot Helmet",
+    "itemID": 671063303,
     "shortName": "riot.helmet",
     "category": "Attire"
   },
   {
-    "displayName": "Roadsign Gloves",
+    "displayName": "Road Sign Gloves",
+    "itemID": -699558439,
     "shortName": "roadsign.gloves",
     "category": "Attire"
   },
   {
     "displayName": "Road Sign Jacket",
+    "itemID": -2002277461,
     "shortName": "roadsign.jacket",
     "category": "Attire"
   },
   {
     "displayName": "Road Sign Kilt",
+    "itemID": 1850456855,
     "shortName": "roadsign.kilt",
     "category": "Attire"
   },
   {
     "displayName": "Rock",
+    "itemID": 963906841,
     "shortName": "rock",
     "category": "Tool"
   },
   {
     "displayName": "Rocket Launcher",
+    "itemID": 442886268,
     "shortName": "rocket.launcher",
     "category": "Weapon"
   },
   {
     "displayName": "Rug Bear Skin",
+    "itemID": -1104881824,
     "shortName": "rug.bear",
     "category": "Items"
   },
   {
     "displayName": "Rug",
+    "itemID": -1985799200,
     "shortName": "rug",
     "category": "Items"
   },
   {
     "displayName": "Salvaged Sword",
+    "itemID": 1326180354,
     "shortName": "salvaged.sword",
     "category": "Weapon"
   },
   {
     "displayName": "Shirt",
+    "itemID": -2025184684,
     "shortName": "shirt.collared",
     "category": "Attire"
   },
   {
     "displayName": "Tank Top",
+    "itemID": 1608640313,
     "shortName": "shirt.tanktop",
     "category": "Attire"
   },
   {
     "displayName": "Boots",
+    "itemID": -1549739227,
     "shortName": "shoes.boots",
     "category": "Attire"
   },
   {
     "displayName": "Double Barrel Shotgun",
+    "itemID": -765183617,
     "shortName": "shotgun.double",
     "category": "Weapon"
   },
   {
     "displayName": "Pump Shotgun",
+    "itemID": 795371088,
     "shortName": "shotgun.pump",
     "category": "Weapon"
   },
   {
     "displayName": "Waterpipe Shotgun",
+    "itemID": -1367281941,
     "shortName": "shotgun.waterpipe",
     "category": "Weapon"
   },
   {
-    "displayName": "Skull Trophy",
-    "shortName": "skull.trophy",
-    "category": "Fun"
-  },
-  {
-    "displayName": "Skull Spikes",
-    "shortName": "skullspikes",
-    "category": "Fun"
-  },
-  {
-    "displayName": "Sled",
-    "shortName": "sled",
-    "category": "Fun"
-  },
-  {
     "displayName": "Sleeping Bag",
+    "itemID": -1754948969,
     "shortName": "sleepingbag",
     "category": "Items"
   },
   {
     "displayName": "Custom SMG",
+    "itemID": 1796682209,
     "shortName": "smg.2",
     "category": "Weapon"
   },
   {
     "displayName": "MP5A4",
+    "itemID": 1318558775,
     "shortName": "smg.mp5",
     "category": "Weapon"
   },
   {
     "displayName": "Thompson",
+    "itemID": -1758372725,
     "shortName": "smg.thompson",
     "category": "Weapon"
   },
   {
-    "displayName": "Wooden Spear",
-    "shortName": "spear.wooden",
-    "category": "Weapon"
-  },
-  {
-    "displayName": "Spinning wheel",
+    "displayName": "Spinning Wheel",
+    "itemID": -1100422738,
     "shortName": "spinner.wheel",
     "category": "Items"
   },
   {
     "displayName": "Stone Pickaxe",
+    "itemID": 171931394,
     "shortName": "stone.pickaxe",
     "category": "Tool"
   },
   {
     "displayName": "Stone Hatchet",
+    "itemID": -1583967946,
     "shortName": "stonehatchet",
     "category": "Tool"
   },
   {
-    "displayName": "Sunglasses",
-    "shortName": "sunglasses",
-    "category": "Attire"
-  },
-  {
     "displayName": "Table",
+    "itemID": 593465182,
     "shortName": "table",
     "category": "Items"
   },
   {
     "displayName": "Reactive Target",
+    "itemID": -1736356576,
     "shortName": "target.reactive",
     "category": "Electrical"
   },
   {
     "displayName": "Longsleeve T-Shirt",
+    "itemID": 935692442,
     "shortName": "tshirt.long",
     "category": "Attire"
   },
   {
     "displayName": "T-Shirt",
+    "itemID": 223891266,
     "shortName": "tshirt",
     "category": "Attire"
   },
   {
-    "displayName": "Headset",
-    "shortName": "twitch.headset",
-    "category": "Attire"
-  },
-  {
     "displayName": "Vending Machine",
+    "itemID": 198438816,
     "shortName": "vending.machine",
     "category": "Items"
   },
   {
     "displayName": "Garage Door",
+    "itemID": -148794216,
     "shortName": "wall.frame.garagedoor",
     "category": "Construction"
   },
   {
     "displayName": "Water Purifier",
+    "itemID": 2114754781,
     "shortName": "water.purifier",
     "category": "Items"
   }
