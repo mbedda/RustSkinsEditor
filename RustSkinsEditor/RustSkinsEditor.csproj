@@ -6,10 +6,10 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>hazmat_xQg_icon.ico</ApplicationIcon>
-    <FileVersion>1.7.4.0</FileVersion>
-    <AssemblyVersion>1.7.4.0</AssemblyVersion>
+    <FileVersion>1.7.5.0</FileVersion>
+    <AssemblyVersion>1.7.5.0</AssemblyVersion>
     <SignAssembly>False</SignAssembly>
-    <Version>$(VersionPrefix)1.7.4.0</Version>
+    <Version>$(VersionPrefix)1.7.5.0</Version>
     <AssemblyOriginatorKeyFile>C:\Users\mbedd\source\repos\RustSkinsEditor\RustSkinsEditor.snk</AssemblyOriginatorKeyFile>
     <Company>$(Authors)</Company>
     <DebugType>none</DebugType>
