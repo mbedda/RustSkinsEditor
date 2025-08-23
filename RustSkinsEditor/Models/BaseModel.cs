@@ -30,7 +30,7 @@ namespace RustSkinsEditor.Models
             set { SetProperty(ref _name, value); }
         }
 
-        private ObservableCollection<BaseSkin> _skins;
+        private ObservableCollection<BaseSkin> _skins = new ObservableCollection<BaseSkin>();
         public ObservableCollection<BaseSkin> Skins
         {
             get { return _skins; }
