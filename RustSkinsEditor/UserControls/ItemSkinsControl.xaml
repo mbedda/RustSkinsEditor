@@ -27,7 +27,7 @@
                         </ContextMenu>
                     </StackPanel.ContextMenu>
                     <Grid>
-                        <Image Source="{Binding PreviewUrl}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="120"></Image>
+                        <Image Source="{Binding PreviewImage}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Height="120"></Image>
                         <Grid Margin="2" Background="#B2C11E1E" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding WorkshopId, Converter={StaticResource IsMarketSkinConverter}}">
                             <TextBlock Margin="3,3" Text="MARKET SKIN" Foreground="White" FontWeight="Bold" FontSize="14" TextWrapping="Wrap"></TextBlock>
                         </Grid>

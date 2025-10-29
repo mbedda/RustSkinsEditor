@@ -1,6 +1,8 @@
 ﻿using Prism.Mvvm;
+using RustSkinsEditor.Helpers;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
 
 namespace RustSkinsEditor.Models
 {
@@ -80,6 +82,22 @@ namespace RustSkinsEditor.Models
         {
             get { return _invalid; }
             set { SetProperty(ref _invalid, value); }
+        }
+
+        private ImageSource _previewImage;
+        public ImageSource PreviewImage
+        {
+            get => _previewImage;
+            set { SetProperty(ref _previewImage, value); }
+        }
+
+        public async void LoadImageAsync()
+        {
+            if (PreviewImage != null) return;
+
+            var image = await ImageCacheService.GetImageAsync(PreviewUrl, WorkshopId.ToString());
+            if (image != null)
+                PreviewImage = image;
         }
     }
 }

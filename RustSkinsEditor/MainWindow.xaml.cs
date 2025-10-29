@@ -42,7 +42,8 @@ namespace RustSkinsEditor
 
         public async Task FetchSteamSkinsAsync(BaseItem item)
         {
-            if(item == null || item.Skins == null) return;
+            ImageCacheService.CancelAll(); // stop previous downloads
+            if (item == null || item.Skins == null) return;
 
             List<ulong> skinlist = new List<ulong>();
 
@@ -86,6 +87,10 @@ namespace RustSkinsEditor
                 //viewModel.ResetSkinsCollection(skinsDetails);
                 //itemSkinsControl.DataContext = skinsDetails;
             }
+
+            ImageCacheService.ResetCancel();
+            foreach (var skin in item.Skins)
+                skin.LoadImageAsync(); // start loading cached/downloaded images
         }
 
         public async Task UpdateItemSkinsControlIfComboSelected()
