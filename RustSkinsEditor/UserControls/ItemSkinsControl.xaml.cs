@@ -36,6 +36,8 @@ namespace RustSkinsEditor.UserControls
         {
             BaseSkin baseSkin = (BaseSkin)((MenuItem)sender).CommandParameter;
 
+            if (baseSkin.WorkshopUrl == null) return;
+
             Process.Start(new ProcessStartInfo(baseSkin.WorkshopUrl.AbsoluteUri) { UseShellExecute = true });
         }
 

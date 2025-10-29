@@ -6,6 +6,8 @@
     <Application.Resources>
         <Converters:UriFromShortnameConverter x:Key="UriFromShortnameConverter"/>
         <Converters:IsMarketSkinConverter x:Key="IsMarketSkinConverter"/>
-         
+        <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+
     </Application.Resources>
 </Application>

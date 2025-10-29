@@ -5,19 +5,15 @@ using System.Windows.Data;
 
 namespace RustSkinsEditor.Converters
 {
-    /// <summary>
-    /// Converts Boolean Values to Control.Visibility values
-    /// </summary>
     public class BooleanToVisibilityConverter : IValueConverter
     {
-        //Set to true if you want to show control when boolean value is true
-        //Set to false if you want to hide/collapse control when value is true
-        private bool triggerValue = false;
-        public bool TriggerValue
+        private bool inverse = false;
+        public bool Inverse
         {
-            get { return triggerValue; }
-            set { triggerValue = value; }
+            get { return inverse; }
+            set { inverse = value; }
         }
+
         //Set to true if you just want to hide the control
         //else set to false if you want to collapse the control
         private bool isHidden;
@@ -29,23 +25,16 @@ namespace RustSkinsEditor.Converters
 
         private object GetVisibility(object value)
         {
-            if (!(value is bool))
-                return DependencyProperty.UnsetValue;
-            bool objValue = (bool)value;
-            if ((objValue && TriggerValue && IsHidden) || (!objValue && !TriggerValue && IsHidden))
-            {
-                return Visibility.Hidden;
-            }
-            if ((objValue && TriggerValue && !IsHidden) || (!objValue && !TriggerValue && !IsHidden))
-            {
-                return Visibility.Collapsed;
-            }
-            return Visibility.Visible;
+            if (value is not bool) return DependencyProperty.UnsetValue;
+
+            bool booleanInput = Inverse ? !(bool)value : (bool)value;
+
+            return booleanInput ? Visibility.Visible : IsHidden ? Visibility.Hidden : Visibility.Collapsed;
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-             return GetVisibility(value);
+            return GetVisibility(value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

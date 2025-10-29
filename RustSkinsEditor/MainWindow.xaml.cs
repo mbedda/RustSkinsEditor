@@ -40,7 +40,7 @@ namespace RustSkinsEditor
 
         }
 
-        public async void FetchSteamSkins(BaseItem item)
+        public async Task FetchSteamSkinsAsync(BaseItem item)
         {
             if(item == null || item.Skins == null) return;
 
@@ -50,12 +50,9 @@ namespace RustSkinsEditor
 
             foreach (var baseSkin in item.Skins)
             {
-                if (baseSkin.PreviewUrl != null) continue;
+                if (baseSkin.SteamDataFetched || baseSkin.WorkshopId == 0) continue;
 
-                if (baseSkin.WorkshopId != 0)
-                {
-                    skinlist.Add(baseSkin.WorkshopId);
-                }
+                skinlist.Add(baseSkin.WorkshopId);
             }
 
             if (skinlist.Count > 0)
@@ -64,17 +61,25 @@ namespace RustSkinsEditor
 
                 foreach (var fileDetails in fileDataDetails)
                 {
-                    if (fileDetails.Title == null || fileDetails.Title == "")
-                        fileDetails.Title = fileDetails.PublishedFileId + "";
+                    bool invalid = false;
+                    if (fileDetails.ConsumerAppId != 252490 || fileDetails.PreviewUrl == null || string.IsNullOrEmpty(fileDetails.Title))
+                        invalid = true;
 
-                    foreach (var baseSkin in viewModel.SelectedItem.Skins)
+                    var baseSkin = viewModel.SelectedItem.Skins.FirstOrDefault(s => s.WorkshopId == fileDetails.PublishedFileId);
+
+                    if(baseSkin != null)
                     {
-                        if(baseSkin.WorkshopId == fileDetails.PublishedFileId)
+                        baseSkin.SteamDataFetched = true;
+                        if (invalid)
                         {
-                            baseSkin.Name = fileDetails.Title;
-                            baseSkin.PreviewUrl = fileDetails.PreviewUrl;
-                            baseSkin.WorkshopUrl = new Uri("https://steamcommunity.com/sharedfiles/filedetails/?id=" + baseSkin.WorkshopId);
+                            baseSkin.Name = baseSkin.WorkshopId.ToString();
+                            baseSkin.Invalid = true;
+                            continue;
                         }
+
+                        baseSkin.Name = fileDetails.Title;
+                        baseSkin.PreviewUrl = fileDetails.PreviewUrl;
+                        baseSkin.WorkshopUrl = new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={baseSkin.WorkshopId}");
                     }
                 }
 
@@ -83,23 +88,23 @@ namespace RustSkinsEditor
             }
         }
 
-        public void UpdateItemSkinsControlIfComboSelected()
+        public async Task UpdateItemSkinsControlIfComboSelected()
         {
             if (comboboxItems.SelectedIndex > -1)
             {
                 //itemSkinsControl.DataContext = null;
-                FetchSteamSkins((BaseItem)(comboboxItems.SelectedItem));
+                await FetchSteamSkinsAsync((BaseItem)(comboboxItems.SelectedItem));
                 AddSkinTB.Text = "";
             }
             AddSkinTB.Text = "";
         }
 
-        private void comboboxItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void comboboxItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (((ComboBox)sender).SelectedIndex > -1)
             {
                 viewModel.SelectedItem = null;
-                FetchSteamSkins((BaseItem)((ComboBox)sender).SelectedItem);
+                await FetchSteamSkinsAsync((BaseItem)((ComboBox)sender).SelectedItem);
             }
         }
 
@@ -531,7 +536,7 @@ namespace RustSkinsEditor
         }
 
 
-        private void DeleteMarketSkins_Click(object sender, RoutedEventArgs e)
+        private async void DeleteMarketSkins_Click(object sender, RoutedEventArgs e)
         {
             int count = 0;
             foreach (var baseItem in viewModel.SkinsFile.BaseModel.Items)
@@ -551,7 +556,7 @@ namespace RustSkinsEditor
             if(viewModel.SelectedItem != null)
             {
                 viewModel.SelectedItem = null;
-                FetchSteamSkins((BaseItem)(comboboxItems.SelectedItem));
+                await FetchSteamSkinsAsync((BaseItem)(comboboxItems.SelectedItem));
             }
 
             MessageBox.Show($"Deleted {count} market skins");

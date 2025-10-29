@@ -67,5 +67,19 @@ namespace RustSkinsEditor.Models
             get { return _workshopUrl; }
             set { SetProperty(ref _workshopUrl, value); }
         }
+
+        private bool _steamDataFetched;
+        public bool SteamDataFetched
+        {
+            get { return _steamDataFetched; }
+            set { SetProperty(ref _steamDataFetched, value); }
+        }
+
+        private bool _invalid;
+        public bool Invalid
+        {
+            get { return _invalid; }
+            set { SetProperty(ref _invalid, value); }
+        }
     }
 }

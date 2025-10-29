@@ -524,8 +524,7 @@ namespace RustSkinsEditor.Models
 
             foreach (var baseItem in BaseModel.Items)
             {
-                skinlist.AddRange(baseItem.Skins.Where(s => string.IsNullOrEmpty(s.Name) 
-                    || s.Name == s.WorkshopId.ToString()).Select(s => s.WorkshopId));
+                skinlist.AddRange(baseItem.Skins.Where(s => string.IsNullOrEmpty(s.Name) && !s.SteamDataFetched).Select(s => s.WorkshopId));
             }
 
             if (skinlist.Count > 0)
@@ -542,23 +541,29 @@ namespace RustSkinsEditor.Models
 
                     foreach (var fileDetails in fileDataDetails)
                     {
-                        if (fileDetails.Title == null || fileDetails.Title == "")
-                            fileDetails.Title = fileDetails.PublishedFileId + "";
+                        bool invalid = false;
+                        if (fileDetails.ConsumerAppId != 252490 || fileDetails.PreviewUrl == null || string.IsNullOrEmpty(fileDetails.Title))
+                            invalid = true;
 
-                        bool found = false;
                         foreach (var baseItem in BaseModel.Items)
                         {
-                            foreach (var baseSkin in baseItem.Skins)
-                            {
-                                if(baseSkin.WorkshopId == fileDetails.PublishedFileId)
-                                {
-                                    found = true;
-                                    baseSkin.Name = fileDetails.Title;
-                                    break;
-                                }
-                            }
+                            var baseSkin = baseItem.Skins.FirstOrDefault(s => s.WorkshopId == fileDetails.PublishedFileId);
 
-                            if(found) break;
+                            if(baseSkin != null)
+                            {
+                                baseSkin.SteamDataFetched = true;
+                                if (invalid)
+                                {
+                                    baseSkin.Name = baseSkin.WorkshopId.ToString();
+                                    baseSkin.Invalid = true;
+                                    continue;
+                                }
+
+                                baseSkin.Name = fileDetails.Title;
+                                baseSkin.PreviewUrl = fileDetails.PreviewUrl;
+                                baseSkin.WorkshopUrl = new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={baseSkin.WorkshopId}");
+                                break;
+                            }
                         }
                     }
                 }
