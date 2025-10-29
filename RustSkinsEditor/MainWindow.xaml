@@ -110,8 +110,9 @@
                 <TextBox x:Name="AddSkinTB" Text="" VerticalAlignment="Center" Margin="10,0,0,10"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="2">
-                <Button x:Name="AddSkin" Grid.Column="2" Content="Add" HorizontalAlignment="Right" Margin="10,10,10,10" Padding="10,5" Click="AddSkin_Click"/>
-                <Button x:Name="DeleteProhibitedSkins" Grid.Column="2" Content="DELETE ALL MARKET SKINS" HorizontalAlignment="Right" Margin="10,10,10,10" Padding="10,5" Click="DeleteMarketSkins_Click"/>
+                <Button x:Name="AddSkin" Content="Add" HorizontalAlignment="Right" Margin="10,10,10,10" Padding="10,5" Click="AddSkin_Click"/>
+                <Button x:Name="DeleteBrokenSkins" Content="DELETE BROKEN SKINS" HorizontalAlignment="Right" Margin="5,10,0,10" Padding="10,5" Click="DeleteBrokenSkins_Click"/>
+                <Button x:Name="DeleteProhibitedSkins" Content="DELETE MARKET SKINS" HorizontalAlignment="Right" Margin="5,10,10,10" Padding="10,5" Click="DeleteMarketSkins_Click"/>
             </StackPanel>
         </Grid>
         <Grid Grid.RowSpan="7" Visibility="{Binding ItemsModal, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -120,7 +121,7 @@
         </Grid>
         <Grid Grid.RowSpan="7" Background="#66000000" Visibility="{Binding Fullscreen, Converter={StaticResource BooleanToVisibilityConverter}}" PreviewMouseLeftButtonUp="Fullscreen_PreviewMouseLeftButtonUp">
             <Viewbox Margin="50">
-                <Image Source="{Binding FullscreenImage}" Width="513" Height="513"></Image>
+                <Image Source="{Binding FullscreenImage}" Width="512" Height="512"></Image>
             </Viewbox>
         </Grid>
         <Grid Grid.RowSpan="10" Grid.ColumnSpan="10" Visibility="{Binding ConfigEditorOn, Converter={StaticResource BooleanToVisibilityConverter}}">

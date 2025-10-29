@@ -524,7 +524,7 @@ namespace RustSkinsEditor.Models
 
             foreach (var baseItem in BaseModel.Items)
             {
-                skinlist.AddRange(baseItem.Skins.Where(s => string.IsNullOrEmpty(s.Name) && !s.SteamDataFetched).Select(s => s.WorkshopId));
+                skinlist.AddRange(baseItem.Skins.Where(s => (string.IsNullOrEmpty(s.Name) || s.Name == s.WorkshopId.ToString()) && !s.SteamDataFetched).Select(s => s.WorkshopId));
             }
 
             if (skinlist.Count > 0)
@@ -555,7 +555,7 @@ namespace RustSkinsEditor.Models
                                 if (invalid)
                                 {
                                     baseSkin.Name = baseSkin.WorkshopId.ToString();
-                                    baseSkin.Invalid = true;
+                                    baseSkin.Broken = true;
                                     continue;
                                 }
 

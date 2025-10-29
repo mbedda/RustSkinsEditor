@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace RustSkinsEditor.Helpers
@@ -64,7 +65,8 @@ namespace RustSkinsEditor.Helpers
                         var bmp = DecodeImage(bytes);
                         if (bmp != null)
                         {
-                            await SaveAsPngAsync(bmp, filePath);
+                            var resized = ResizeImage(bmp, 128, 128);
+                            await SaveAsPngAsync(resized, filePath);
                             return LoadFromFile(filePath);
                         }
 
@@ -110,7 +112,22 @@ namespace RustSkinsEditor.Helpers
             }
         }
 
-        private static async Task SaveAsPngAsync(BitmapImage bmp, string path)
+        private static BitmapSource ResizeImage(BitmapSource source, int maxWidth, int maxHeight)
+        {
+            if (source == null)
+                return null;
+
+            double scale = Math.Min((double)maxWidth / source.PixelWidth, (double)maxHeight / source.PixelHeight);
+            if (scale >= 1.0)
+                return source; // already within bounds, no need to resize
+
+            var transform = new ScaleTransform(scale, scale, 0, 0);
+            var transformed = new TransformedBitmap(source, transform);
+            transformed.Freeze();
+            return transformed;
+        }
+
+        private static async Task SaveAsPngAsync(BitmapSource bmp, string path)
         {
             try
             {
@@ -126,7 +143,7 @@ namespace RustSkinsEditor.Helpers
             }
             catch
             {
-                // Ignore failed saves (e.g., disk locked)
+                // ignore save errors
             }
         }
 

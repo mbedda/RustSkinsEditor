@@ -77,11 +77,11 @@ namespace RustSkinsEditor.Models
             set { SetProperty(ref _steamDataFetched, value); }
         }
 
-        private bool _invalid;
-        public bool Invalid
+        private bool _broken;
+        public bool Broken
         {
-            get { return _invalid; }
-            set { SetProperty(ref _invalid, value); }
+            get { return _broken; }
+            set { SetProperty(ref _broken, value); }
         }
 
         private ImageSource _previewImage;

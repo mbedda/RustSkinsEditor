@@ -31,7 +31,7 @@
                         <Grid Margin="2" Background="#B2C11E1E" VerticalAlignment="Top" HorizontalAlignment="Center" Visibility="{Binding WorkshopId, Converter={StaticResource IsMarketSkinConverter}}">
                             <TextBlock Margin="3,3" Text="MARKET SKIN" Foreground="White" FontWeight="Bold" FontSize="14" TextWrapping="Wrap"></TextBlock>
                         </Grid>
-                        <Grid Margin="2" Background="#B2C11E1E" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Invalid, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <Grid Margin="2" Background="#B2C11E1E" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding Broken, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <TextBlock Margin="3,3" Text="BROKEN" Foreground="White" FontWeight="Bold" FontSize="14" TextWrapping="Wrap"></TextBlock>
                         </Grid>
                     </Grid>

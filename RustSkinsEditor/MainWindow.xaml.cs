@@ -74,7 +74,7 @@ namespace RustSkinsEditor
                         if (invalid)
                         {
                             baseSkin.Name = baseSkin.WorkshopId.ToString();
-                            baseSkin.Invalid = true;
+                            baseSkin.Broken = true;
                             continue;
                         }
 
@@ -540,6 +540,88 @@ namespace RustSkinsEditor
             viewModel.LoadGameItems();
         }
 
+        private async void DeleteBrokenSkins_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.FullLoadingScreen = true;
+            await DeleteAllBrokenSkins();
+            viewModel.FullLoadingScreen = false;
+        }
+
+        public async Task DeleteAllBrokenSkins()
+        {
+            if (viewModel.SkinsFile.BaseModel == null) return;
+
+            List<ulong> skinlist = new();
+
+            foreach (var baseItem in viewModel.SkinsFile.BaseModel.Items)
+            {
+                skinlist.AddRange(baseItem.Skins.Where(s => !s.SteamDataFetched).Select(s => s.WorkshopId));
+            }
+
+            if (skinlist.Count > 0)
+            {
+                int skip = 0;
+                int take = 1500;
+
+                while (skip < skinlist.Count)
+                {
+                    List<ulong> maxedList = skinlist.Skip(skip).Take(take).ToList();
+                    skip += maxedList.Count;
+
+                    var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync("whatever", maxedList);
+
+                    foreach (var fileDetails in fileDataDetails)
+                    {
+                        bool invalid = false;
+                        if (fileDetails.ConsumerAppId != 252490 || fileDetails.PreviewUrl == null || string.IsNullOrEmpty(fileDetails.Title))
+                            invalid = true;
+
+                        foreach (var baseItem in viewModel.SkinsFile.BaseModel.Items)
+                        {
+                            var baseSkin = baseItem.Skins.FirstOrDefault(s => s.WorkshopId == fileDetails.PublishedFileId);
+
+                            if (baseSkin != null)
+                            {
+                                baseSkin.SteamDataFetched = true;
+                                if (invalid)
+                                {
+                                    baseSkin.Name = baseSkin.WorkshopId.ToString();
+                                    baseSkin.Broken = true;
+                                    continue;
+                                }
+
+                                baseSkin.Name = fileDetails.Title;
+                                baseSkin.PreviewUrl = fileDetails.PreviewUrl;
+                                baseSkin.WorkshopUrl = new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={baseSkin.WorkshopId}");
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            int count = 0;
+            foreach (var baseItem in viewModel.SkinsFile.BaseModel.Items)
+            {
+                for (int i = baseItem.Skins.Count - 1; i >= 0; i--)
+                {
+                    if (baseItem.Skins[i].Broken)
+                    {
+                        baseItem.Skins.RemoveAt(i);
+                        count++;
+                    }
+                }
+            }
+            viewModel.UpdateActivity();
+
+            if (viewModel.SelectedItem != null)
+            {
+                viewModel.SelectedItem = null;
+                await FetchSteamSkinsAsync((BaseItem)(comboboxItems.SelectedItem));
+            }
+
+            MessageBox.Show($"Deleted {count} broken skins");
+        }
 
         private async void DeleteMarketSkins_Click(object sender, RoutedEventArgs e)
         {
