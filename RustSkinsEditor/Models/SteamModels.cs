@@ -123,7 +123,9 @@ namespace RustSkinsEditor.Models
             {"Wood Storage Box","box.wooden"},
             {"Wooden Door","door.hinged.wood"},
             {"Work Boots","shoes.boots"},
-            {"Spinning Wheel", "spinner.wheel"}
+            {"Spinning Wheel", "spinner.wheel"},
+            {"Bed", "bed"},
+            {"HMLMG", "hmlmg"}
         };
     }
 

@@ -574,5 +574,17 @@
     "itemID": 2114754781,
     "shortName": "water.purifier",
     "category": "Items"
+  },
+  {
+    "displayName": "Bed",
+    "itemID": -1273339005,
+    "shortName": "bed",
+    "category": "Items"
+  },
+  {
+    "displayName": "HMLMG",
+    "itemID": -1214542497,
+    "shortName": "hmlmg",
+    "category": "Weapon"
   }
 ]

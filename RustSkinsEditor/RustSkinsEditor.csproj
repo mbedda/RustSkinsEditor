@@ -47,6 +47,7 @@
     <None Remove="Assets\RustItems\beachchair.png" />
     <None Remove="Assets\RustItems\beachparasol.png" />
     <None Remove="Assets\RustItems\beachtowel.png" />
+    <None Remove="Assets\RustItems\bed.png" />
     <None Remove="Assets\RustItems\bone.club.png" />
     <None Remove="Assets\RustItems\boogieboard.png" />
     <None Remove="Assets\RustItems\bow.hunting.png" />
@@ -81,6 +82,7 @@
     <None Remove="Assets\RustItems\hat.miner.png" />
     <None Remove="Assets\RustItems\hatchet.png" />
     <None Remove="Assets\RustItems\hazmatsuit.png" />
+    <None Remove="Assets\RustItems\hmlmg.png" />
     <None Remove="Assets\RustItems\hoodie.png" />
     <None Remove="Assets\RustItems\icepick.salvaged.png" />
     <None Remove="Assets\RustItems\innertube.png" />
@@ -186,6 +188,9 @@
     <Content Include="Assets\RustItems\beachtowel.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\RustItems\bed.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\RustItems\bone.club.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -286,6 +291,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\hazmatsuit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hmlmg.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\hoodie.png">
