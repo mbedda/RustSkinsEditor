@@ -125,7 +125,8 @@ namespace RustSkinsEditor.Models
             {"Work Boots","shoes.boots"},
             {"Spinning Wheel", "spinner.wheel"},
             {"Bed", "bed"},
-            {"HMLMG", "hmlmg"}
+            {"HMLMG", "hmlmg"},
+            {"Tactical Gloves", "tactical.gloves"}
         };
     }
 
@@ -167,6 +168,103 @@ namespace RustSkinsEditor.Models
             public int SortOrder { get; set; }
             [DataMember(Name = "filetype")]
             public int FileType { get; set; }
+        }
+    }
+
+    [DataContract]
+    public partial class SteamPublishedFileResponse
+    {
+        [DataMember(Name = "response")]
+        public Response SteamResponse { get; set; }
+
+        [DataContract]
+        public partial class Response
+        {
+            [DataMember(Name = "result")]
+            public long Result { get; set; }
+
+            [DataMember(Name = "resultcount")]
+            public long Resultcount { get; set; }
+
+            [DataMember(Name = "publishedfiledetails")]
+            public Publishedfiledetail[] Publishedfiledetails { get; set; }
+        }
+
+        [DataContract]
+        public partial class Publishedfiledetail
+        {
+            [DataMember(Name = "publishedfileid")]
+            public ulong Publishedfileid { get; set; }
+
+            [DataMember(Name = "result")]
+            public long Result { get; set; }
+
+            [DataMember(Name = "creator")]
+            public string Creator { get; set; }
+
+            [DataMember(Name = "creator_app_id")]
+            public long CreatorAppId { get; set; }
+
+            [DataMember(Name = "consumer_app_id")]
+            public long ConsumerAppId { get; set; }
+
+            [DataMember(Name = "filename")]
+            public string Filename { get; set; }
+
+            [DataMember(Name = "file_size")]
+            public long FileSize { get; set; }
+
+            [DataMember(Name = "preview_url")]
+            public Uri PreviewUrl { get; set; }
+
+            [DataMember(Name = "hcontent_preview")]
+            public string HcontentPreview { get; set; }
+
+            [DataMember(Name = "title")]
+            public string Title { get; set; }
+
+            [DataMember(Name = "description")]
+            public string Description { get; set; }
+
+            [DataMember(Name = "time_created")]
+            public long TimeCreated { get; set; }
+
+            [DataMember(Name = "time_updated")]
+            public long TimeUpdated { get; set; }
+
+            [DataMember(Name = "visibility")]
+            public long Visibility { get; set; }
+
+            [DataMember(Name = "banned")]
+            public long Banned { get; set; }
+
+            [DataMember(Name = "ban_reason")]
+            public string BanReason { get; set; }
+
+            [DataMember(Name = "subscriptions")]
+            public long Subscriptions { get; set; }
+
+            [DataMember(Name = "favorited")]
+            public long Favorited { get; set; }
+
+            [DataMember(Name = "lifetime_subscriptions")]
+            public long LifetimeSubscriptions { get; set; }
+
+            [DataMember(Name = "lifetime_favorited")]
+            public long LifetimeFavorited { get; set; }
+
+            [DataMember(Name = "views")]
+            public long Views { get; set; }
+
+            [DataMember(Name = "tags")]
+            public Tag[] Tags { get; set; }
+        }
+
+        [DataContract]
+        public partial class Tag
+        {
+            [DataMember(Name = "tag")]
+            public string TagTag { get; set; }
         }
     }
 

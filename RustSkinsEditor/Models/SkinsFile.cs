@@ -537,32 +537,35 @@ namespace RustSkinsEditor.Models
                     List<ulong> maxedList = skinlist.Skip(skip).Take(take).ToList();
                     skip += maxedList.Count;
 
-                    var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync("whatever", maxedList);
+                    var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync(maxedList);
 
-                    foreach (var fileDetails in fileDataDetails)
+                    if (fileDataDetails != null && fileDataDetails.SteamResponse != null && fileDataDetails.SteamResponse.Publishedfiledetails != null)
                     {
-                        bool invalid = false;
-                        if (fileDetails.ConsumerAppId != 252490 || fileDetails.PreviewUrl == null || string.IsNullOrEmpty(fileDetails.Title))
-                            invalid = true;
-
-                        foreach (var baseItem in BaseModel.Items)
+                        foreach (var fileDetails in fileDataDetails.SteamResponse.Publishedfiledetails)
                         {
-                            var baseSkin = baseItem.Skins.FirstOrDefault(s => s.WorkshopId == fileDetails.PublishedFileId);
+                            bool invalid = false;
+                            if (fileDetails.ConsumerAppId != 252490 || fileDetails.PreviewUrl == null || string.IsNullOrEmpty(fileDetails.Title))
+                                invalid = true;
 
-                            if(baseSkin != null)
+                            foreach (var baseItem in BaseModel.Items)
                             {
-                                baseSkin.SteamDataFetched = true;
-                                if (invalid)
-                                {
-                                    baseSkin.Name = baseSkin.WorkshopId.ToString();
-                                    baseSkin.Broken = true;
-                                    continue;
-                                }
+                                var baseSkin = baseItem.Skins.FirstOrDefault(s => s.WorkshopId == fileDetails.Publishedfileid);
 
-                                baseSkin.Name = fileDetails.Title;
-                                baseSkin.PreviewUrl = fileDetails.PreviewUrl;
-                                baseSkin.WorkshopUrl = new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={baseSkin.WorkshopId}");
-                                break;
+                                if (baseSkin != null)
+                                {
+                                    baseSkin.SteamDataFetched = true;
+                                    if (invalid)
+                                    {
+                                        baseSkin.Name = baseSkin.WorkshopId.ToString();
+                                        baseSkin.Broken = true;
+                                        continue;
+                                    }
+
+                                    baseSkin.Name = fileDetails.Title;
+                                    baseSkin.PreviewUrl = fileDetails.PreviewUrl;
+                                    baseSkin.WorkshopUrl = new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={baseSkin.WorkshopId}");
+                                    break;
+                                }
                             }
                         }
                     }

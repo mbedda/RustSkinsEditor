@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>hazmat_xQg_icon.ico</ApplicationIcon>
-    <FileVersion>1.7.7.0</FileVersion>
-    <AssemblyVersion>1.7.7.0</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
     <SignAssembly>False</SignAssembly>
-    <Version>$(VersionPrefix)1.7.7.0</Version>
+    <Version>1.7.8.0</Version>
     <AssemblyOriginatorKeyFile>C:\Users\mbedd\source\repos\RustSkinsEditor\RustSkinsEditor.snk</AssemblyOriginatorKeyFile>
     <Company>$(Authors)</Company>
     <DebugType>none</DebugType>
@@ -28,7 +28,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>full</DebugType>
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -141,6 +141,7 @@
     <None Remove="Assets\RustItems\stonehatchet.png" />
     <None Remove="Assets\RustItems\sunglasses.png" />
     <None Remove="Assets\RustItems\table.png" />
+    <None Remove="Assets\RustItems\tactical.gloves.png" />
     <None Remove="Assets\RustItems\target.reactive.png" />
     <None Remove="Assets\RustItems\tshirt.long.png" />
     <None Remove="Assets\RustItems\tshirt.png" />
@@ -470,6 +471,9 @@
     <Content Include="Assets\RustItems\table.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\RustItems\tactical.gloves.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\RustItems\target.reactive.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -513,9 +517,9 @@
   <ItemGroup>
     <PackageReference Include="gong-wpf-dragdrop" Version="3.2.1" />
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
     <PackageReference Include="Prism.Wpf" Version="8.1.97" />
-    <PackageReference Include="SteamWebAPI2" Version="4.3.2" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
 

@@ -586,5 +586,11 @@
     "itemID": -1214542497,
     "shortName": "hmlmg",
     "category": "Weapon"
+  },
+  {
+    "displayName": "Tactical Gloves",
+    "itemID": -1108136649,
+    "shortName": "tactical.gloves",
+    "category": "Attire"
   }
 ]

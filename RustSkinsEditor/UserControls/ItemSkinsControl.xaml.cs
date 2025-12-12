@@ -45,7 +45,7 @@ namespace RustSkinsEditor.UserControls
         {
             BaseSkin baseSkin = (BaseSkin)((MenuItem)sender).CommandParameter;
 
-            Clipboard.SetText(baseSkin.WorkshopId.ToString());
+            Clipboard.SetDataObject(baseSkin.WorkshopId.ToString());
         }
 
         private void OpenImage_Click(object sender, RoutedEventArgs e)
