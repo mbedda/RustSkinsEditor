@@ -592,5 +592,35 @@
     "itemID": -1108136649,
     "shortName": "tactical.gloves",
     "category": "Attire"
+  },
+  {
+    "displayName": "Salvaged Axe",
+    "itemID": -262590403,
+    "shortName": "axe.salvaged",
+    "category": "Tool"
+  },
+  {
+    "displayName": "Barbeque",
+    "itemID": 1099314009,
+    "shortName": "bbq",
+    "category": "Items"
+  },
+  {
+    "displayName": "Electric Furnace",
+    "itemID": -1196547867,
+    "shortName": "electric.furnace",
+    "category": "Electrical"
+  },
+  {
+    "displayName": "SKS",
+    "itemID": -348232115,
+    "shortName": "rifle.sks",
+    "category": "Weapon"
+  },
+  {
+    "displayName": "Auto Turret",
+    "itemID": -2139580305,
+    "shortName": "autoturret",
+    "category": "Electrical"
   }
 ]

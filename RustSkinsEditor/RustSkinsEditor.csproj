@@ -9,7 +9,7 @@
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <SignAssembly>False</SignAssembly>
-    <Version>1.7.8.0</Version>
+    <Version>1.7.9.0</Version>
     <AssemblyOriginatorKeyFile>C:\Users\mbedd\source\repos\RustSkinsEditor\RustSkinsEditor.snk</AssemblyOriginatorKeyFile>
     <Company>$(Authors)</Company>
     <DebugType>none</DebugType>
@@ -42,8 +42,11 @@
     <None Remove="Assets\RustItems\attire.hide.poncho.png" />
     <None Remove="Assets\RustItems\attire.hide.skirt.png" />
     <None Remove="Assets\RustItems\attire.hide.vest.png" />
+    <None Remove="Assets\RustItems\autoturret.png" />
+    <None Remove="Assets\RustItems\axe.salvaged.png" />
     <None Remove="Assets\RustItems\barricade.concrete.png" />
     <None Remove="Assets\RustItems\barricade.sandbags.png" />
+    <None Remove="Assets\RustItems\bbq.png" />
     <None Remove="Assets\RustItems\beachchair.png" />
     <None Remove="Assets\RustItems\beachparasol.png" />
     <None Remove="Assets\RustItems\beachtowel.png" />
@@ -69,6 +72,7 @@
     <None Remove="Assets\RustItems\door.hinged.metal.png" />
     <None Remove="Assets\RustItems\door.hinged.toptier.png" />
     <None Remove="Assets\RustItems\door.hinged.wood.png" />
+    <None Remove="Assets\RustItems\electric.furnace.png" />
     <None Remove="Assets\RustItems\explosive.satchel.png" />
     <None Remove="Assets\RustItems\fridge.png" />
     <None Remove="Assets\RustItems\fun.guitar.png" />
@@ -113,6 +117,7 @@
     <None Remove="Assets\RustItems\rifle.lr300.png" />
     <None Remove="Assets\RustItems\rifle.m39.png" />
     <None Remove="Assets\RustItems\rifle.semiauto.png" />
+    <None Remove="Assets\RustItems\rifle.sks.png" />
     <None Remove="Assets\RustItems\riot.helmet.png" />
     <None Remove="Assets\RustItems\roadsign.gloves.png" />
     <None Remove="Assets\RustItems\roadsign.jacket.png" />
@@ -174,10 +179,19 @@
     <Content Include="Assets\RustItems\attire.hide.vest.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\RustItems\autoturret.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\axe.salvaged.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\RustItems\barricade.concrete.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\barricade.sandbags.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\bbq.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\beachchair.png">
@@ -253,6 +267,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\door.hinged.wood.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\electric.furnace.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\explosive.satchel.png">
@@ -385,6 +402,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\rifle.semiauto.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\rifle.sks.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\riot.helmet.png">

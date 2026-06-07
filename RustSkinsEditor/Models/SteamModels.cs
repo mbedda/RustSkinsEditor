@@ -126,7 +126,12 @@ namespace RustSkinsEditor.Models
             {"Spinning Wheel", "spinner.wheel"},
             {"Bed", "bed"},
             {"HMLMG", "hmlmg"},
-            {"Tactical Gloves", "tactical.gloves"}
+            {"Tactical Gloves", "tactical.gloves"},
+            {"Salvaged Axe", "axe.salvaged"},
+            {"Barbeque", "bbq"},
+            {"Electric Furnace", "electric.furnace"},
+            {"SKS", "rifle.sks"},
+            {"Auto Turret", "autoturret"},
         };
     }
 
