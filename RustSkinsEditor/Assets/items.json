@@ -622,5 +622,11 @@
     "itemID": -2139580305,
     "shortName": "autoturret",
     "category": "Electrical"
+  },
+  {
+    "displayName": "Metal Shop Front",
+    "itemID": -148229307,
+    "shortName": "wall.frame.shopfront.metal",
+    "category": "Construction"
   }
 ]

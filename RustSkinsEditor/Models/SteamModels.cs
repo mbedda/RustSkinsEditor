@@ -132,6 +132,7 @@ namespace RustSkinsEditor.Models
             {"Electric Furnace", "electric.furnace"},
             {"SKS", "rifle.sks"},
             {"Auto Turret", "autoturret"},
+            {"Metal Shop Front", "wall.frame.shopfront.metal"}
         };
     }
 

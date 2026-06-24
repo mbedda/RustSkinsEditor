@@ -9,7 +9,7 @@
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <SignAssembly>False</SignAssembly>
-    <Version>1.7.9.0</Version>
+    <Version>1.8.0.0</Version>
     <AssemblyOriginatorKeyFile>C:\Users\mbedd\source\repos\RustSkinsEditor\RustSkinsEditor.snk</AssemblyOriginatorKeyFile>
     <Company>$(Authors)</Company>
     <DebugType>none</DebugType>
@@ -153,6 +153,7 @@
     <None Remove="Assets\RustItems\twitch.headset.png" />
     <None Remove="Assets\RustItems\vending.machine.png" />
     <None Remove="Assets\RustItems\wall.frame.garagedoor.png" />
+    <None Remove="Assets\RustItems\wall.frame.shopfront.metal.png" />
     <None Remove="Assets\RustItems\water.purifier.png" />
     <None Remove="Assets\settings.png" />
   </ItemGroup>
@@ -510,6 +511,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\wall.frame.garagedoor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\wall.frame.shopfront.metal.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\water.purifier.png">
