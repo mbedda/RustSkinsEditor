@@ -9,7 +9,7 @@
     <FileVersion>$(Version)</FileVersion>
     <AssemblyVersion>$(Version)</AssemblyVersion>
     <SignAssembly>False</SignAssembly>
-    <Version>1.8.0.0</Version>
+    <Version>1.8.1.0</Version>
     <AssemblyOriginatorKeyFile>C:\Users\mbedd\source\repos\RustSkinsEditor\RustSkinsEditor.snk</AssemblyOriginatorKeyFile>
     <Company>$(Authors)</Company>
     <DebugType>none</DebugType>
@@ -80,6 +80,7 @@
     <None Remove="Assets\RustItems\grenade.f1.png" />
     <None Remove="Assets\RustItems\gun.water.png" />
     <None Remove="Assets\RustItems\hammer.png" />
+    <None Remove="Assets\RustItems\hammer.salvaged.png" />
     <None Remove="Assets\RustItems\hat.beenie.png" />
     <None Remove="Assets\RustItems\hat.boonie.png" />
     <None Remove="Assets\RustItems\hat.cap.png" />
@@ -292,6 +293,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\hammer.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\RustItems\hammer.salvaged.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\RustItems\hat.beenie.png">

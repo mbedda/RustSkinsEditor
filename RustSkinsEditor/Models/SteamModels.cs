@@ -6,10 +6,9 @@ namespace RustSkinsEditor.Models
 {
     public static class SteamModels
     {
-        public static string GetShortnameFromWorkshopTags(List<string> workshopTags)
+        public static bool TryGetShortnameFromWorkshopTags(out string shortname, List<string> workshopTags)
         {
-            string shortname = "";
-
+            shortname = "";
             foreach (string tag in workshopTags)
             {
                 if (string.IsNullOrEmpty(tag))
@@ -19,10 +18,10 @@ namespace RustSkinsEditor.Models
                 {
                     shortname = _workshopNameToShortname[tag];
                     break;
-                }
+                }   
             }
 
-            return shortname;
+            return !string.IsNullOrEmpty(shortname);
         }
 
         public static Dictionary<string, string> _workshopNameToShortname = new Dictionary<string, string>
@@ -122,6 +121,7 @@ namespace RustSkinsEditor.Models
             {"Waterpipe Shotgun","shotgun.waterpipe"},
             {"Wood Storage Box","box.wooden"},
             {"Wooden Door","door.hinged.wood"},
+            {"Wooden Double Door", "door.double.hinged.wood"},
             {"Work Boots","shoes.boots"},
             {"Spinning Wheel", "spinner.wheel"},
             {"Bed", "bed"},

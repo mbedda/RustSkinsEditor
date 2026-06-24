@@ -42,6 +42,8 @@ namespace RustSkinsEditor.Models
 
     public class BaseSkin : BindableBase
     {
+        public string Shortname = string.Empty;
+
         private ulong _workshopId;
         public ulong WorkshopId
         {

@@ -376,30 +376,27 @@ namespace RustSkinsEditor.ViewModels
             }
         }
 
-        public bool AddSkin(string shortname, ulong skincode)
+        public bool AddSkin(out BaseItem baseItem, BaseSkin baseSkin)
         {
-            if(SkinsFile != null && SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
+            baseItem = null;
+            if (SkinsFile != null && SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
             {
-                var baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => s.Shortname == shortname);
+                baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => s.Shortname == baseSkin.Shortname);
 
                 if (baseItem == null)
                 {
-                    baseItem = new BaseItem() { Shortname = shortname };
+                    baseItem = new BaseItem() { Shortname = baseSkin.Shortname };
 
-                    var rustItem = RustItems.GetRustItem(shortname);
+                    var rustItem = RustItems.GetRustItem(baseSkin.Shortname);
                     if (rustItem != null)
                         baseItem.Name = rustItem.displayName;
 
                     SkinsFile.BaseModel.Items.Add(baseItem);
                 }
 
-                if (baseItem.Skins.Where(s=>s.WorkshopId == skincode).Count() == 0)
+                if (baseItem.Skins.Where(s=>s.WorkshopId == baseSkin.WorkshopId).Count() == 0)
                 {
-                    baseItem.Skins.Add(new BaseSkin()
-                    {
-                        WorkshopId = skincode,
-                        Name = skincode.ToString()
-                    });
+                    baseItem.Skins.Add(baseSkin);
                     UpdateActivity();
                     return true;
                 }

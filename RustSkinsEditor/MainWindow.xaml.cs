@@ -188,29 +188,23 @@ namespace RustSkinsEditor
 
             if (skincode != 0)
             {
-                string shortname = "";
+                BaseSkin baseSkin = await GetSkinDataFromSteamApi(skincode);
 
-                if (comboboxItems.SelectedIndex != -1)
+                if (baseSkin != null && string.IsNullOrEmpty(baseSkin.Shortname) && comboboxItems.SelectedIndex != -1)
+                    baseSkin.Shortname = (comboboxItems.SelectedItem as BaseItem).Shortname;
+
+                if (baseSkin == null || string.IsNullOrEmpty(baseSkin.Shortname))
                 {
-                    shortname = (comboboxItems.SelectedItem as BaseItem).Shortname;
+                    MessageBox.Show("Could not retrieve skin data.");
+                    return;
                 }
-                else
-                {
-                    shortname = await GetSkinShortnameFromSteamApi(skincode);
 
-                    if (string.IsNullOrEmpty(shortname))
-                    {
-                        MessageBox.Show("Could not retrieve skin shortname.");
-                        return;
-                    }
-                }
-                
 
-                if (viewModel.AddSkin(shortname, skincode))
+                if (viewModel.AddSkin(out var baseItem, baseSkin))
                 {
                     UpdateItemSkinsControlIfComboSelected();
 
-                    MessageBox.Show("Added Skin " + skincode + " Successfully!");
+                    MessageBox.Show($"Added Skin \"{(string.IsNullOrEmpty(baseSkin.Name) ? baseSkin.WorkshopId.ToString() : baseSkin.Name)}\" to \"{baseItem.Name}\" Successfully!");
                 }
                 else
                 {
@@ -225,27 +219,37 @@ namespace RustSkinsEditor
             }
         }
 
-        public async Task<string> GetSkinShortnameFromSteamApi(ulong skinid)
+        public async Task<BaseSkin> GetSkinDataFromSteamApi(ulong skinid)
         {
             var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync(new List<ulong>() { skinid });
 
-            if (fileDataDetails == null || fileDataDetails.SteamResponse == null || fileDataDetails.SteamResponse.Publishedfiledetails == null) return "";
+            if (fileDataDetails == null || fileDataDetails.SteamResponse == null 
+                || fileDataDetails.SteamResponse.Publishedfiledetails == null || fileDataDetails.SteamResponse.Publishedfiledetails.Length == 0) return null;
 
-            foreach (var fileDetails in fileDataDetails.SteamResponse.Publishedfiledetails)
+            var fileDetails = fileDataDetails.SteamResponse.Publishedfiledetails[0];
+            bool invalid = false;
+            if (fileDetails.ConsumerAppId != 252490 || fileDetails.PreviewUrl == null || string.IsNullOrEmpty(fileDetails.Title))
+                invalid = true;
+
+            BaseSkin baseSkin = new BaseSkin();
+            baseSkin.WorkshopId = fileDetails.Publishedfileid;
+
+            baseSkin.SteamDataFetched = true;
+            baseSkin.Name = fileDetails.Title;
+
+            if (invalid)
             {
-                if (fileDetails.Title == null || fileDetails.Title == "")
-                    fileDetails.Title = fileDetails.Publishedfileid + "";
-
-                if (fileDetails.Tags == null) return "";
-
-                string shortname = SteamModels.GetShortnameFromWorkshopTags(fileDetails.Tags.Select(s=>s.TagTag).ToList());
-
-                if (string.IsNullOrEmpty(shortname)) return "";
-
-                return shortname;
+                baseSkin.Name = baseSkin.WorkshopId.ToString();
+                baseSkin.Broken = true;
             }
 
-            return "";
+            baseSkin.PreviewUrl = fileDetails.PreviewUrl;
+            baseSkin.WorkshopUrl = new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={baseSkin.WorkshopId}");
+
+            if (fileDetails.Tags != null)
+                SteamModels.TryGetShortnameFromWorkshopTags(out baseSkin.Shortname, fileDetails.Tags.Select(s => s.TagTag).ToList());
+
+            return baseSkin;
         }
 
         private void AddWorkshopSkinCollection()
@@ -317,24 +321,26 @@ namespace RustSkinsEditor
                 {
                     foreach (var fileDetails in fileDataDetails.SteamResponse.Publishedfiledetails)
                     {
-                        if (fileDetails.Title == null || fileDetails.Title == "")
-                            fileDetails.Title = fileDetails.Publishedfileid + "";
+                        string shortname = string.Empty;
 
-                        if (fileDetails.Tags == null)
+                        if (fileDetails.ConsumerAppId != 252490 || fileDetails.PreviewUrl == null 
+                            || string.IsNullOrEmpty(fileDetails.Title) || fileDetails.Tags == null
+                            || !SteamModels.TryGetShortnameFromWorkshopTags(out shortname, fileDetails.Tags.Select(s => s.TagTag).ToList()))
                         {
                             partialfail = true;
                             continue;
                         }
 
-                        string shortname = SteamModels.GetShortnameFromWorkshopTags(fileDetails.Tags.Select(s => s.TagTag).ToList());
+                        BaseSkin baseSkin = new BaseSkin();
 
-                        if (string.IsNullOrEmpty(shortname))
-                        {
-                            partialfail = true;
-                            continue;
-                        }
+                        baseSkin.WorkshopId = fileDetails.Publishedfileid;
+                        baseSkin.Shortname = shortname;
+                        baseSkin.Name = fileDetails.Title;
+                        baseSkin.PreviewUrl = fileDetails.PreviewUrl;
+                        baseSkin.WorkshopUrl = new Uri($"https://steamcommunity.com/sharedfiles/filedetails/?id={baseSkin.WorkshopId}");
+                        baseSkin.SteamDataFetched = true;
 
-                        if (viewModel.AddSkin(shortname, fileDetails.Publishedfileid))
+                        if (viewModel.AddSkin(out _, baseSkin))
                         {
                             partialsuccess = true;
                         }

@@ -197,7 +197,8 @@ namespace RustSkinsEditor.Models
                             new()
                             {
                                 WorkshopId = skin,
-                                Name = skin.ToString()
+                                Name = skin.ToString(),
+                                Shortname = baseItem.Shortname
                             });
                     }
 
@@ -251,7 +252,8 @@ namespace RustSkinsEditor.Models
                             new()
                             {
                                 WorkshopId = skin.Key,
-                                Name = skin.Value.itemDisplayname
+                                Name = skin.Value.itemDisplayname,
+                                Shortname = baseItem.Shortname
                             });
                     }
 
@@ -303,7 +305,8 @@ namespace RustSkinsEditor.Models
                             new()
                             {
                                 WorkshopId = skin,
-                                Name = skin.ToString()
+                                Name = skin.ToString(),
+                                Shortname = baseItem.Shortname
                             });
                     }
 
@@ -346,7 +349,8 @@ namespace RustSkinsEditor.Models
                             new()
                             {
                                 WorkshopId = skinId,
-                                Name = lskin.Value.Name
+                                Name = lskin.Value.Name,
+                                Shortname = baseItem.Shortname
                             });
                     }
 
@@ -411,7 +415,8 @@ namespace RustSkinsEditor.Models
                             new()
                             {
                                 WorkshopId = skin.SkinID,
-                                Name = skin.SkinName
+                                Name = skin.SkinName,
+                                Shortname = baseItem.Shortname
                             });
                     }
 
