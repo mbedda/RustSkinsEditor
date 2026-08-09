@@ -634,5 +634,11 @@
     "itemID": -148229307,
     "shortName": "wall.frame.shopfront.metal",
     "category": "Construction"
+  },
+  {
+    "displayName": "Small Backpack",
+    "itemID": 2068884361,
+    "shortName": "smallbackpack",
+    "category": "Attire"
   }
 ]
