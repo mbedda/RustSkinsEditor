@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+using Prism.Mvvm;
 using RustSkinsEditor.Helpers;
 using System;
 using System.Collections.ObjectModel;
@@ -30,6 +30,13 @@ namespace RustSkinsEditor.Models
         {
             get { return _name; }
             set { SetProperty(ref _name, value); }
+        }
+
+        private bool _isSupported = true;
+        public bool IsSupported
+        {
+            get { return _isSupported; }
+            set { SetProperty(ref _isSupported, value); }
         }
 
         private ObservableCollection<BaseSkin> _skins = new ObservableCollection<BaseSkin>();

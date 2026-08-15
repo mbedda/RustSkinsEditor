@@ -362,13 +362,13 @@ namespace RustSkinsEditor.ViewModels
 
                 if (baseItem == null)
                 {
-                    baseItem = new BaseItem() { Shortname = baseSkin.Shortname };
-
                     var rustItem = RustItems.GetRustItem(baseSkin.Shortname);
-                    if (rustItem != null)
-                        baseItem.Name = rustItem.displayName;
-                    else
-                        baseItem.Name = baseSkin.Shortname;
+                    baseItem = new BaseItem()
+                    {
+                        Shortname = baseSkin.Shortname,
+                        Name = rustItem != null ? rustItem.displayName : baseSkin.Shortname,
+                        IsSupported = (rustItem != null)
+                    };
 
                     SkinsFile.BaseModel.Items.Add(baseItem);
                     SkinsFile.SortItems();
@@ -395,13 +395,13 @@ namespace RustSkinsEditor.ViewModels
                 var baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => string.Equals(s.Shortname, Shortname, StringComparison.OrdinalIgnoreCase));
                 if (baseItem == null)
                 {
-                    baseItem = new BaseItem() { Shortname = Shortname };
-
                     var rustItem = RustItems.GetRustItem(Shortname);
-                    if (rustItem != null)
-                        baseItem.Name = rustItem.displayName;
-                    else
-                        baseItem.Name = Shortname;
+                    baseItem = new BaseItem()
+                    {
+                        Shortname = Shortname,
+                        Name = rustItem != null ? rustItem.displayName : Shortname,
+                        IsSupported = (rustItem != null)
+                    };
 
                     SkinsFile.BaseModel.Items.Add(baseItem);
                     SkinsFile.SortItems();

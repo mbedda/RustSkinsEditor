@@ -512,10 +512,13 @@ namespace RustSkinsEditor.Models
                 if (rustItem != null)
                 {
                     item.Name = rustItem.displayName;
+                    item.IsSupported = true;
                 }
-                else if (string.IsNullOrEmpty(item.Name))
+                else
                 {
-                    item.Name = item.Shortname;
+                    if (string.IsNullOrEmpty(item.Name))
+                        item.Name = item.Shortname;
+                    item.IsSupported = false;
                 }
             }
 
@@ -531,6 +534,7 @@ namespace RustSkinsEditor.Models
                         {
                             Shortname = rustItem.shortName,
                             Name = rustItem.displayName,
+                            IsSupported = true,
                             Skins = new System.Collections.ObjectModel.ObservableCollection<BaseSkin>()
                         };
                         BaseModel.Items.Add(newItem);
@@ -538,6 +542,7 @@ namespace RustSkinsEditor.Models
                     }
                     else
                     {
+                        existingItem.IsSupported = true;
                         if (string.IsNullOrEmpty(existingItem.Name))
                         {
                             existingItem.Name = rustItem.displayName;

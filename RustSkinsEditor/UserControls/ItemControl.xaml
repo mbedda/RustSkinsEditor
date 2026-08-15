@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="RustSkinsEditor.UserControls.ItemControl"
+<UserControl x:Class="RustSkinsEditor.UserControls.ItemControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -38,7 +38,10 @@
                                 </ContextMenu>
                             </StackPanel.ContextMenu>
                             <Image Source="{Binding Shortname, Converter={StaticResource UriFromShortnameConverter}, ConverterParameter='Assets\\RustItems'}"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="80"></Image>
-                            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5" Text="{Binding Path=Name}" ToolTip="{Binding Path=Shortname}" Width="120" TextWrapping="Wrap" Height="30" TextAlignment="Center"></TextBlock>
+                            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,5" ToolTip="{Binding Path=Shortname}" Width="120" TextWrapping="Wrap" Height="30" TextAlignment="Center" Foreground="{Binding IsSupported, Converter={StaticResource ItemSupportedToBrushConverter}}">
+                                <Run Text="{Binding Path=Name, Mode=OneWay}"/>
+                                <Run Text=" ("/><Run Text="{Binding Path=Skins.Count, Mode=OneWay}"/><Run Text=")"/>
+                            </TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

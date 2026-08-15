@@ -83,7 +83,10 @@
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding Shortname, Converter={StaticResource UriFromShortnameConverter}, ConverterParameter='Assets\\RustItems'}" Width="20" Height="20" Margin="0,0,5,0" />
-                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Foreground="{Binding IsSupported, Converter={StaticResource ItemSupportedToBrushConverter}}">
+                                <Run Text="{Binding Name, Mode=OneWay}" />
+                                <Run Text=" (" /><Run Text="{Binding Skins.Count, Mode=OneWay}" /><Run Text=")" />
+                            </TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
