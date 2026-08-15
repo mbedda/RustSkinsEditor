@@ -1,4 +1,4 @@
-﻿using Prism.Mvvm;
+using Prism.Mvvm;
 using RustSkinsEditor.Helpers;
 using RustSkinsEditor.Models.Plugins;
 using RustSkinsEditor.ViewModels;
@@ -178,7 +178,7 @@ namespace RustSkinsEditor.Models
 
         public void ConverSkinsToBaseModel()
         {
-            if (SkinsRoot != null)
+            if (SkinsRoot != null && SkinsRoot.Skins != null)
             {
                 BaseModel = new BaseModel();
                 BaseModel.Items = new();
@@ -190,16 +190,19 @@ namespace RustSkinsEditor.Models
                     baseItem.Shortname = item.ItemShortname;
                     baseItem.Skins = new();
 
-                    foreach (var skin in item.Skins)
+                    if (item.Skins != null)
                     {
-                        if (skin == 0) continue; // Skip skins with WorkshopId 0
-                        baseItem.Skins.Add(
-                            new()
-                            {
-                                WorkshopId = skin,
-                                Name = skin.ToString(),
-                                Shortname = baseItem.Shortname
-                            });
+                        foreach (var skin in item.Skins)
+                        {
+                            if (skin == 0) continue; // Skip skins with WorkshopId 0
+                            baseItem.Skins.Add(
+                                new()
+                                {
+                                    WorkshopId = skin,
+                                    Name = skin.ToString(),
+                                    Shortname = baseItem.Shortname
+                                });
+                        }
                     }
 
                     BaseModel.Items.Add(baseItem);
@@ -224,7 +227,10 @@ namespace RustSkinsEditor.Models
                         skin.Skins.Add(baseItem.WorkshopId);
                     }
 
-                    SkinsRoot.Skins.Add(skin);
+                    if (skin.Skins.Count > 0)
+                    {
+                        SkinsRoot.Skins.Add(skin);
+                    }
                 }
             }
         }
@@ -241,6 +247,8 @@ namespace RustSkinsEditor.Models
 
                 foreach (var item in results)
                 {
+                    if (string.IsNullOrEmpty(item.Shortname)) continue;
+
                     BaseItem baseItem = new BaseItem();
                     baseItem.Shortname = item.Shortname;
                     baseItem.Skins = new();
@@ -252,7 +260,7 @@ namespace RustSkinsEditor.Models
                             new()
                             {
                                 WorkshopId = skin.Key,
-                                Name = skin.Value.itemDisplayname,
+                                Name = skin.Value?.itemDisplayname ?? skin.Key.ToString(),
                                 Shortname = baseItem.Shortname
                             });
                     }
@@ -298,16 +306,19 @@ namespace RustSkinsEditor.Models
                     baseItem.Shortname = item.Key;
                     baseItem.Skins = new();
 
-                    foreach (var skin in item.Value)
+                    if (item.Value != null)
                     {
-                        if (skin == 0) continue; // Skip skins with WorkshopId 0
-                        baseItem.Skins.Add(
-                            new()
-                            {
-                                WorkshopId = skin,
-                                Name = skin.ToString(),
-                                Shortname = baseItem.Shortname
-                            });
+                        foreach (var skin in item.Value)
+                        {
+                            if (skin == 0) continue; // Skip skins with WorkshopId 0
+                            baseItem.Skins.Add(
+                                new()
+                                {
+                                    WorkshopId = skin,
+                                    Name = skin.ToString(),
+                                    Shortname = baseItem.Shortname
+                                });
+                        }
                     }
 
                     BaseModel.Items.Add(baseItem);
@@ -324,7 +335,11 @@ namespace RustSkinsEditor.Models
 
                 foreach (var item in BaseModel.Items)
                 {
-                    SkinBoxRoot.Skins.Add(item.Shortname, item.Skins.Select(s => s.WorkshopId).ToList());
+                    var skins = item.Skins.Where(s => s.WorkshopId != 0).Select(s => s.WorkshopId).ToList();
+                    if (skins.Count > 0)
+                    {
+                        SkinBoxRoot.Skins.Add(item.Shortname, skins);
+                    }
                 }
             }
         }
@@ -342,16 +357,19 @@ namespace RustSkinsEditor.Models
                     baseItem.Shortname = item.Key;
                     baseItem.Skins = new();
 
-                    foreach (var lskin in item.Value.Skins)
+                    if (item.Value?.Skins != null)
                     {
-                        if (lskin.Key == "0" || !UInt64.TryParse(lskin.Key, out ulong skinId)) continue; // Skip skins with WorkshopId 0
-                        baseItem.Skins.Add(
-                            new()
-                            {
-                                WorkshopId = skinId,
-                                Name = lskin.Value.Name,
-                                Shortname = baseItem.Shortname
-                            });
+                        foreach (var lskin in item.Value.Skins)
+                        {
+                            if (lskin.Key == "0" || !UInt64.TryParse(lskin.Key, out ulong skinId) || skinId == 0) continue; // Skip skins with WorkshopId 0
+                            baseItem.Skins.Add(
+                                new()
+                                {
+                                    WorkshopId = skinId,
+                                    Name = lskin.Value?.Name ?? skinId.ToString(),
+                                    Shortname = baseItem.Shortname
+                                });
+                        }
                     }
 
                     BaseModel.Items.Add(baseItem);
@@ -368,6 +386,9 @@ namespace RustSkinsEditor.Models
 
                 foreach (var item in BaseModel.Items)
                 {
+                    var validSkins = item.Skins.Where(s => s.WorkshopId != 0).ToList();
+                    if (validSkins.Count == 0) continue;
+
                     LSkinsRoot.LSkinItem lSkinItem = new LSkinsRoot.LSkinItem();
                     lSkinItem.Skins = new();
 
@@ -376,7 +397,7 @@ namespace RustSkinsEditor.Models
                         Name = item.Name
                     });
 
-                    foreach (var baseSkin in item.Skins)
+                    foreach (var baseSkin in validSkins)
                     {
                         lSkinItem.Skins.Add(baseSkin.WorkshopId.ToString(),
                             new()
@@ -406,18 +427,22 @@ namespace RustSkinsEditor.Models
 
                     BaseItem baseItem = new BaseItem();
                     baseItem.Shortname = rustItem.shortName;
+                    baseItem.Name = rustItem.displayName;
                     baseItem.Skins = new();
 
-                    foreach (var skin in item.Value)
+                    if (item.Value != null)
                     {
-                        if (skin.SkinID == 0) continue; // Skip skins with WorkshopId 0
-                        baseItem.Skins.Add(
-                            new()
-                            {
-                                WorkshopId = skin.SkinID,
-                                Name = skin.SkinName,
-                                Shortname = baseItem.Shortname
-                            });
+                        foreach (var skin in item.Value)
+                        {
+                            if (skin.SkinID == 0) continue; // Skip skins with WorkshopId 0
+                            baseItem.Skins.Add(
+                                new()
+                                {
+                                    WorkshopId = skin.SkinID,
+                                    Name = skin.SkinName,
+                                    Shortname = baseItem.Shortname
+                                });
+                        }
                     }
 
                     BaseModel.Items.Add(baseItem);
@@ -443,6 +468,8 @@ namespace RustSkinsEditor.Models
 
                     foreach (var baseSkin in item.Skins)
                     {
+                        if (baseSkin.WorkshopId == 0) continue;
+
                         skinContSkins.Add(
                             new()
                             {
@@ -454,41 +481,96 @@ namespace RustSkinsEditor.Models
                             });
                     }
 
-                    SkinControllerRoot.Items.Add(rustItem.itemID, skinContSkins);
+                    if (skinContSkins.Count > 0)
+                    {
+                        SkinControllerRoot.Items.Add(rustItem.itemID, skinContSkins);
+                    }
                 }
             }
+        }
+
+        public void EnsureAllSupportedItems(RustItems rustItems)
+        {
+            if (BaseModel == null)
+            {
+                BaseModel = new BaseModel();
+            }
+            if (BaseModel.Items == null)
+            {
+                BaseModel.Items = new System.Collections.ObjectModel.ObservableCollection<BaseItem>();
+            }
+
+            var existingMap = new Dictionary<string, BaseItem>(StringComparer.OrdinalIgnoreCase);
+            foreach (var item in BaseModel.Items)
+            {
+                if (!string.IsNullOrEmpty(item.Shortname) && !existingMap.ContainsKey(item.Shortname))
+                {
+                    existingMap[item.Shortname] = item;
+                }
+
+                var rustItem = rustItems?.GetRustItem(item.Shortname);
+                if (rustItem != null)
+                {
+                    item.Name = rustItem.displayName;
+                }
+                else if (string.IsNullOrEmpty(item.Name))
+                {
+                    item.Name = item.Shortname;
+                }
+            }
+
+            if (rustItems?.Items != null)
+            {
+                foreach (var rustItem in rustItems.Items)
+                {
+                    if (string.IsNullOrEmpty(rustItem.shortName)) continue;
+
+                    if (!existingMap.TryGetValue(rustItem.shortName, out var existingItem))
+                    {
+                        var newItem = new BaseItem
+                        {
+                            Shortname = rustItem.shortName,
+                            Name = rustItem.displayName,
+                            Skins = new System.Collections.ObjectModel.ObservableCollection<BaseSkin>()
+                        };
+                        BaseModel.Items.Add(newItem);
+                        existingMap[rustItem.shortName] = newItem;
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(existingItem.Name))
+                        {
+                            existingItem.Name = rustItem.displayName;
+                        }
+                    }
+                }
+            }
+
+            SortItems();
+        }
+
+        public void SortItems()
+        {
+            if (BaseModel?.Items == null) return;
+
+            var sorted = BaseModel.Items
+                .OrderBy(i => string.IsNullOrEmpty(i.Name) ? (i.Shortname ?? "") : i.Name, StringComparer.CurrentCultureIgnoreCase)
+                .ThenBy(i => i.Shortname ?? "", StringComparer.CurrentCultureIgnoreCase)
+                .ToList();
+
+            BaseModel.Items = new System.Collections.ObjectModel.ObservableCollection<BaseItem>(sorted);
         }
 
         public RustItem GetRustItem(int itemID, MainViewModel vm)
         {
-            RustItem result = null;
-
-            foreach (var item in vm.RustItems.Items)
-            {
-                if(item.itemID == itemID)
-                {
-                    result = item;
-                    break;
-                }
-            }
-
-            return result;
+            if (vm?.RustItems?.Items == null) return null;
+            return vm.RustItems.GetRustItem(itemID);
         }
 
         public RustItem GetRustItem(string shortname, MainViewModel vm)
         {
-            RustItem result = null;
-
-            foreach (var item in vm.RustItems.Items)
-            {
-                if (item.shortName == shortname)
-                {
-                    result = item;
-                    break;
-                }
-            }
-
-            return result;
+            if (vm?.RustItems?.Items == null) return null;
+            return vm.RustItems.GetRustItem(shortname);
         }
 
         private string _SkinnerJSONString;

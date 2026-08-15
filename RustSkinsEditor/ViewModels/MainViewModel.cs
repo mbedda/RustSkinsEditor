@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Mvvm;
 using RustSkinsEditor.Models;
@@ -118,6 +118,7 @@ namespace RustSkinsEditor.ViewModels
             ExitFullscreenCommand = new DelegateCommand(ExitFullscreen);
 
             RustItems = new RustItems();
+            RustItemsList = RustItems.Items?.Select(x => x.shortName).ToList() ?? new List<string>();
 
             GetSteamPath();
 
@@ -277,19 +278,7 @@ namespace RustSkinsEditor.ViewModels
             SelectedItem = null;
             SkinsFile = new SkinsFile();
             SkinsFile.LoadFile(filepath, skinFileSource);
-
-            if (SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
-            {
-                foreach (var baseItem in SkinsFile.BaseModel.Items)
-                {
-                    RustItem rustItem = RustItems.GetRustItem(baseItem.Shortname);
-
-                    if (rustItem != null)
-                        baseItem.Name = rustItem.displayName;
-                    else
-                        baseItem.Name = baseItem.Shortname;
-                }
-            }
+            SkinsFile.EnsureAllSupportedItems(RustItems);
 
             UpdateActivity();
         }
@@ -299,19 +288,7 @@ namespace RustSkinsEditor.ViewModels
             SelectedItem = null;
             SkinsFile = new SkinsFile();
             SkinsFile.LoadFiles(folderpath, skinFileSource);
-
-            if (SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
-            {
-                foreach (var baseItem in SkinsFile.BaseModel.Items)
-                {
-                    RustItem rustItem = RustItems.GetRustItem(baseItem.Shortname);
-
-                    if (rustItem != null)
-                        baseItem.Name = rustItem.displayName;
-                    else
-                        baseItem.Name = baseItem.Shortname;
-                }
-            }
+            SkinsFile.EnsureAllSupportedItems(RustItems);
 
             UpdateActivity();
         }
@@ -342,7 +319,7 @@ namespace RustSkinsEditor.ViewModels
                 {
                     case SkinFileSource.Skins:
                         FullLoadingScreen = true;
-                        SkinsFile.SaveFile(filepath, Config, skinFileSource);
+                        await SkinsFile.SaveFile(filepath, Config, skinFileSource);
                         FullLoadingScreen = false;
                         break;
                     case SkinFileSource.Skinner:
@@ -353,7 +330,7 @@ namespace RustSkinsEditor.ViewModels
                         break;
                     case SkinFileSource.SkinnerBeta:
                         FullLoadingScreen = true;
-                        SkinsFile.SaveFile(filepath, Config, skinFileSource);
+                        await SkinsFile.SaveFile(filepath, Config, skinFileSource);
                         FullLoadingScreen = false;
                         break;
                     case SkinFileSource.SkinBox:
@@ -364,12 +341,12 @@ namespace RustSkinsEditor.ViewModels
                         break;
                     case SkinFileSource.LSkins:
                         FullLoadingScreen = true;
-                        SkinsFile.SaveFiles(filepath, Config, skinFileSource);
+                        await SkinsFile.SaveFiles(filepath, Config, skinFileSource);
                         FullLoadingScreen = false;
                         break;
                     case SkinFileSource.SkinController:
                         FullLoadingScreen = true;
-                        SkinsFile.SaveFile(filepath, Config, skinFileSource);
+                        await SkinsFile.SaveFile(filepath, Config, skinFileSource);
                         FullLoadingScreen = false;
                         break;
                 }
@@ -381,7 +358,7 @@ namespace RustSkinsEditor.ViewModels
             baseItem = null;
             if (SkinsFile != null && SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
             {
-                baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => s.Shortname == baseSkin.Shortname);
+                baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => string.Equals(s.Shortname, baseSkin.Shortname, StringComparison.OrdinalIgnoreCase));
 
                 if (baseItem == null)
                 {
@@ -390,11 +367,14 @@ namespace RustSkinsEditor.ViewModels
                     var rustItem = RustItems.GetRustItem(baseSkin.Shortname);
                     if (rustItem != null)
                         baseItem.Name = rustItem.displayName;
+                    else
+                        baseItem.Name = baseSkin.Shortname;
 
                     SkinsFile.BaseModel.Items.Add(baseItem);
+                    SkinsFile.SortItems();
                 }
 
-                if (baseItem.Skins.Where(s=>s.WorkshopId == baseSkin.WorkshopId).Count() == 0)
+                if (baseItem.Skins.All(s => s.WorkshopId != baseSkin.WorkshopId))
                 {
                     baseItem.Skins.Add(baseSkin);
                     UpdateActivity();
@@ -412,7 +392,7 @@ namespace RustSkinsEditor.ViewModels
         {
             if (SkinsFile != null && SkinsFile.BaseModel != null && SkinsFile.BaseModel.Items != null)
             {
-                var baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => s.Shortname == Shortname);
+                var baseItem = SkinsFile.BaseModel.Items.FirstOrDefault(s => string.Equals(s.Shortname, Shortname, StringComparison.OrdinalIgnoreCase));
                 if (baseItem == null)
                 {
                     baseItem = new BaseItem() { Shortname = Shortname };
@@ -420,8 +400,11 @@ namespace RustSkinsEditor.ViewModels
                     var rustItem = RustItems.GetRustItem(Shortname);
                     if (rustItem != null)
                         baseItem.Name = rustItem.displayName;
+                    else
+                        baseItem.Name = Shortname;
 
                     SkinsFile.BaseModel.Items.Add(baseItem);
+                    SkinsFile.SortItems();
 
                     UpdateActivity();
                     return true;

@@ -1,4 +1,4 @@
-﻿using RustSkinsEditor.Helpers;
+using RustSkinsEditor.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,17 +17,23 @@ namespace RustSkinsEditor.Models
     {
         public RustItems()
         {
-            //Items = new List<RustItem>(); 
-            //Load();
+            Load();
         }
 
         [DataMember]
-        public List<RustItem> Items { get; set; }
+        public List<RustItem> Items { get; set; } = new List<RustItem>();
         public DLCsData DLCsData { get; set; }
 
         public RustItem GetRustItem(string shortname)
         {
-            return Items.FirstOrDefault(s => s.shortName == shortname);
+            if (Items == null || string.IsNullOrEmpty(shortname)) return null;
+            return Items.FirstOrDefault(s => string.Equals(s.shortName, shortname, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public RustItem GetRustItem(int itemID)
+        {
+            if (Items == null) return null;
+            return Items.FirstOrDefault(s => s.itemID == itemID);
         }
 
         public async Task Load(string steamPath)
@@ -36,19 +42,34 @@ namespace RustSkinsEditor.Models
             string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string jsonPath = Path.Combine(appPath, "Assets", "items.json");
 
-            List<RustItem> items = new();
+            List<RustItem> items = null;
 
             if (File.Exists(jsonPath))
                 items = await Common.LoadJsonAsync<List<RustItem>>(jsonPath);
 
-            //await FetchSkinnableItems(appPath, jsonPath, steamPath, items);
+            if (items == null || items.Count == 0)
+                items = Common.LoadJsonResource<List<RustItem>>("RustSkinsEditor.Assets.items.json");
 
-            Items = new List<RustItem>(items.OrderBy(x => x.displayName));
+            if (items != null)
+                Items = new List<RustItem>(items.OrderBy(x => x.displayName, StringComparer.CurrentCultureIgnoreCase));
         }
 
         public void Load()
         {
-            Items = Common.LoadJsonResource<List<RustItem>>("RustSkinsEditor.Assets.items.json");
+            string appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string jsonPath = Path.Combine(appPath, "Assets", "items.json");
+
+            List<RustItem> items = null;
+            if (File.Exists(jsonPath))
+                items = Common.LoadJson<List<RustItem>>(jsonPath);
+
+            if (items == null || items.Count == 0)
+                items = Common.LoadJsonResource<List<RustItem>>("RustSkinsEditor.Assets.items.json");
+
+            if (items != null)
+                Items = new List<RustItem>(items.OrderBy(x => x.displayName, StringComparer.CurrentCultureIgnoreCase));
+            else
+                Items = new List<RustItem>();
         }
 
         public async Task<bool> GetRustDLCs()

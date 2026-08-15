@@ -1,4 +1,4 @@
-﻿using RustSkinsEditor.Models;
+using RustSkinsEditor.Models;
 using RustSkinsEditor.Models.Plugins;
 using System;
 using System.Collections.ObjectModel;
@@ -58,15 +58,22 @@ namespace RustSkinsEditor.UserControls
         {
             ICollectionView itemsViewOriginal = (CollectionView)CollectionViewSource.GetDefaultView(ItemListbox.ItemsSource);
 
-            itemsViewOriginal.Filter = ((o) =>
+            if (itemsViewOriginal != null)
             {
-                if (String.IsNullOrEmpty(filtertxt.Text)) return true;
-                else
+                itemsViewOriginal.Filter = ((o) =>
                 {
-                    if (((BaseItem)o).Name.ToLower().Contains(filtertxt.Text.Trim().ToLower())) return true;
-                    else return false;
-                }
-            });
+                    if (string.IsNullOrEmpty(filtertxt.Text)) return true;
+                    if (o is BaseItem item)
+                    {
+                        string filter = filtertxt.Text.Trim();
+                        if (!string.IsNullOrEmpty(item.Name) && item.Name.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0)
+                            return true;
+                        if (!string.IsNullOrEmpty(item.Shortname) && item.Shortname.IndexOf(filter, StringComparison.OrdinalIgnoreCase) >= 0)
+                            return true;
+                    }
+                    return false;
+                });
+            }
         }
 
         private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

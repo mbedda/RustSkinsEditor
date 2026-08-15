@@ -1,4 +1,4 @@
-﻿<Window
+<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -78,7 +78,7 @@
                       SelectedValuePath="ItemShortname"
                       DisplayMemberPath="ItemShortname"
           KeyUp="Cmb_KeyUp" />-->
-            <ComboBox x:Name="comboboxItems" Grid.Column="2" IsTextSearchEnabled="True" Margin="10,0" ItemsSource="{Binding SkinsFile.BaseModel.Items}" SelectedValuePath="Shortname" SelectionChanged="comboboxItems_SelectionChanged" Height="24">
+            <ComboBox x:Name="comboboxItems" Grid.Column="2" IsTextSearchEnabled="True" TextSearch.TextPath="Name" Margin="10,0" ItemsSource="{Binding SkinsFile.BaseModel.Items}" SelectedValuePath="Shortname" SelectionChanged="comboboxItems_SelectionChanged" Height="24">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
