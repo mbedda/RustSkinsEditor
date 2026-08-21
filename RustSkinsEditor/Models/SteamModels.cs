@@ -133,7 +133,11 @@ namespace RustSkinsEditor.Models
             {"SKS", "rifle.sks"},
             {"Auto Turret", "autoturret"},
             {"Metal Shop Front", "wall.frame.shopfront.metal"},
-            {"Small Backpack", "smallbackpack"}
+            {"Small Backpack", "smallbackpack"},
+            {"Wood Armor Gloves", "woodarmor.gloves"},
+            {"Wood Armor Helmet", "wood.armor.helmet"},
+            {"Wood Armor Jacket", "wood.armor.jacket"},
+            {"Wood Armor Pants", "wood.armor.pants"}
         };
     }
 

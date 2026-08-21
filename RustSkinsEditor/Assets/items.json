@@ -640,5 +640,29 @@
     "itemID": 2068884361,
     "shortName": "smallbackpack",
     "category": "Attire"
+  },
+  {
+    "displayName": "Wood Armor Gloves",
+    "itemID": -459159118,
+    "shortName": "woodarmor.gloves",
+    "category": "Attire"
+  },
+  {
+    "displayName": "Wood Armor Helmet",
+    "itemID": -2094954543,
+    "shortName": "wood.armor.helmet",
+    "category": "Attire"
+  },
+  {
+    "displayName": "Wood Chestplate",
+    "itemID": 418081930,
+    "shortName": "wood.armor.jacket",
+    "category": "Attire"
+  },
+  {
+    "displayName": "Wood Armor Pants",
+    "itemID": 832133926,
+    "shortName": "wood.armor.pants",
+    "category": "Attire"
   }
 ]
