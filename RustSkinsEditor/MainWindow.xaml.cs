@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using RustSkinsEditor.Helpers;
 using RustSkinsEditor.Models;
 using RustSkinsEditor.ViewModels;
@@ -136,14 +136,7 @@ namespace RustSkinsEditor
 
         private void AddSkin_Click(object sender, RoutedEventArgs e)
         {
-            if (collectionCB.IsChecked.HasValue && collectionCB.IsChecked.Value)
-            {
-                AddWorkshopSkinCollection();
-            }
-            else
-            {
-                AddWorkshopSkinAsync();
-            }
+            AddWorkshopSkinAsync();
         }
 
         private async void AddWorkshopSkinAsync()
@@ -153,42 +146,51 @@ namespace RustSkinsEditor
                 MessageBox.Show("No skins file loaded.");
                 return;
             }
-            //if (comboboxItems.SelectedIndex == -1)
-            //{
-            //    MessageBox.Show("No item selected.");
-            //    return;
-            //}
 
             ulong skincode = 0;
+            string input = AddSkinTB.Text.Trim();
 
-            if (AddSkinTB.Text.Contains("steamcommunity.com") && AddSkinTB.Text.Split('?').Count()>1)
+            if (input.Contains("steamcommunity.com") && input.Split('?').Length > 1)
             {
-                Dictionary<String, String> params1 = new Dictionary<string, string>();
-                string[] queryParams = AddSkinTB.Text.Split('?')[1].Split('&');
+                Dictionary<string, string> params1 = new Dictionary<string, string>();
+                string[] queryParams = input.Split('?')[1].Split('&');
                 foreach (string s in queryParams)
                 {
                     string[] queryParameter = s.Split('=');
-                    if(queryParameter.Length < 2)
+                    if (queryParameter.Length < 2)
                         continue;
-                    params1.Add(queryParameter[0], queryParameter[1]);
+                    params1[queryParameter[0]] = queryParameter[1];
                 }
 
-                try
-                {
-                    if (params1.ContainsKey("id"))
-                        skincode = Convert.ToUInt32(params1["id"]);
-                }
-                catch
-                { }
+                if (params1.ContainsKey("id"))
+                    ulong.TryParse(params1["id"], out skincode);
             }
             else
             {
-                ulong.TryParse(AddSkinTB.Text, out skincode);
+                ulong.TryParse(input, out skincode);
             }
 
             if (skincode != 0)
             {
-                BaseSkin baseSkin = await GetSkinDataFromSteamApi(skincode);
+                var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync(new List<ulong>() { skincode });
+
+                if (fileDataDetails == null || fileDataDetails.SteamResponse == null 
+                    || fileDataDetails.SteamResponse.Publishedfiledetails == null || fileDataDetails.SteamResponse.Publishedfiledetails.Length == 0)
+                {
+                    MessageBox.Show("Could not retrieve workshop data.");
+                    return;
+                }
+
+                var fileDetails = fileDataDetails.SteamResponse.Publishedfiledetails[0];
+
+                // Auto-detect Workshop Collection: CreatorAppId == 766 indicates a Steam Community Workshop collection
+                if (fileDetails.CreatorAppId == 766)
+                {
+                    GetCollectionAndAddData(new List<ulong>() { skincode });
+                    return;
+                }
+
+                BaseSkin baseSkin = ParseBaseSkinFromPublishedFileDetails(fileDetails);
 
                 if (baseSkin != null && string.IsNullOrEmpty(baseSkin.Shortname) && comboboxItems.SelectedIndex != -1)
                     baseSkin.Shortname = (comboboxItems.SelectedItem as BaseItem).Shortname;
@@ -198,7 +200,6 @@ namespace RustSkinsEditor
                     MessageBox.Show("Could not retrieve skin data.");
                     return;
                 }
-
 
                 if (viewModel.AddSkin(out var baseItem, baseSkin))
                 {
@@ -215,18 +216,14 @@ namespace RustSkinsEditor
             }
             else
             {
-                MessageBox.Show("Please enter a valid url or skin id.");
+                MessageBox.Show("Please enter a valid url or skin/collection id.");
             }
         }
 
-        public async Task<BaseSkin> GetSkinDataFromSteamApi(ulong skinid)
+        public BaseSkin ParseBaseSkinFromPublishedFileDetails(SteamPublishedFileResponse.Publishedfiledetail fileDetails)
         {
-            var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync(new List<ulong>() { skinid });
+            if (fileDetails == null || fileDetails.CreatorAppId == 766) return null;
 
-            if (fileDataDetails == null || fileDataDetails.SteamResponse == null 
-                || fileDataDetails.SteamResponse.Publishedfiledetails == null || fileDataDetails.SteamResponse.Publishedfiledetails.Length == 0) return null;
-
-            var fileDetails = fileDataDetails.SteamResponse.Publishedfiledetails[0];
             bool invalid = false;
             if (fileDetails.ConsumerAppId != 252490 || fileDetails.PreviewUrl == null || string.IsNullOrEmpty(fileDetails.Title))
                 invalid = true;
@@ -252,43 +249,14 @@ namespace RustSkinsEditor
             return baseSkin;
         }
 
-        private void AddWorkshopSkinCollection()
+        public async Task<BaseSkin> GetSkinDataFromSteamApi(ulong skinid)
         {
-            if (viewModel.SkinsFile == null || viewModel.SkinsFile.BaseModel == null)
-            {
-                MessageBox.Show("No skins file loaded.");
-                return;
-            }
+            var fileDataDetails = await SteamApi.GetPublishedFileDetailsAsync(new List<ulong>() { skinid });
 
-            ulong skincode = 0;
+            if (fileDataDetails == null || fileDataDetails.SteamResponse == null 
+                || fileDataDetails.SteamResponse.Publishedfiledetails == null || fileDataDetails.SteamResponse.Publishedfiledetails.Length == 0) return null;
 
-            if (AddSkinTB.Text.Contains("steamcommunity.com"))
-            {
-                Dictionary<String, String> params1 = new Dictionary<string, string>();
-                string[] queryParams = AddSkinTB.Text.Split('?')[1].Split('&');
-                foreach (string s in queryParams)
-                {
-                    string[] queryParameter = s.Split('=');
-                    params1.Add(queryParameter[0], queryParameter[1]);
-                }
-
-                try
-                {
-                    if (params1.ContainsKey("id"))
-                        skincode = Convert.ToUInt32(params1["id"]);
-                }
-                catch
-                { }
-            }
-            else
-            {
-                ulong.TryParse(AddSkinTB.Text, out skincode);
-            }
-
-            if (skincode != 0)
-            {
-                GetCollectionAndAddData(new List<ulong>() { skincode });
-            }
+            return ParseBaseSkinFromPublishedFileDetails(fileDataDetails.SteamResponse.Publishedfiledetails[0]);
         }
 
         public async void GetCollectionAndAddData(List<ulong> collections)
@@ -304,7 +272,10 @@ namespace RustSkinsEditor
                     {
                         foreach (var item in collection.Children)
                         {
-                            CollectionSkins.Add(Convert.ToUInt32(item.PublishedFileId));
+                            if (ulong.TryParse(item.PublishedFileId, out ulong childId))
+                            {
+                                CollectionSkins.Add(childId);
+                            }
                         }
                     }
                 }

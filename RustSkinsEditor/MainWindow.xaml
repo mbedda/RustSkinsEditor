@@ -102,14 +102,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Workshop Link or Id" Margin="10,10,0,0" Foreground="White" FontStyle="Italic"></TextBlock>
-                    <CheckBox x:Name="collectionCB" Grid.Column="1" Content="Is Collection" VerticalAlignment="Bottom" Foreground="White"/>
-                </Grid>
+                <TextBlock Text="Workshop Skin or Collection Link / ID" Margin="10,10,0,0" Foreground="White" FontStyle="Italic"/>
                 <TextBox x:Name="AddSkinTB" Text="" VerticalAlignment="Center" Margin="10,0,0,10"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Column="2">
