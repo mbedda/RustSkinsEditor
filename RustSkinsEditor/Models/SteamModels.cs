@@ -137,7 +137,11 @@ namespace RustSkinsEditor.Models
             {"Wood Armor Gloves", "woodarmor.gloves"},
             {"Wood Armor Helmet", "wood.armor.helmet"},
             {"Wood Armor Jacket", "wood.armor.jacket"},
-            {"Wood Armor Pants", "wood.armor.pants"}
+            {"Wood Armor Pants", "wood.armor.pants"},
+            {"Armored Ladder Hatch", "floor.ladder.hatch.toptier"},
+            {"Armored Triangle Ladder Hatch", "floor.triangle.ladder.hatch.toptier"},
+            {"Ladder Hatch", "floor.ladder.hatch"},
+            {"Triangle Ladder Hatch", "floor.triangle.ladder.hatch"}
         };
     }
 

@@ -664,5 +664,29 @@
     "itemID": 832133926,
     "shortName": "wood.armor.pants",
     "category": "Attire"
+  },
+  {
+    "displayName": "Armored Ladder Hatch",
+    "itemID": 607785075,
+    "shortName": "floor.ladder.hatch.toptier",
+    "category": "Construction"
+  },
+  {
+    "displayName": "Armored Triangle Ladder Hatch",
+    "itemID": -478923685,
+    "shortName": "floor.triangle.ladder.hatch.toptier",
+    "category": "Construction"
+  },
+  {
+    "displayName": "Ladder Hatch",
+    "itemID": 1948067030,
+    "shortName": "floor.ladder.hatch",
+    "category": "Construction"
+  },
+  {
+    "displayName": "Triangle Ladder Hatch",
+    "itemID": 2041899972,
+    "shortName": "floor.triangle.ladder.hatch",
+    "category": "Construction"
   }
 ]
