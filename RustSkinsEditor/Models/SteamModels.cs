@@ -141,7 +141,8 @@ namespace RustSkinsEditor.Models
             {"Armored Ladder Hatch", "floor.ladder.hatch.toptier"},
             {"Armored Triangle Ladder Hatch", "floor.triangle.ladder.hatch.toptier"},
             {"Ladder Hatch", "floor.ladder.hatch"},
-            {"Triangle Ladder Hatch", "floor.triangle.ladder.hatch"}
+            {"Triangle Ladder Hatch", "floor.triangle.ladder.hatch"},
+            {"Nailgun", "pistol.nailgun"}
         };
     }
 

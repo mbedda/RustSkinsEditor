@@ -688,5 +688,11 @@
     "itemID": 2041899972,
     "shortName": "floor.triangle.ladder.hatch",
     "category": "Construction"
+  },
+  {
+    "displayName": "Nailgun",
+    "itemID": 1953903201,
+    "shortName": "pistol.nailgun",
+    "category": "Weapon"
   }
 ]
